@@ -118,7 +118,7 @@
     .container{
       /* Let content width scale with viewport so there isn't excessive side whitespace on larger phones/tablets. */
       width: 100% !important;
-      max-width: min(1000px, calc(100vw - 48px)) !important;
+      max-width: min(1000px, calc(100vw - 12px)) !important;
       margin: 0 auto !important;
       min-width: 0 !important;
     }
@@ -128,12 +128,15 @@
       grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
     }
   
-    /* 活動經歷照片縮小 1.5 倍 (約 0.667) */
+    /* 活動經歷照片：跟「更多我的照片」相同視覺尺寸（寬度策略 + 正方形比例） */
     .activities-album{
-      width: 66.666% !important;
-      max-width: 66.666% !important;
+      width: 100% !important;
+      max-width: 760px !important; /* match .more-grid max-width */
       margin-left: auto !important;
       margin-right: auto !important;
+    }
+    .activities-album .act-imgwrap{
+      aspect-ratio: 1 / 1 !important; /* match .more-imgwrap */
     }
   
     /* 保險：避免任何卡片強制撐寬 */
