@@ -17,12 +17,19 @@ function updateMobileActionsMount(){
 
   const isMobile = window.matchMedia('(max-width: 1024px)').matches;
   if(isMobile){
-    if(actions.parentNode !== document.body){
-      actions.classList.add('mobile-actions-panel');
-      document.body.appendChild(actions);
+    // Mobile layout: keep actions in the sidebar (top-left), so nav can sit right below it.
+    const nav = sidebar.querySelector('#side-nav') || sidebar.querySelector('.nav');
+    if(actions.parentNode !== sidebar){
+      actions.classList.remove('mobile-actions-panel');
+      if(nav){
+        sidebar.insertBefore(actions, nav);
+      }else{
+        sidebar.insertBefore(actions, sidebar.firstChild);
+      }
     }
   }else{
-    if(actions.parentNode === document.body){
+    // Restore to original location on desktop.
+    if(actions.parentNode !== actions.__home){
       actions.classList.remove('mobile-actions-panel');
       const home = actions.__home;
       const next = actions.__next;
@@ -931,6 +938,14 @@ function setActiveNav(id, lock){
   if(!nav) return;
   nav.querySelectorAll('.nav-item').forEach(x => x.classList.toggle('active', x.dataset.target === id));
   if(lock) navLockUntil = Date.now() + 800;
+
+  // Mobile dropdown: reflect the active section label on the button.
+  const btn = nav.querySelector('.nav-menu-btn');
+  if(btn){
+    const active = nav.querySelector(`.nav-item[data-target="${id}"]`);
+    const label = active ? active.textContent.trim() : (nav.dataset.navDefault || btn.textContent);
+    btn.textContent = label || btn.textContent;
+  }
 }
 
 function smoothScrollToSection(target){
@@ -942,7 +957,18 @@ function updateActiveNavFromScroll(){
   if(Date.now() < navLockUntil) return;
   const ids = NAV_ORDER.filter(id => document.getElementById(id));
   if(!ids.length) return;
-  const y = window.scrollY + 10;
+  // Keep the "active" nav item in sync with the effective top padding on mobile.
+  // This matches the visual offset used by the fixed top controls.
+  const isMobile = window.matchMedia('(max-width: 1024px)').matches;
+  let topPad = 0;
+  if(isMobile){
+    const main = document.querySelector('.main');
+    if(main){
+      const pt = parseFloat(getComputedStyle(main).paddingTop);
+      topPad = Number.isFinite(pt) ? pt : 0;
+    }
+  }
+  const y = window.scrollY + topPad + 10;
   let current = ids[0];
   for(const id of ids){
     const el = document.getElementById(id);
@@ -957,8 +983,25 @@ function buildSideNav(){
   const nav = document.getElementById('side-nav');
   if(!nav) return;
   nav.innerHTML = '';
-  const sections = NAV_ORDER.map(id => document.getElementById(id)).filter(Boolean);
 
+  const isZh = (document.documentElement.getAttribute('data-locale') || '').toLowerCase().startsWith('zh');
+  const btnLabel = isZh ? '目錄' : 'Menu';
+  nav.dataset.navDefault = btnLabel;
+
+  // Mobile dropdown button (hidden on desktop via CSS).
+  const btn = document.createElement('button');
+  btn.type = 'button';
+  btn.className = 'btn nav-menu-btn';
+  btn.setAttribute('aria-expanded', 'false');
+  btn.textContent = btnLabel;
+  nav.appendChild(btn);
+
+  // Nav list (desktop: always visible; mobile: shown only when nav has .is-open).
+  const list = document.createElement('div');
+  list.className = 'nav-list';
+  nav.appendChild(list);
+
+  const sections = NAV_ORDER.map(id => document.getElementById(id)).filter(Boolean);
   sections.forEach(sec => {
     const a = document.createElement('a');
     a.className = 'nav-item';
@@ -972,9 +1015,44 @@ function buildSideNav(){
       if(!target) return;
       setActiveNav(sec.id, true);
       smoothScrollToSection(target);
+      // Close dropdown after selecting on mobile.
+      nav.classList.remove('is-open');
+      const b = nav.querySelector('.nav-menu-btn');
+      if(b) b.setAttribute('aria-expanded', 'false');
     });
-    nav.appendChild(a);
+    list.appendChild(a);
   });
+
+  const close = () => {
+    nav.classList.remove('is-open');
+    const b = nav.querySelector('.nav-menu-btn');
+    if(b) b.setAttribute('aria-expanded', 'false');
+  };
+  const toggle = (ev) => {
+    ev.preventDefault();
+    const open = nav.classList.toggle('is-open');
+    const b = nav.querySelector('.nav-menu-btn');
+    if(b) b.setAttribute('aria-expanded', open ? 'true' : 'false');
+  };
+
+  // Always bind the current button (safe because we rebuild the DOM).
+  btn.addEventListener('click', toggle);
+
+  // Bind global close handlers only once.
+  if(!nav.__dropdownDocInit){
+    nav.__dropdownDocInit = true;
+    document.addEventListener('click', (ev) => {
+      if(!nav.classList.contains('is-open')) return;
+      if(nav.contains(ev.target)) return;
+      close();
+    });
+    document.addEventListener('keydown', (ev) => {
+      if(ev.key !== 'Escape') return;
+      if(!nav.classList.contains('is-open')) return;
+      close();
+    });
+    window.addEventListener('resize', () => { try{ close(); }catch(e){} });
+  }
 
   updateActiveNavFromScroll();
 }

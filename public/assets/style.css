@@ -43,6 +43,9 @@ a:hover{text-decoration:underline}
 .nav a{padding:10px 12px;border-radius:14px;color:var(--muted)}
 .nav a:hover{background: rgba(16,24,39,.6);text-decoration:none;color:var(--text)}
 .nav a.active{background: rgba(251,146,60,.14);color:var(--text);border:1px solid rgba(251,146,60,.25)}
+/* Side nav structure: desktop shows list; mobile.css turns it into a dropdown button. */
+.nav .nav-menu-btn{display:none}
+.nav .nav-list{display:flex;flex-direction:column;gap:6px}
 .actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 .btn{
   display:inline-flex;align-items:center;justify-content:center;

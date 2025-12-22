@@ -2,6 +2,10 @@
    Apply on <=1024px so Chrome device toolbar always matches (no reliance on pointer media). */
 @media (max-width: 1024px){
     html, body{ overflow-x: hidden; }
+
+    :root{
+      --mobile-top-offset: 48px;
+    }
   
     /* Sidebar 變成左半側浮層 */
     .layout{
@@ -14,56 +18,117 @@
       top: 10px !important;
       left: 10px !important;
   
-      /* 只佔左半邊 */
-      right: calc(50vw + 6px) !important;
+      /* 目錄吃滿「右上 icons / actions」左側的所有空間 */
+      right: 184px !important;
   
       height: auto !important;
-      padding: 10px 10px !important;
+      /* Align dropdown label start with main title left edge (main padding-left = 12px). */
+      padding: 6px 6px 6px 2px !important;
       border-right: 0 !important;
       border-bottom: 1px solid rgba(34,48,74,.7) !important;
       background: rgba(11,15,23,.72) !important;
       backdrop-filter: blur(10px);
       z-index: 9999 !important;
-      overflow: hidden !important;
+      overflow: visible !important;
       border-radius: 18px !important;
+
+      /* Top controls: Menu | Language | Resume */
+      display: grid !important;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) !important;
+      gap: 8px !important;
+      align-items: center !important;
     }
   
     /* 側邊欄名字整塊刪掉 */
     .sidebar .brand{ display: none !important; }
   
-    /* 目錄在左邊兩排 */
+    /* 手機版目錄：下拉式按鈕 */
     .sidebar .nav{
-      display: flex !important;
-      flex-direction: row !important;
-      flex-wrap: wrap !important;
-      gap: 8px !important;
+      position: static !important;
+      display: block !important;
       margin: 0 !important;
       padding: 0 !important;
-      overflow: hidden !important;
+      max-height: none !important;
+      overflow: visible !important;
+      grid-column: 1 / 2 !important;
+      min-width: 0 !important;
     }
-    .sidebar .nav a,
-    .sidebar .nav .nav-item{
-      padding: 8px 10px !important;
+    .sidebar .nav .nav-menu-btn{
+      display: inline-flex !important;
+      width: 100% !important;
+      justify-content: space-between !important;
+      padding: 6px 10px !important;
+      min-height: 32px !important;
       font-size: 12px !important;
       border-radius: 999px !important;
+      min-width: 0 !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
       white-space: nowrap !important;
     }
+    .sidebar .nav .nav-menu-btn::after{
+      content: "▾";
+      opacity: .85;
+      margin-left: 8px;
+    }
+    .sidebar .nav.is-open .nav-menu-btn::after{
+      content: "▴";
+    }
+    .sidebar .nav .nav-list{
+      display: none !important;
+      position: absolute !important;
+      /* Anchor to sidebar (nav is position: static), show right below the 3-button row */
+      top: calc(32px + 10px) !important;
+      left: 0 !important;
+      right: 0 !important;
+      z-index: 10001 !important;
+
+      padding: 8px !important;
+      border-radius: 16px !important;
+      border: 1px solid rgba(34,48,74,.7) !important;
+      background: rgba(11,15,23,.92) !important;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 12px 30px rgba(0,0,0,.25);
+
+      max-height: min(60vh, 360px) !important;
+      overflow: auto !important;
+    }
+    .sidebar .nav.is-open .nav-list{
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 6px !important;
+    }
+    .sidebar .nav .nav-list .nav-item{
+      padding: 8px 10px !important;
+      font-size: 12px !important;
+      border-radius: 14px !important;
+      white-space: nowrap !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+    }
   
-    /* actions 在手機版會被 JS 搬到 body（class: mobile-actions-panel）。
-       這裡同時支援：搬出去的版本 + 留在 sidebar 的 fallback。 */
-    .actions.mobile-actions-panel,
+    /* actions（語言/履歷）與目錄按鈕同一排：讓子元素參與 sidebar 的 3 欄 grid */
     body .layout .sidebar .actions{
+      display: contents !important;
+    }
+    body .layout .sidebar .actions select.btn{
+      grid-column: 2 / 3 !important;
+    }
+    body .layout .sidebar .actions a.btn{
+      grid-column: 3 / 4 !important;
+    }
+
+    /* Fallback: if actions is still mounted to body for any reason */
+    .actions.mobile-actions-panel{
       position: fixed !important;
       top: 56px !important;
-      right: 10px !important;
-      left: auto !important;
+      left: 10px !important;
+      right: auto !important;
       transform: none !important;
 
-      /* Narrow panel but still fits 2 items in one row */
-      width: 160px !important;
-      max-width: calc(100vw - 20px) !important;
+      width: calc(100vw - 20px) !important;
+      max-width: 360px !important;
 
-      /* Two buttons side-by-side on mobile */
       display: grid !important;
       grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
       gap: 8px !important;
@@ -83,7 +148,9 @@
     .sidebar .actions select.btn{
       width: 100% !important;
       min-width: 0 !important;
-      padding: 8px 10px !important;
+      /* buttons a bit shorter on mobile */
+      padding: 6px 10px !important;
+      min-height: 32px !important;
       font-size: 12px !important;
       justify-content: center !important;
     }
@@ -104,7 +171,8 @@
   
     /* 右上角 icons 維持在最上層 */
     .floating-icons{
-      top: 10px !important;
+      /* Align vertically with the center of the 32px-tall top buttons row */
+      top: 15px !important;
       right: 6px !important;
       z-index: 10010 !important;
     }
@@ -126,7 +194,11 @@
     /* 避免內容被浮層遮住 */
     .main{
       padding: 14px 12px !important;
-      padding-top: 140px !important;
+      padding-top: var(--mobile-top-offset) !important;
+    }
+    /* 點目錄/或 hash 跳轉時避免被上方浮層蓋住 */
+    .section{
+      scroll-margin-top: var(--mobile-top-offset) !important;
     }
   
     .container{
