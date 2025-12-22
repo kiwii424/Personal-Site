@@ -8,6 +8,7 @@
   --line:#22304a;
   --accent:#fb923c;
 }
+
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 html,body{font-family: var(--font-body);margin:0;padding:0}
@@ -70,7 +71,6 @@ html[data-locale="en"] .hero{display:none}
   padding: 0;
   color: #ffffff;
   background: none;
-  /* mimic vertical orange gradient outline: stronger on top/bottom */
   text-shadow:
     0 -1px 0 rgba(251,146,60,.55),
     0  1px 0 rgba(251,146,60,.28),
@@ -84,11 +84,67 @@ html[data-locale="en"] .hero{display:none}
 .hint{color:var(--muted);font-size:14px;margin:0 0 12px}
 .grid{display:grid;grid-template-columns: 320px 1fr;gap:14px}
 @media (max-width: 980px){
-  .layout{grid-template-columns:1fr}
-  .sidebar{position:relative;height:auto}
+  /* Keep sidebar on the left for small screens (mobile/tablet). */
+  .layout{grid-template-columns:220px 1fr}
+  .sidebar{position:sticky;top:0;height:100vh}
   .main{padding:18px 14px}
   .grid{grid-template-columns:1fr}
   .h1{font-size:34px}
+
+  /* About: keep photo compact on smaller screens. */
+  #about .grid{grid-template-columns:220px 1fr}
+  #about .photo{aspect-ratio:1 / 1}
+}
+
+/* Mobile-specific tweaks (do not affect desktop layout). */
+@media (max-width: 520px){
+  /* Prevent horizontal overflow on mobile (common with CSS grid/flex min-content sizing). */
+  html,body{overflow-x:hidden}
+  .main,.sidebar,.container{min-width:0}
+  .grid > *{min-width:0}
+
+  /* NOTE: 舊版手機 sidebar 仍在左邊，下面會被新的 touch mobile 規則覆蓋 */
+  .layout{grid-template-columns:96px 1fr}
+  .sidebar{padding:12px 10px;overflow-x:hidden}
+  .brand{padding:8px 10px;border-radius:14px}
+  .brand .role{display:none}
+  .nav a{padding:8px 10px;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .actions{flex-direction:column;align-items:stretch}
+  .sidebar .btn{padding:8px 10px;font-size:12px;justify-content:flex-start;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+  /* Make the whole blocks/cards narrower (not just padding) on mobile. */
+  :root{--mobile-card-max:260px}
+  .container{max-width:var(--mobile-card-max);margin-left:auto;margin-right:auto}
+  .section > .card,
+  .list,
+  .classes-wrap,
+  #certs-list,
+  .activities-panel,
+  .more-grid{
+    max-width:var(--mobile-card-max);
+    margin-left:auto;
+    margin-right:auto;
+  }
+
+  /* Make "blocks" feel tighter on mobile (less empty space). */
+  .card{padding:12px;border-radius:16px}
+  .item{padding:12px;border-radius:16px}
+  .classes-block{padding:12px}
+  .cert-row{padding:12px}
+  .activities-text{padding:12px}
+
+  /* Smaller "small tiles/cards" on mobile. */
+  .course-card{padding:8px 8px 10px;min-height:56px}
+  .classes-grid-row .course-card{min-width:200px}
+  .more-card{padding:6px 8px}
+
+  /* Shrink Activities + More photos on mobile by constraining their containers. */
+  .activities-album,.activities-text{max-width:var(--mobile-card-max);margin-left:auto;margin-right:auto}
+  .act-imgwrap{aspect-ratio:1 / 1}
+
+  /* About photo: smaller on mobile. */
+  #about .grid{grid-template-columns:140px 1fr}
+  #about .photo{aspect-ratio:1 / 1}
 }
 
 .card{
@@ -261,7 +317,6 @@ input:focus,textarea:focus{border-color: rgba(251,146,60,.55);box-shadow: 0 0 0 
   font-size:34px;
   letter-spacing:-.02em;
   margin:0 0 12px;
-  /* Left white -> right blue (clipped to text), with consistent gradient "length" across locales */
   background: linear-gradient(90deg,
     #ffffff 0%,
     #e0f2fe 18%,
@@ -270,7 +325,6 @@ input:focus,textarea:focus{border-color: rgba(251,146,60,.55);box-shadow: 0 0 0 
     #1d4ed8 100%);
   background-repeat: no-repeat;
   background-position: left center;
-  /* Fix gradient "length" so zh/en name length looks consistent */
   background-size: 480px 100%;
   -webkit-background-clip:text;
   background-clip:text;
@@ -460,7 +514,7 @@ html[data-locale="en"] #about-name{ background-size: 420px 100%; }
   .course-cat-row{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 520px){
-  .course-cat-row{ grid-template-columns: 1fr; }
+  .course-cat-row{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 .course-card{
   border-radius: 14px;
@@ -509,8 +563,8 @@ html[data-locale="en"] #about-name{ background-size: 420px 100%; }
   .classes-nycu .classes-grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 520px){
-  .classes-grid{ grid-template-columns: 1fr; }
-  .classes-nycu .classes-grid{ grid-template-columns: 1fr; }
+  .classes-grid{ grid-template-columns: 1fr 1fr; }
+  .classes-nycu .classes-grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 /* UIUC horizontal row */
@@ -568,12 +622,21 @@ html[data-locale="en"] #about-name{ background-size: 420px 100%; }
   display:flex;
   align-items:flex-end;
   padding: 10px;
-  background: linear-gradient(180deg, rgba(2,6,23,0) 30%, rgba(2,6,23,.78) 100%);
-  opacity: 0;
-  transition: opacity .15s ease;
+  /* Always show the label, but do NOT dim the image by default. */
+  background: none;
+  opacity: 1;
+  transition: opacity .15s ease, background .15s ease;
   pointer-events: none;
 }
 .more-tile:hover .more-overlay{ opacity: 1; }
+
+/* Dim only after click (toggled via JS). */
+.more-tile.is-dimmed .more-overlay{
+  background: linear-gradient(180deg, rgba(2,6,23,0) 30%, rgba(2,6,23,.78) 100%);
+}
+.more-tile.is-dimmed .more-img{
+  filter: brightness(.78) saturate(1.02) contrast(1.02);
+}
 .more-card{
   width: 100%;
   border-radius: 12px;
@@ -852,7 +915,7 @@ h1,h2,h3,.section-title,.name,.brand .name{
   transform: scale(1.01);
   transition: transform .22s ease, filter .22s ease;
 }
-.more-tile:hover .more-img{
+.more-tile:not(.is-dimmed):hover .more-img{
   transform: scale(1.04);
   filter: brightness(1.05);
 }
@@ -997,4 +1060,645 @@ h1,h2,h3,.section-title,.name,.brand .name{
   padding-left: 18px;
   color: rgba(229,231,235,.88);
   line-height: 1.55;
+}
+
+/* =========================================================
+   Mobile on real phones: sidebar -> top horizontal bar
+   用 (pointer: coarse) 避免影響電腦把視窗縮窄的情況
+   也能處理手機缺少 viewport meta 導致寬度接近 980 的狀況
+   ========================================================= */
+@media (max-width: 1024px) and (pointer: coarse){
+  html, body{ overflow-x: hidden; max-width: 100%; }
+
+  /* Layout: 變成上下結構，sidebar 在上 */
+  .layout{
+    display:flex !important;
+    flex-direction: column !important;
+    min-height: 100vh;
+  }
+
+  .sidebar{
+    position: sticky !important;
+    top: 0 !important;
+    height: auto !important;
+    width: 100% !important;
+    border-right: 0 !important;
+    border-bottom: 1px solid rgba(34,48,74,.7) !important;
+    padding: 10px 12px !important;
+    background: rgba(11,15,23,.72) !important;
+    overflow: visible !important;
+    z-index: 9999 !important;
+  }
+
+  .brand{ margin-bottom: 8px !important; }
+  .brand .role{ display:none !important; }
+
+  /* Nav: 變橫向，超出可水平滑 */
+  .nav{
+    flex-direction: row !important;
+    gap: 8px !important;
+    margin: 6px 0 10px !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    white-space: nowrap !important;
+    padding-bottom: 6px !important;
+  }
+  .nav::-webkit-scrollbar{ height: 6px; }
+  .nav a{
+    flex: 0 0 auto !important;
+    padding: 8px 10px !important;
+    font-size: 12px !important;
+    border-radius: 999px !important;
+    white-space: nowrap !important;
+  }
+
+  /* Actions: 同一列或可換行，避免把寬度撐爆 */
+  .actions{
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 8px !important;
+    flex-wrap: wrap !important;
+  }
+  .actions .btn,
+  .actions select.btn{
+    padding: 8px 10px !important;
+    font-size: 12px !important;
+  }
+
+  .sidebar-more{ display:none !important; }
+
+  /* Main content: 寬度變合理，置中 */
+  .main{ padding: 14px 12px !important; }
+  .container{
+    width: 100% !important;
+    max-width: 680px !important;
+    margin: 0 auto !important;
+    min-width: 0 !important;
+  }
+
+  /* Grid / cards: 防止 min-content 撐寬 */
+  .main, .container, .grid, .about-grid, .about-labels,
+  .classes-wrap, .classes-block, .classes-grid, .course-cat-row,
+  .classes-grid-row, .activities-panel, .activities-album, .activities-text,
+  .more-grid, .list, #certs-list{
+    min-width: 0 !important;
+  }
+  .grid > *, .about-grid > *, .about-labels > *,
+  .classes-wrap > *, .classes-block > *, .classes-grid > *,
+  .course-cat-row > *, .activities-panel > *, .more-grid > *{
+    min-width: 0 !important;
+  }
+
+  /* About: 照片不要撐太大，改成上圖下文 */
+  #about .grid{
+    grid-template-columns: 1fr !important;
+  }
+  #about .photo{
+    max-width: 220px !important;
+    margin: 0 auto !important;
+    aspect-ratio: 1 / 1 !important;
+  }
+
+  /* Courses: 手機改成單欄，避免兩欄造成總寬度被撐大 */
+  .classes-grid{ grid-template-columns: 1fr !important; }
+  .classes-nycu .classes-grid{ grid-template-columns: 1fr !important; }
+  .course-cat-row{ grid-template-columns: 1fr !important; }
+
+  /* UIUC horizontal row: 降低卡片 min-width，避免整頁被撐寬 */
+  .classes-grid-row{
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+  }
+  .classes-grid-row .course-card{
+    min-width: 210px !important;
+  }
+
+  /* Activities: 相簿比例偏正方，整體不會太寬 */
+  .activities-panel{ grid-template-columns: 1fr !important; }
+  .act-imgwrap{ aspect-ratio: 1 / 1 !important; }
+
+  /* More: 改單欄，縮到合理寬度 */
+  .more-grid{
+    grid-template-columns: 1fr !important;
+    max-width: 680px !important;
+    margin: 10px auto 0 !important;
+  }
+  .more-tile{
+    max-width: 520px !important;
+    margin: 0 auto !important;
+  }
+}
+
+/* 更小手機再收一點 */
+@media (max-width: 520px) and (pointer: coarse){
+  .container{ max-width: 430px !important; }
+  .course-name{ font-size: 13px !important; }
+  .course-term{ font-size: 10px !important; }
+  .card,.item,.classes-block,.cert-row,.activities-text{ padding: 12px !important; }
+  .repo-link{ right: 10px !important; bottom: 10px !important; }
+}
+
+/* =========================================================
+   Mobile overrides v2
+   只作用在手機 touch 裝置，不影響 desktop
+   直接貼在 style.css 最底部
+   ========================================================= */
+   @media (max-width: 1024px) and (pointer: coarse){
+
+    /* 1) Sidebar 改成懸浮在左半側 */
+    .sidebar{
+      position: fixed !important;
+      top: 10px !important;
+      left: 10px !important;
+  
+      /* 左半側寬度：視窗的一半左右，並限制最大寬 */
+      width: min(52vw, 540px) !important;
+      height: auto !important;
+  
+      border-right: 0 !important;
+      border-bottom: 1px solid rgba(34,48,74,.7) !important;
+  
+      border-radius: 18px !important;
+      padding: 10px 12px !important;
+  
+      background: rgba(11,15,23,.72) !important;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 30px rgba(0,0,0,.28);
+  
+      z-index: 9999 !important;
+      overflow: hidden !important;
+    }
+  
+    /* Sidebar 內容橫向化，避免高度太高 */
+    .brand{
+      margin-bottom: 8px !important;
+    }
+    .brand .role{
+      display:none !important;
+    }
+  
+    .nav{
+      flex-direction: row !important;
+      gap: 8px !important;
+      margin: 6px 0 8px !important;
+      overflow-x: auto !important;
+      overflow-y: hidden !important;
+      white-space: nowrap !important;
+      padding-bottom: 6px !important;
+    }
+    .nav a{
+      flex: 0 0 auto !important;
+      padding: 8px 10px !important;
+      font-size: 12px !important;
+      border-radius: 999px !important;
+    }
+  
+    .actions{
+      flex-direction: row !important;
+      align-items: center !important;
+      gap: 8px !important;
+      flex-wrap: wrap !important;
+    }
+    .actions .btn,
+    .actions select.btn{
+      padding: 8px 10px !important;
+      font-size: 12px !important;
+    }
+  
+    /* 右半側圖標保持在右上，並對齊同一高度 */
+    .floating-icons{
+      position: fixed !important;
+      top: 10px !important;
+      right: 10px !important;
+      left: auto !important;
+      bottom: auto !important;
+      z-index: 10000 !important;
+    }
+  
+    /* 內容往下推，避免被懸浮 sidebar 蓋住 */
+    .main{
+      padding-top: 92px !important;
+    }
+  
+    /* 2) NYCU 課程：一行三個 */
+    .classes-nycu .classes-grid{
+      grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    }
+    .course-cat-row{
+      grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    }
+  
+    /* 3) 活動經歷照片縮小 1.5 倍 */
+    .activities-panel{
+      grid-template-columns: 1fr !important;
+    }
+    .activities-album{
+      width: 100% !important;
+      max-width: min(66vw, 420px) !important; /* 約縮到 2/3 */
+      margin: 0 auto !important;
+    }
+    .act-imgwrap{
+      aspect-ratio: 1 / 1 !important;
+    }
+  }
+  
+  /* 更小手機再收斂字體，讓 NYCU 三欄不擠 */
+  @media (max-width: 520px) and (pointer: coarse){
+    .sidebar{
+      width: min(56vw, 380px) !important;
+      top: 8px !important;
+      left: 8px !important;
+    }
+    .floating-icons{
+      top: 8px !important;
+      right: 8px !important;
+    }
+    .course-name{
+      font-size: 12px !important;
+    }
+    .course-term{
+      font-size: 10px !important;
+    }
+  }
+
+/* =========================================================
+   Mobile overrides v3
+   只作用在手機 touch 裝置，不影響 desktop
+   直接貼在 style.css 最底部
+   ========================================================= */
+   @media (max-width: 1024px) and (pointer: coarse){
+
+    /* 1) 側邊欄的名字刪掉（brand 整塊隱藏） */
+    .sidebar .brand{ display:none !important; }
+  
+    /* 3) 目錄在左邊，兩排（wrap 成 2 rows） */
+    .sidebar .nav{
+      display:flex !important;
+      flex-direction: row !important;
+      flex-wrap: wrap !important;
+      align-content: flex-start !important;
+  
+      /* 兩排的關鍵：限制高度並讓內容自動換到第二排 */
+      max-height: 78px !important;
+      overflow-y: hidden !important;
+      overflow-x: auto !important;
+  
+      gap: 8px !important;
+      margin: 0 !important;
+      padding: 8px 8px 6px !important;
+    }
+    .sidebar .nav a{
+      flex: 0 0 auto !important;
+      padding: 8px 10px !important;
+      font-size: 12px !important;
+      border-radius: 999px !important;
+    }
+  
+    /* 左側懸浮 sidebar：因為名字拿掉了，高度可以更矮 */
+    .sidebar{
+      padding: 8px 8px !important;
+    }
+  
+    /* 2) 中英文與履歷改到右邊：把 sidebar 內的 actions 整個搬到右側浮層 */
+    .sidebar .actions{
+      position: fixed !important;
+      top: 54px !important;     /* 圖標下方 */
+      right: 10px !important;
+      left: auto !important;
+  
+      display:flex !important;
+      flex-direction: column !important;
+      align-items: stretch !important;
+      gap: 8px !important;
+  
+      z-index: 10001 !important;
+      padding: 0 !important;
+      margin: 0 !important;
+  
+      /* 讓它看起來像一個小懸浮區塊 */
+      width: 150px !important;
+    }
+    .sidebar .actions .btn,
+    .sidebar .actions select.btn{
+      width: 100% !important;
+      justify-content: center !important;
+      padding: 8px 10px !important;
+      font-size: 12px !important;
+  
+      border-radius: 14px !important;
+      border: 1px solid rgba(34,48,74,.85) !important;
+      background: rgba(16,24,39,.55) !important;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 30px rgba(0,0,0,.22);
+    }
+  
+    /* 右上圖標保持在最上層，actions 會在它下面 */
+    .floating-icons{
+      z-index: 10002 !important;
+    }
+  
+    /* 內容往下推，避免被左側 nav 與右側 actions 蓋住 */
+    .main{
+      padding-top: 110px !important;
+    }
+  }
+  
+  /* 更小手機再縮一點右側 actions 寬度 */
+  @media (max-width: 520px) and (pointer: coarse){
+    .sidebar .actions{
+      top: 50px !important;
+      right: 8px !important;
+      width: 138px !important;
+    }
+    .sidebar .nav{
+      max-height: 74px !important;
+    }
+  }
+
+
+  /* =========================================================
+   Mobile fix: force actions to right floating (under icons)
+   只作用在手機 touch 裝置，不影響 desktop
+   ========================================================= */
+@media (max-width: 1024px) and (pointer: coarse){
+
+  /* 強制把中英文與履歷這組 actions 搬到右側浮層 */
+  .actions{
+    position: fixed !important;
+    top: 54px !important;
+    right: 10px !important;
+    left: auto !important;
+
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 8px !important;
+    flex-wrap: nowrap !important;
+
+    z-index: 10001 !important;
+    width: 150px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .actions .btn,
+  .actions select.btn{
+    width: 100% !important;
+    justify-content: center !important;
+    padding: 8px 10px !important;
+    font-size: 12px !important;
+
+    border-radius: 14px !important;
+    border: 1px solid rgba(34,48,74,.85) !important;
+    background: rgba(16,24,39,.55) !important;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 10px 30px rgba(0,0,0,.22);
+  }
+
+  /* 右上圖標永遠蓋在最上面 */
+  .floating-icons{ z-index: 10002 !important; }
+
+  /* 主內容往下推，避免被 nav 與右側 actions 蓋住 */
+  .main{ padding-top: 110px !important; }
+}
+
+@media (max-width: 520px) and (pointer: coarse){
+  .actions{
+    top: 50px !important;
+    right: 8px !important;
+    width: 138px !important;
+  }
+}
+
+/* =========================================================
+   Mobile final override
+   修正重疊 + 左側懸浮目錄 + 右側 icons + actions
+   只影響手機
+   ========================================================= */
+   @media (max-width: 520px){
+
+    /* 讓內容往下避開懸浮層，避免被蓋到 */
+    .main{
+      padding-top: 200px !important;
+    }
+    /* 點 sidebar 目錄跳轉時，也要避開懸浮層高度 */
+    .section{
+      scroll-margin-top: 200px !important;
+    }
+  
+    /* 左側懸浮 sidebar 只佔左半邊，不要全寬 */
+    .sidebar{
+      position: fixed !important;
+      top: 10px !important;
+      left: 10px !important;
+      right: auto !important;
+  
+      width: calc(100% - 190px) !important; /* 右側保留 icons + actions */
+      max-width: 520px !important;
+      height: auto !important;
+      max-height: 160px !important;
+  
+      overflow: hidden !important;
+      border-right: 0 !important;
+      border-bottom: 1px solid rgba(34,48,74,.7) !important;
+      border-radius: 22px !important;
+      background: rgba(11,15,23,.72) !important;
+      backdrop-filter: blur(10px);
+      z-index: 10000 !important;
+      padding: 10px 10px !important;
+    }
+  
+    /* 刪掉 sidebar 的名字區塊 */
+    .brand{
+      display: none !important;
+    }
+  
+    /* 目錄在左邊兩排 */
+    .nav{
+      display: grid !important;
+      grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+      gap: 8px !important;
+      margin: 0 !important;
+      padding: 0 !important;
+  
+      overflow: hidden !important;
+      white-space: normal !important;
+    }
+    .nav a{
+      padding: 8px 10px !important;
+      font-size: 12px !important;
+      border-radius: 999px !important;
+      text-align: center !important;
+      white-space: nowrap !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+    }
+  
+    /* 右上 icons 保持最上層 */
+    .floating-icons{
+      z-index: 10002 !important;
+    }
+  
+    /* 把 sidebar 內的 actions 從左側拿掉，避免它還卡在 sidebar 裡造成擠壓 */
+    .sidebar .actions{
+      display: none !important;
+    }
+  
+    /* 任何地方的 actions 都強制固定到右側 icons 下面 */
+    .actions{
+      position: fixed !important;
+      top: 56px !important;
+      right: 10px !important;
+      left: auto !important;
+  
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: stretch !important;
+      gap: 8px !important;
+  
+      z-index: 10001 !important;
+      width: 160px !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+    .actions .btn,
+    .actions select.btn{
+      width: 100% !important;
+      justify-content: center !important;
+      padding: 8px 10px !important;
+      font-size: 12px !important;
+  
+      border-radius: 14px !important;
+      border: 1px solid rgba(34,48,74,.85) !important;
+      background: rgba(16,24,39,.55) !important;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 30px rgba(0,0,0,.22);
+    }
+  
+    /* NYCU 課程一行三個 */
+    .classes-nycu .course-cat-row{
+      grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    }
+    /* 兼容你可能用到的另一種 NYCU grid */
+    .classes-nycu .classes-grid{
+      grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    }
+  
+    /* 活動經歷照片縮小 1.5 倍左右 (寬度約 2/3) */
+    .activities-album{
+      max-width: 66.67% !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+  }
+
+  /* =========================================================
+   Mobile LAST override
+   只改手機版：sidebar 左上懸浮，actions 右側浮層(icons下方)
+   ========================================================= */
+
+   /* Mobile layout patch v20251222c */
+@media (max-width: 520px){
+  html, body{ overflow-x: hidden; }
+
+  /* Sidebar becomes floating top layer */
+  .layout{
+    grid-template-columns: 1fr !important;
+    grid-template-rows: auto 1fr !important;
+  }
+
+  .sidebar{
+    position: fixed !important;
+    top: 10px !important;
+    left: 10px !important;
+    /* Only occupy the left half; reserve the right half for icons + actions. */
+    right: calc(50vw + 6px) !important;
+    height: auto !important;
+    border-right: 0 !important;
+    border-bottom: 1px solid rgba(34,48,74,.7) !important;
+    padding: 10px 10px !important;
+    background: rgba(11,15,23,.72) !important;
+    backdrop-filter: blur(10px);
+    z-index: 9999 !important;
+    overflow: visible !important;
+  }
+
+  /* Remove name block on mobile */
+  .sidebar .brand{ display: none !important; }
+
+  /* Left side: nav in two rows, constrained to left half */
+  .sidebar .nav{
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+
+    overflow: hidden !important;
+    white-space: normal !important;
+  }
+
+  .sidebar .nav a,
+  .sidebar .nav .nav-item{
+    flex: 0 0 auto !important;
+    padding: 8px 10px !important;
+    font-size: 12px !important;
+    border-radius: 999px !important;
+    white-space: nowrap !important;
+  }
+
+  /* Right side: move actions out as a floating panel under icons */
+  .sidebar .actions{
+    position: fixed !important;
+    top: 62px !important;
+    right: 10px !important;
+    left: auto !important;
+
+    width: calc(50vw - 20px) !important;
+    max-width: calc(50vw - 20px) !important;
+
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+    align-items: stretch !important;
+
+    padding: 10px !important;
+    border-radius: 18px !important;
+    border: 1px solid rgba(34,48,74,.7) !important;
+    background: rgba(11,15,23,.72) !important;
+    backdrop-filter: blur(10px);
+
+    z-index: 10000 !important;
+  }
+
+  .sidebar .actions .btn,
+  .sidebar .actions select.btn{
+    width: 100% !important;
+    padding: 8px 10px !important;
+    font-size: 12px !important;
+    justify-content: center !important;
+  }
+
+  /* Keep icons on the right, above actions */
+  .floating-icons{
+    top: 10px !important;
+    right: 10px !important;
+    z-index: 10010 !important;
+  }
+
+  /* Optional: hide sidebar extra tiles on mobile */
+  .sidebar-more{ display: none !important; }
+  /* Main content spacing so it does not hide behind floating sidebar */
+  .main{
+    padding: 14px 12px !important;
+    padding-top: 128px !important;
+  }
+
+  .container{
+    max-width: 420px !important;
+    width: 100% !important;
+    margin: 0 auto !important;
+    min-width: 0 !important;
+  }
 }

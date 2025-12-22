@@ -1,0 +1,143 @@
+/* Mobile layout overrides.
+   Apply on <=1024px so Chrome device toolbar always matches (no reliance on pointer media). */
+@media (max-width: 1024px){
+    html, body{ overflow-x: hidden; }
+  
+    /* Sidebar 變成左半側浮層 */
+    .layout{
+      grid-template-columns: 1fr !important;
+      grid-template-rows: auto 1fr !important;
+    }
+  
+    .sidebar{
+      position: fixed !important;
+      top: 10px !important;
+      left: 10px !important;
+  
+      /* 只佔左半邊 */
+      right: calc(50vw + 6px) !important;
+  
+      height: auto !important;
+      padding: 10px 10px !important;
+      border-right: 0 !important;
+      border-bottom: 1px solid rgba(34,48,74,.7) !important;
+      background: rgba(11,15,23,.72) !important;
+      backdrop-filter: blur(10px);
+      z-index: 9999 !important;
+      overflow: hidden !important;
+      border-radius: 18px !important;
+    }
+  
+    /* 側邊欄名字整塊刪掉 */
+    .sidebar .brand{ display: none !important; }
+  
+    /* 目錄在左邊兩排 */
+    .sidebar .nav{
+      display: flex !important;
+      flex-direction: row !important;
+      flex-wrap: wrap !important;
+      gap: 8px !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      overflow: hidden !important;
+    }
+    .sidebar .nav a,
+    .sidebar .nav .nav-item{
+      padding: 8px 10px !important;
+      font-size: 12px !important;
+      border-radius: 999px !important;
+      white-space: nowrap !important;
+    }
+  
+    /* actions 在手機版會被 JS 搬到 body（class: mobile-actions-panel）。
+       這裡同時支援：搬出去的版本 + 留在 sidebar 的 fallback。 */
+    .actions.mobile-actions-panel,
+    body .layout .sidebar .actions{
+      position: fixed !important;
+      top: 56px !important;
+      right: 10px !important;
+      left: auto !important;
+      transform: none !important;
+
+      /* Narrow panel but still fits 2 items in one row */
+      width: 160px !important;
+      max-width: calc(100vw - 20px) !important;
+
+      /* Two buttons side-by-side on mobile */
+      display: grid !important;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+      gap: 8px !important;
+      align-items: stretch !important;
+
+      padding: 10px !important;
+      border-radius: 18px !important;
+      border: 1px solid rgba(34,48,74,.7) !important;
+      background: rgba(11,15,23,.72) !important;
+      backdrop-filter: blur(10px);
+
+      z-index: 10000 !important;
+    }
+    .actions.mobile-actions-panel .btn,
+    .actions.mobile-actions-panel select.btn,
+    .sidebar .actions .btn,
+    .sidebar .actions select.btn{
+      width: 100% !important;
+      min-width: 0 !important;
+      padding: 8px 10px !important;
+      font-size: 12px !important;
+      justify-content: center !important;
+    }
+
+    /* 避免 select 內容撐寬 */
+    .actions.mobile-actions-panel select.btn,
+    body .layout .sidebar .actions select.btn{
+      min-width: 0 !important;
+    }
+
+    /* Avoid long labels stretching the grid (e.g. "Resume PDF") */
+    .actions.mobile-actions-panel a.btn,
+    body .layout .sidebar .actions a.btn{
+      white-space: nowrap !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+    }
+  
+    /* 右上角 icons 維持在最上層 */
+    .floating-icons{
+      top: 10px !important;
+      right: 10px !important;
+      z-index: 10010 !important;
+    }
+  
+    /* 避免內容被浮層遮住 */
+    .main{
+      padding: 14px 12px !important;
+      padding-top: 140px !important;
+    }
+  
+    .container{
+      /* Let content width scale with viewport so there isn't excessive side whitespace on larger phones/tablets. */
+      width: 100% !important;
+      max-width: min(1000px, calc(100vw - 48px)) !important;
+      margin: 0 auto !important;
+      min-width: 0 !important;
+    }
+  
+    /* NYCU 課程一行三個 */
+    .classes-nycu .classes-grid{
+      grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    }
+  
+    /* 活動經歷照片縮小 1.5 倍 (約 0.667) */
+    .activities-album{
+      width: 66.666% !important;
+      max-width: 66.666% !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+  
+    /* 保險：避免任何卡片強制撐寬 */
+    .card,.item,.classes-block,.cert-row,.activities-text,.activities-album{
+      min-width: 0 !important;
+    }
+  }

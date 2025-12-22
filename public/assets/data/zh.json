@@ -140,7 +140,7 @@
         "國際級 EDA 研究競賽（NVIDIA 出題），聚焦於 Gate Sizing、Buffering 與 Cell Relocation 的增量式實體設計優化。",
         "負責演算法設計與程式實作，提升 PPA（Power, Performance, Area）品質。",
         "Beta submission 在 50% 測資中排名前三。",
-        "Final submission 所有測資皆成功通過，完整達成設計合法性與效能提升要求。"
+        "Final submission 所有測資皆成功通過，完整達成設計合法性與效能提升要求，獲得國內賽佳作。"
       ],
       "skills": [
         "EDA",
@@ -715,7 +715,7 @@
         ],
         "bullets": [
           "負責企業名單開發、建檔、聯繫與贊助洽談",
-          "與三間大型企業接洽，其中包含 Google、104 人力銀行、羅技電子",
+          "與三間大型企業接洽，其中包含 Google、104 人力銀行",
           "成功爭取總贊助金額 近新台幣 20 萬元"
         ]
       },

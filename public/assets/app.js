@@ -4,6 +4,39 @@ function $all(sel, root=document){ return Array.from(root.querySelectorAll(sel))
 const state = { skill: '__all__', cls: '__all__' };
 window.__ui = {};
 
+function updateMobileActionsMount(){
+  const actions = document.querySelector('.actions');
+  const sidebar = document.querySelector('.sidebar');
+  if(!actions || !sidebar) return;
+
+  // Remember original location so we can restore when leaving mobile width.
+  if(!actions.__home){
+    actions.__home = actions.parentNode;
+    actions.__next = actions.nextSibling;
+  }
+
+  const isMobile = window.matchMedia('(max-width: 1024px)').matches;
+  if(isMobile){
+    if(actions.parentNode !== document.body){
+      actions.classList.add('mobile-actions-panel');
+      document.body.appendChild(actions);
+    }
+  }else{
+    if(actions.parentNode === document.body){
+      actions.classList.remove('mobile-actions-panel');
+      const home = actions.__home;
+      const next = actions.__next;
+      if(home){
+        if(next && next.parentNode === home){
+          home.insertBefore(actions, next);
+        }else{
+          home.appendChild(actions);
+        }
+      }
+    }
+  }
+}
+
 function iconSvg(type){
   if(type === 'email'){
     return `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5L4 8V6l8 5 8-5v2z"/></svg>`;
@@ -551,9 +584,10 @@ function renderCourseGrid(gridEl, group){
     const targetCls = explicit || (match ? match.canonical : '');
     card.setAttribute('data-course-key', rawKey);
     card.setAttribute('data-course-target-cls', targetCls);
-    if(targetCls){
+    if (targetCls) {
       card.classList.add('has-project');
-      card.setAttribute('data-project-count', String(match.count || 1));
+      const projectCount = match ? match.count : 1;
+      card.setAttribute('data-project-count', String(projectCount));
     }
 
     const term = document.createElement('div');
@@ -752,6 +786,10 @@ function renderAboutMini(locale){
 
 async function main(){
   initLangSwitch();
+  // Ensure the language switch + resume buttons are anchored to the viewport on mobile.
+  updateMobileActionsMount();
+  window.addEventListener('resize', () => { try{ updateMobileActionsMount(); }catch(e){} });
+
   const locale = document.documentElement.getAttribute('data-locale') || 'en';
   const res = await fetch(`/assets/data/${locale}.json`, { cache: 'no-store' });
   const data = await res.json();
@@ -761,15 +799,6 @@ async function main(){
 }
 
 document.addEventListener('DOMContentLoaded', main);
-
-// global card click handler (Course Projects)
-document.addEventListener('click', (e) => {
-  const card = e.target.closest('[data-card-href]');
-  if(!card) return;
-  const href = card.getAttribute('data-card-href');
-  if(!href) return;
-  window.open(href, '_blank', 'noreferrer');
-});
 
 function githubSvg(){
   return `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -876,6 +905,15 @@ function renderMoreAbout(data){
     card.appendChild(rightText);
     overlay.appendChild(card);
     tile.appendChild(overlay);
+
+    // On click/tap: dim only the clicked tile (match "click to dim" UX).
+    // Keep nav button clicks from triggering this (they stopPropagation above).
+    tile.addEventListener('click', () => {
+      document.querySelectorAll('.more-tile.is-dimmed').forEach(t => {
+        if(t !== tile) t.classList.remove('is-dimmed');
+      });
+      tile.classList.toggle('is-dimmed');
+    });
 
     grid.appendChild(tile);
   });
