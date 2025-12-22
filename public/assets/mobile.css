@@ -105,8 +105,22 @@
     /* 右上角 icons 維持在最上層 */
     .floating-icons{
       top: 10px !important;
-      right: 10px !important;
+      right: 6px !important;
       z-index: 10010 !important;
+    }
+    .floating-icons .iconbar{
+      justify-content: flex-end !important;
+      gap: 6px !important;
+      flex-wrap: nowrap !important;
+    }
+    .floating-icons .iconbtn{
+      width: 34px !important;
+      height: 34px !important;
+      border-radius: 11px !important;
+    }
+    .floating-icons .iconbtn svg{
+      width: 16px !important;
+      height: 16px !important;
     }
   
     /* 避免內容被浮層遮住 */
