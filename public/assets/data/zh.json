@@ -1,0 +1,800 @@
+{
+  "locale": "zh",
+  "name": "黃淯琪 Meredith Huang",
+  "role": "NYCU 電機工程 | UIUC EE Exchange",
+  "headline": "聚焦 EDA Physical Design 與系統層演算法整合，具備競賽級 Incremental Placement Optimization 實作經驗與 GPU 平行化能力。",
+  "photo_src": "/assets/pics/profile.jpg",
+  "photo_alt": "profile photo",
+  "nav": [
+    {
+      "id": "about",
+      "label": "關於我"
+    },
+    {
+      "id": "skills",
+      "label": "技能"
+    },
+    {
+      "id": "competitions",
+      "label": "競賽"
+    },
+    {
+      "id": "course-projects",
+      "label": "課程專題"
+    },
+    {
+      "id": "classes",
+      "label": "課程"
+    },
+    {
+      "id": "certifications",
+      "label": "證書"
+    },
+    {
+      "id": "activities",
+      "label": "課外活動"
+    },
+    {
+      "id": "more",
+      "label": "更多"
+    },
+    {
+      "id": "contact",
+      "label": "聯絡我"
+    }
+  ],
+  "about": {
+    "title": "關於我",
+    "body": [
+      "還沒想好自我介紹",
+      "喝太醉會變猴子，因為monkey"
+    ],
+    "summary": "國立陽明交通大學電機工程學系。2025 秋季 UIUC EE 交換。研究興趣包含 EDA、Secure Systems 與 GPU 平行化。"
+  },
+  "links": [
+    {
+      "label": "Email",
+      "value": "meredith.mh24@gmail.com",
+      "href": "mailto:meredith.mh24@gmail.com"
+    },
+    {
+      "label": "GitHub",
+      "value": "kiwii424",
+      "href": "https://github.com/kiwii424"
+    },
+    {
+      "label": "LinkedIn",
+      "value": "Meredith Huang",
+      "href": "https://www.linkedin.com/in/meredith-huang/?locale=zh_TW"
+    }
+  ],
+  "projects_meta": {
+    "competitions_title": "競賽",
+    "competitions_hint": "點技能標籤可篩選對應項目，再點同一個標籤可取消。",
+    "course_projects_title": "課程專題",
+    "course_projects_hint": "點技能標籤可篩選，再點同一個標籤可取消。點擊卡片可連到 GitHub repo。"
+  },
+  "skills": {
+    "title": "技能",
+    "hint": "技能標籤與競賽、課程專題相互連動。"
+  },
+  "classes": {
+    "title": "課程",
+    "hint": "點卡片會篩選課程專題，再點一次可取消。",
+    "list": [
+      {
+        "name": "密碼工程 (Cryptography Engineering)",
+        "school": "NYCU"
+      },
+      {
+        "name": "平行程式設計實務 (Applied Parallel Programming, CUDA)",
+        "school": "UIUC"
+      },
+      {
+        "name": "演算法化市場微結構 (Algorithmic Market Microstructure)",
+        "school": "UIUC"
+      },
+      {
+        "name": "高頻交易科技 (High Frequency Trading Tech)",
+        "school": "UIUC"
+      },
+      {
+        "name": "Go 程式設計 (Go Programming)",
+        "school": "NYCU"
+      },
+      {
+        "name": "AI 無線通訊系統實驗 (AI Lab for Wireless Communication)",
+        "school": "NYCU"
+      },
+      {
+        "name": "電子設計自動化演算法與實作 (EDA Algorithms and Implementation)",
+        "school": "NYCU"
+      }
+    ]
+  },
+  "certifications": {
+    "title": "證書",
+    "hint": ""
+  },
+  "contact": {
+    "title": "聯絡我",
+    "note": ""
+  },
+  "skills_list": [
+    "EDA",
+    "CUDA",
+    "Python",
+    "C++",
+    "Go",
+    "Machine Learning",
+    "Signal Processing",
+    "Cryptography",
+    "Git",
+    "Linux"
+  ],
+  "competitions_list": [
+    {
+      "title": "ICCAD 2025 CAD Contest — Problem C",
+      "time": "2025/03–2025/09",
+      "desc": [
+        "國際級 EDA 研究競賽（NVIDIA 出題），聚焦於 Gate Sizing、Buffering 與 Cell Relocation 的增量式實體設計優化。",
+        "負責演算法設計與程式實作，提升 PPA（Power, Performance, Area）品質。",
+        "Beta submission 在 50% 測資中排名前三。",
+        "Final submission 所有測資皆成功通過，完整達成設計合法性與效能提升要求。"
+      ],
+      "skills": [
+        "EDA",
+        "Placement",
+        "Gate Sizing",
+        "Buffer Insertion",
+        "Optimization"
+      ]
+    },
+    {
+      "title": "2025 CME Group University Trading Challenge",
+      "time": "2025/09–2025/11",
+      "desc": [
+        "赴美交換期間參與國際金融衍生性商品競賽，與跨國團隊合作設計交易策略，並於 CME 平台進行模擬操作。",
+        "應用資料分析與演算法設計，提升交易決策精準度。",
+        "強化市場微結構、衍生性商品及風險控管之專業理解。"
+      ],
+      "skills": [
+        "Trading",
+        "Market Microstructure",
+        "Data Analysis",
+        "Risk Management"
+      ]
+    },
+    {
+      "title": "ACT 夢想家 ESG 影響力 商業競賽 — 大專生組",
+      "time": "2023/02–2023/05",
+      "desc": [
+        "入選團隊並與企業研譁科技合作，針對 ESG 議題提出創新解決方案。",
+        "負責市場分析、數據研究與簡報呈現。",
+        "歷經企業參訪與工作坊，培養跨領域思維與 ESG/SDGs 導向之商業提案能力。"
+      ],
+      "skills": [
+        "ESG",
+        "Market Research",
+        "Presentation",
+        "Business"
+      ]
+    }
+  ],
+  "course_projects_list": [
+    {
+      "title": "Secure File Vault: A PKI-Driven CSE System with Role-Based Access",
+      "time": "2025",
+      "desc": [
+        "以 PKI 為核心建構端到端加密檔案系統，模擬雲端 KMS，實作角色導向權限控管與金鑰註冊、驗證、撤銷流程。"
+      ],
+      "skills": [
+        "PKI",
+        "Client-Side Encryption",
+        "KMS",
+        "RBAC"
+      ],
+      "classes": [
+        "密碼工程 (Cryptography Engineering)"
+      ],
+      "link": "https://github.com/kiwii424?tab=repositories&q=Secure+File+Vault+PKI+CSE+RBAC"
+    },
+    {
+      "title": "GPU Optimization for Convolutional Neural Network Forward Pass",
+      "time": "2025",
+      "desc": [
+        "以 CUDA 實作並優化 CNN 前向傳播卷積層，逐步完成 CPU baseline、GPU kernel、input unrolling、kernel fusion 與 profiling，將運行時間降至 50 ms 以內。"
+      ],
+      "skills": [
+        "CUDA",
+        "Tiling",
+        "Kernel Fusion",
+        "Profiling"
+      ],
+      "classes": [
+        "平行程式設計實務 (Applied Parallel Programming, CUDA)"
+      ],
+      "link": "https://github.com/kiwii424?tab=repositories&q=CUDA+CNN+Forward+Pass"
+    },
+    {
+      "title": "LiveBuddy: LINE Chatbot（Golang）",
+      "time": "2024",
+      "desc": [
+        "以 Golang 開發 LINE Chatbot，整合天氣、匯率、新聞、翻譯與任務提醒；使用 goroutine 處理並行與定時推播，並實作排程與用戶資料儲存。"
+      ],
+      "skills": [
+        "Golang",
+        "Goroutine",
+        "Scheduler",
+        "APIs"
+      ],
+      "classes": [
+        "Go 程式設計 (Go Programming)"
+      ],
+      "link": "https://github.com/kiwii424?tab=repositories&q=LiveBuddy+LINE+chatbot+Go"
+    },
+    {
+      "title": "FMCW Radar AoA 估測：Matlab 後處理 + CNN",
+      "time": "2025",
+      "desc": [
+        "從 FMCW 雷達量測到 Matlab 後處理與 covariance 生成，再以 Python 訓練 CNN 進行 AoA 估測；多角度反射體辨識準確率達 93% 以上。"
+      ],
+      "skills": [
+        "FMCW",
+        "Signal Processing",
+        "CNN",
+        "AoA"
+      ],
+      "classes": [
+        "AI 無線通訊系統實驗 (AI Lab for Wireless Communication)"
+      ],
+      "link": "https://github.com/kiwii424?tab=repositories&q=FMCW+radar+AoA+CNN"
+    }
+  ],
+  "classes_list": [
+    {
+      "name": "Cryptography Engineering",
+      "detail": "PKI, CSE, RBAC design"
+    },
+    {
+      "name": "Applied Parallel Programming",
+      "detail": "CUDA kernels, profiling, performance optimization"
+    },
+    {
+      "name": "Go Programming",
+      "detail": "goroutines, scheduling, service integration"
+    },
+    {
+      "name": "AI Lab for Wireless Communication",
+      "detail": "FMCW radar, signal processing, CNN-based AoA"
+    }
+  ],
+  "certifications_list": [
+    {
+      "title": "Fundamentals of Deep Learning",
+      "issuer": "NVIDIA",
+      "issued": "2025/06",
+      "credential_id": "8L3qkP3zS5a4OqmeJ9GcoQ",
+      "url": "https://learn.nvidia.com/certificates?id=8L3qkP3zS5a4OqmeJ9GcoQ",
+      "icon": "nvidia",
+      "icon_img": "/assets/pics/nvidia.jpg"
+    }
+  ],
+  "socials": [
+    {
+      "type": "instagram",
+      "href": "https://www.instagram.com/meredith.4xxiv/",
+      "label": "Instagram"
+    },
+    {
+      "type": "linkedin",
+      "href": "https://www.linkedin.com/in/meredith-huang/?locale=zh_TW",
+      "label": "LinkedIn"
+    },
+    {
+      "type": "github",
+      "href": "https://github.com/kiwii424",
+      "label": "GitHub"
+    },
+    {
+      "type": "email",
+      "href": "mailto:meredith.mh24@gmail.com",
+      "label": "Email"
+    }
+  ],
+  "ui": {
+    "resume_button": "履歷",
+    "active_filters": "目前篩選",
+    "all": "全部",
+    "all_skills": "全部技能",
+    "all_classes": "全部課程",
+    "form_name": "姓名",
+    "form_email": "信箱",
+    "form_message": "訊息",
+    "form_send": "送出",
+    "empty_competitions": "目前沒有符合此技能的競賽項目。",
+    "empty_course": "目前沒有符合篩選條件的課程專題。",
+    "about_col_left": "照片",
+    "about_col_right": "自我介紹",
+    "hero_about_title": "關於我",
+    "hero_resume": "履歷",
+    "hero_competitions": "競賽",
+    "hero_course_projects": "課程專題",
+    "hero_classes": "課程",
+    "hero_certs": "證書",
+    "hero_activities": "課外活動",
+    "hero_contact": "聯絡我"
+  },
+  "photo": {
+    "href": "/assets/profile.svg"
+  },
+  "projects": {
+    "title": "課程專題 Course Projects",
+    "hint": "點擊卡片可連到 GitHub repo。",
+    "items": [
+      {
+        "name": "Secure File Vault: A PKI-Driven CSE System with Role-Based Access",
+        "when": "2025",
+        "class": "密碼工程 (Cryptography Engineering)",
+        "skills": [
+          "PKI",
+          "Client-Side Encryption",
+          "KMS",
+          "RBAC"
+        ],
+        "description": "以 PKI 為核心建構端到端加密檔案系統，模擬雲端 KMS，實作角色導向權限控管與金鑰註冊、驗證、撤銷流程。",
+        "links": [
+          {
+            "label": "GitHub Repo",
+            "href": "https://github.com/kiwii424?tab=repositories&q=Secure+File+Vault+PKI+CSE+RBAC"
+          }
+        ]
+      },
+      {
+        "name": "GPU Optimization for Convolutional Neural Network Forward Pass",
+        "when": "2025",
+        "class": "Applied Parallel Programming (CUDA)",
+        "skills": [
+          "CUDA",
+          "Tiling",
+          "Kernel Fusion",
+          "Profiling"
+        ],
+        "description": "以 CUDA 實作並優化 CNN 前向傳播卷積層，逐步完成 CPU baseline、GPU kernel、input unrolling、kernel fusion 與 profiling，將運行時間降至 50 ms 以內。",
+        "links": [
+          {
+            "label": "GitHub Repo",
+            "href": "https://github.com/kiwii424?tab=repositories&q=CUDA+CNN+Forward+Pass"
+          }
+        ]
+      },
+      {
+        "name": "LiveBuddy: LINE Chatbot（Golang）",
+        "when": "2024",
+        "class": "Go 程式設計 (Go Programming)",
+        "skills": [
+          "Golang",
+          "Goroutine",
+          "Scheduler",
+          "APIs"
+        ],
+        "description": "以 Golang 開發 LINE Chatbot，整合天氣、匯率、新聞、翻譯與任務提醒；使用 goroutine 處理並行與定時推播，並實作排程與用戶資料儲存。",
+        "links": [
+          {
+            "label": "GitHub Repo",
+            "href": "https://github.com/kiwii424?tab=repositories&q=LiveBuddy+LINE+chatbot+Go"
+          }
+        ]
+      },
+      {
+        "name": "FMCW Radar AoA 估測：Matlab 後處理 + CNN",
+        "when": "2025",
+        "class": "AI 無線通訊系統實驗 (AI Lab for Wireless Communication)",
+        "skills": [
+          "FMCW",
+          "Signal Processing",
+          "CNN",
+          "AoA"
+        ],
+        "description": "從 FMCW 雷達量測到 Matlab 後處理與 covariance 生成，再以 Python 訓練 CNN 進行 AoA 估測；多角度反射體辨識準確率達 93% 以上。",
+        "links": [
+          {
+            "label": "GitHub Repo",
+            "href": "https://github.com/kiwii424?tab=repositories&q=FMCW+radar+AoA+CNN"
+          }
+        ]
+      }
+    ]
+  },
+  "classes_groups": {
+    "nycu": {
+      "title": "NYCU 課程",
+      "subtitle": "國立陽明交通大學",
+      "theme": "nycu",
+      "items": [
+        {
+          "term": "110學年度暑期",
+          "name": "資訊管理概論",
+          "key": "資訊管理概論",
+          "category": "other"
+        },
+        {
+          "term": "111學年度第1學期",
+          "name": "微積分甲",
+          "key": "微積分甲",
+          "category": "basic"
+        },
+        {
+          "term": "111學年度第1學期",
+          "name": "物理榮譽班",
+          "key": "物理榮譽班",
+          "category": "basic"
+        },
+        {
+          "term": "111學年度第1學期",
+          "name": "計算機概論與程式設計",
+          "key": "計算機概論與程式設計",
+          "category": "code"
+        },
+        {
+          "term": "111學年度第1學期",
+          "name": "邏輯設計",
+          "key": "邏輯設計",
+          "category": "basic"
+        },
+        {
+          "term": "111學年度第1學期",
+          "name": "法文(一)",
+          "key": "法文",
+          "category": "other"
+        },
+        {
+          "term": "111學年度第1學期",
+          "name": "生醫工程導論",
+          "key": "生醫工程導論",
+          "category": "other"
+        },
+        {
+          "term": "111學年度第1學期",
+          "name": "財務管理",
+          "key": "財務管理",
+          "category": "econ"
+        },
+        {
+          "term": "111學年度第1學期",
+          "name": "演算法導論",
+          "key": "演算法導論",
+          "category": "other"
+        },
+        {
+          "term": "111學年度第1學期",
+          "name": "電子學",
+          "key": "電子學",
+          "category": "basic"
+        },
+        {
+          "term": "111學年度第1學期",
+          "name": "數位電路與系統",
+          "key": "數位電路與系統",
+          "category": "basic"
+        },
+        {
+          "term": "111學年度第1學期",
+          "name": "電磁學",
+          "key": "電磁學",
+          "category": "basic"
+        },
+        {
+          "term": "113學年度第1學期",
+          "name": "訊號與系統",
+          "key": "訊號與系統",
+          "category": "basic"
+        },
+        {
+          "term": "113學年度第1學期",
+          "name": "電子實驗",
+          "key": "電子實驗",
+          "category": "other"
+        },
+        {
+          "term": "111學年度第2學期",
+          "name": "線性代數",
+          "key": "線性代數",
+          "category": "basic"
+        },
+        {
+          "term": "111學年度第2學期",
+          "name": "機率",
+          "key": "機率",
+          "category": "basic"
+        },
+        {
+          "term": "111學年度第2學期",
+          "name": "離散數學",
+          "key": "離散數學",
+          "category": "basic"
+        },
+        {
+          "term": "111學年度第2學期",
+          "name": "物件導向程式設計",
+          "key": "物件導向程式設計",
+          "category": "code"
+        },
+        {
+          "term": "111學年度第2學期",
+          "name": "國際政治經濟學",
+          "key": "國際政治經濟學",
+          "category": "econ"
+        },
+        {
+          "term": "111學年度第2學期",
+          "name": "經濟學",
+          "key": "經濟學",
+          "category": "other"
+        },
+        {
+          "term": "111學年度第2學期",
+          "name": "統計學",
+          "key": "統計學",
+          "category": "other"
+        },
+        {
+          "term": "111學年度第2學期",
+          "name": "計算機組織",
+          "key": "計算機組織",
+          "category": "code"
+        },
+        {
+          "term": "111學年度第2學期",
+          "name": "人工智慧導論",
+          "key": "人工智慧導論",
+          "category": "code"
+        },
+        {
+          "term": "111學年度第2學期",
+          "name": "超大型積體電路設計導論",
+          "key": "超大型積體電路設計導論",
+          "category": "basic"
+        },
+        {
+          "term": "111學年度第2學期",
+          "name": "Go 程式設計",
+          "key": "Go 程式設計",
+          "category": "code"
+        },
+        {
+          "term": "111學年度暑期",
+          "name": "電路學",
+          "key": "電路學",
+          "category": "basic"
+        },
+        {
+          "term": "112學年度第1學期",
+          "name": "資料結構",
+          "key": "資料結構",
+          "category": "code"
+        },
+        {
+          "term": "112學年度第1學期",
+          "name": "電子學",
+          "key": "電子學",
+          "category": "basic"
+        },
+        {
+          "term": "112學年度第1學期",
+          "name": "微分方程(英文班)",
+          "key": "微分方程",
+          "category": "basic"
+        },
+        {
+          "term": "112學年度第1學期",
+          "name": "電子實驗",
+          "key": "電子實驗",
+          "category": "other"
+        },
+        {
+          "term": "113學年度第2學期",
+          "name": "AI 無線通訊系統實驗",
+          "key": "AI 無線通訊系統實驗",
+          "category": "code"
+        },
+        {
+          "term": "113學年度第2學期",
+          "name": "電子設計自動化演算法與實作",
+          "key": "電子設計自動化演算法與實作",
+          "category": "other"
+        },
+        {
+          "term": "113學年度第2學期",
+          "name": "高科技公司個案研究",
+          "key": "高科技公司個案研究",
+          "category": "other"
+        },
+        {
+          "term": "113學年度第2學期",
+          "name": "數位經濟與反托拉斯法",
+          "key": "數位經濟與反托拉斯法",
+          "category": "econ"
+        },
+        {
+          "term": "113學年度第2學期",
+          "name": "密碼工程",
+          "key": "密碼工程",
+          "category": "other"
+        },
+        {
+          "term": "113學年度第2學期",
+          "name": "醫學工程導論",
+          "key": "醫學工程導論",
+          "category": "other"
+        },
+        {
+          "term": "113學年度第2學期",
+          "name": "經濟學(二)",
+          "key": "經濟學",
+          "category": "other"
+        }
+      ]
+    },
+    "uiuc": {
+      "title": "UIUC 課程",
+      "subtitle": "University of Illinois Urbana-Champaign",
+      "theme": "uiuc",
+      "items": [
+        {
+          "term": "2025 Fall",
+          "name": "ECE 408 平行程式設計實務 (Applied Parallel Programming)",
+          "key": "ECE 408 平行程式設計實務",
+          "category": "code"
+        },
+        {
+          "term": "2025 Fall",
+          "name": "FIN 556 演算法化市場微結構 (Algorithmic Market Microstructure)",
+          "key": "FIN 556 演算法化市場微結構",
+          "category": "econ"
+        },
+        {
+          "term": "2025 Fall",
+          "name": "IE 421 高頻交易科技 (High Frequency Trading Technology)",
+          "key": "IE 421 高頻交易科技",
+          "category": "econ"
+        }
+      ]
+    }
+  },
+  "more_about": {
+    "title": "更多我",
+    "hint": "滑鼠移到照片上或點擊，即可顯示字卡。",
+    "items": [
+      {
+        "label": "旅遊",
+        "imgs": [
+          "/assets/pics/travel_1.JPEG",
+          "/assets/pics/travel_2.HEIC",
+          "/assets/pics/travel_3.JPG"
+        ]
+      },
+      {
+        "label": "衝浪",
+        "imgs": [
+          "/assets/pics/surf_1.JPG",
+          "/assets/pics/surf_2.jpg"
+        ]
+      },
+      {
+        "label": "潛水",
+        "imgs": [
+          "/assets/pics/dive_1.PNG",
+          "/assets/pics/dive_2.PNG",
+          "/assets/pics/dive_3.PNG"
+        ]
+      },
+      {
+        "label": "跳舞",
+        "imgs": [
+          "/assets/pics/dance_1.jpg",
+          "/assets/pics/dance_2.JPG",
+          "/assets/pics/dance_3.JPG"
+        ]
+      }
+    ],
+    "cta": "更多內容"
+  },
+  "activities": {
+    "hint": "點選上方目錄切換內容",
+    "tabs": [
+      {
+        "key": "hackathon",
+        "label": "新竹 × 清交梅竹黑客松",
+        "role": "公關部員",
+        "time": "2022/03 – 2023/11",
+        "imgs": [
+          "/assets/pics/not_yet.jpg.webp",
+          "/assets/pics/not_yet.jpg.webp",
+          "/assets/pics/not_yet.jpg.webp"
+        ],
+        "bullets": [
+          "負責企業名單開發、建檔、聯繫與贊助洽談",
+          "與三間大型企業接洽，其中包含 Google、104 人力銀行、羅技電子",
+          "成功爭取總贊助金額 近新台幣 20 萬元"
+        ]
+      },
+      {
+        "key": "eea_hr",
+        "label": "陽明交通大學電機系學會",
+        "role": "人力部員",
+        "time": "2023/07 – 2024/07",
+        "imgs": [
+          "/assets/pics/not_yet.jpg.webp",
+          "/assets/pics/not_yet.jpg.webp",
+          "/assets/pics/not_yet.jpg.webp"
+        ],
+        "bullets": [
+          "擔任一日營、電機週等活動招集人，負責人力調度與活動流程規劃",
+          "與多部門協作溝通，確保專案進度如期完成，培養多任務控管與穩定執行能力"
+        ]
+      },
+      {
+        "key": "one_day",
+        "label": "陽明交通大學電機系一日營",
+        "role": "副招集人",
+        "time": "2023/10 – 2024/01",
+        "imgs": [
+          "/assets/pics/not_yet.jpg.webp",
+          "/assets/pics/not_yet.jpg.webp",
+          "/assets/pics/not_yet.jpg.webp"
+        ],
+        "bullets": [
+          "對外與系辦及三所高中學校進行溝通協調、對內統籌工人分工與活動流程",
+          "強化活動執行與突發狀況應對能力"
+        ]
+      },
+      {
+        "key": "xmas_ball",
+        "label": "清交九系聯合耶誕舞會",
+        "role": "公關部長",
+        "time": "2023/04 – 2023/12",
+        "imgs": [
+          "/assets/pics/not_yet.jpg.webp",
+          "/assets/pics/not_yet.jpg.webp",
+          "/assets/pics/not_yet.jpg.webp"
+        ],
+        "bullets": [
+          "主責企業開發與贊助接洽，對接近 20 家企業",
+          "獲得總價值約新台幣 3 萬元之贊助資源",
+          "活動吸引近 500 位學生參與，回饋良好"
+        ]
+      },
+      {
+        "key": "badminton_manager",
+        "label": "陽明交通大學羽球校隊",
+        "role": "球隊經理",
+        "time": "2022/09 – 2025/07",
+        "imgs": [
+          "/assets/pics/not_yet.jpg.webp",
+          "/assets/pics/not_yet.jpg.webp",
+          "/assets/pics/not_yet.jpg.webp"
+        ],
+        "bullets": [
+          "處理球隊內勤行政事務與長期追蹤工作，負責比賽資料整理、網站管理與廠商聯繫",
+          "強化細節控管與穩定行政執行能力"
+        ]
+      },
+      {
+        "key": "ee_camp",
+        "label": "電機營",
+        "role": "活動組員",
+        "time": "2022/11 ~ 2023/08",
+        "imgs": [
+          "/assets/pics/not_yet.jpg.webp",
+          "/assets/pics/not_yet.jpg.webp",
+          "/assets/pics/not_yet.jpg.webp"
+        ],
+        "bullets": [
+          "發揮創意思維，提升團隊合作與活動設計能力",
+          "約120位高中生參與，其中我發想的一項活動成為最後受歡迎者"
+        ]
+      }
+    ]
+  }
+}

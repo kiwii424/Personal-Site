@@ -1,0 +1,916 @@
+{
+  "locale": "en",
+  "name": "Meredith Huang",
+  "role": "NYCU EE | UIUC EE Exchange",
+  "headline": "Focused on EDA Physical Design and system-level algorithm integration, with contest-grade incremental optimization experience and GPU acceleration.",
+  "photo_src": "/assets/pics/profile.jpg",
+  "photo_alt": "profile photo",
+  "nav": [
+    {
+      "id": "about",
+      "label": "About"
+    },
+    {
+      "id": "skills",
+      "label": "Skills"
+    },
+    {
+      "id": "competitions",
+      "label": "Competitions"
+    },
+    {
+      "id": "course-projects",
+      "label": "Course Projects"
+    },
+    {
+      "id": "classes",
+      "label": "Classes"
+    },
+    {
+      "id": "certifications",
+      "label": "Certifications"
+    },
+    {
+      "id": "activities",
+      "label": "Activities"
+    },
+    {
+      "id": "more",
+      "label": "More"
+    },
+    {
+      "id": "contact",
+      "label": "Get in touch"
+    }
+  ],
+  "about": {
+    "title": "About",
+    "body": [
+      "Intro TBD.",
+      "My grandfather was terrible, but when i had my first child, he became a great grandfather."
+    ],
+    "summary": "NYCU Electrical Engineering (B.S.). UIUC EE exchange student (Fall 2025). Interested in EDA, secure systems, and GPU acceleration."
+  },
+  "links": [
+    {
+      "label": "Email",
+      "value": "meredith.mh24@gmail.com",
+      "href": "mailto:meredith.mh24@gmail.com"
+    },
+    {
+      "label": "GitHub",
+      "value": "kiwii424",
+      "href": "https://github.com/kiwii424"
+    },
+    {
+      "label": "LinkedIn",
+      "value": "Meredith Huang",
+      "href": "https://www.linkedin.com/in/meredith-huang/?locale=zh_TW"
+    }
+  ],
+  "projects_meta": {
+    "competitions_title": "Competitions",
+    "competitions_hint": "Click a skill tag to filter. Click the same tag again to clear.",
+    "course_projects_title": "Course Projects",
+    "course_projects_hint": "Click a skill tag to filter. Click the same tag again to clear. Click a card to open the GitHub repo."
+  },
+  "skills": {
+    "title": "Skills",
+    "hint": "Skills are linked with competitions and course projects."
+  },
+  "classes": {
+    "title": "Classes",
+    "hint": "Click a course card to filter Course Projects.",
+    "list": [
+      {
+        "name": "Cryptography Engineering",
+        "school": "NYCU"
+      },
+      {
+        "name": "Applied Parallel Programming (CUDA)",
+        "school": "UIUC"
+      },
+      {
+        "name": "Go Programming",
+        "school": "NYCU"
+      },
+      {
+        "name": "AI Lab for Wireless Communication",
+        "school": "NYCU"
+      },
+      {
+        "name": "EDA Algorithms and Implementation",
+        "school": "NYCU"
+      }
+    ]
+  },
+  "certifications": {
+    "title": "Certifications",
+    "hint": ""
+  },
+  "contact": {
+    "title": "Get in touch",
+    "note": ""
+  },
+  "skills_list": [
+    "EDA",
+    "CUDA",
+    "Python",
+    "C++",
+    "Go",
+    "Machine Learning",
+    "Signal Processing",
+    "Cryptography",
+    "Git",
+    "Linux"
+  ],
+  "competitions_list": [
+    {
+      "title": "ICCAD 2025 CAD Contest — Problem C",
+      "time": "Mar 2025 – Sep 2025",
+      "desc": [
+        "International EDA research contest (problem by NVIDIA) on incremental physical design optimization: gate sizing, buffering, and cell relocation.",
+        "Designed and implemented algorithms to improve PPA (Power, Performance, Area).",
+        "Beta submission ranked top-3 on 50% of the benchmark set.",
+        "Final submission passed all benchmarks and met legality and performance requirements."
+      ],
+      "skills": [
+        "EDA",
+        "Placement",
+        "Gate Sizing",
+        "Buffer Insertion",
+        "Optimization"
+      ]
+    },
+    {
+      "title": "CME Group University Trading Challenge",
+      "time": "Sep 2025 – Nov 2025",
+      "desc": [
+        "Built and tested trading strategies with an international team on CME’s simulated environment during exchange at UIUC.",
+        "Applied data analysis and algorithm design to improve decision quality.",
+        "Strengthened understanding of market microstructure, derivatives, and risk management."
+      ],
+      "skills": [
+        "Trading",
+        "Market Microstructure",
+        "Data Analysis",
+        "Risk Management"
+      ]
+    },
+    {
+      "title": "ACT Dreamer ESG Impact Business Competition (College Track)",
+      "time": "Feb 2023 – May 2023",
+      "desc": [
+        "Selected team collaborated with an enterprise partner to propose an ESG-focused solution.",
+        "Led market analysis, data research, and slide preparation.",
+        "Developed cross-disciplinary thinking through workshops and company visits."
+      ],
+      "skills": [
+        "ESG",
+        "Market Research",
+        "Presentation",
+        "Business"
+      ]
+    }
+  ],
+  "course_projects_list": [
+    {
+      "title": "Secure File Vault: A PKI-Driven CSE System with Role-Based Access",
+      "time": "2025",
+      "desc": [
+        "Built an end-to-end encrypted file vault with PKI-based identity, simulated KMS, and role-based access control with key registration, verification, and revocation workflows."
+      ],
+      "skills": [
+        "PKI",
+        "Client-Side Encryption",
+        "KMS",
+        "RBAC"
+      ],
+      "classes": [
+        "Cryptography Engineering"
+      ],
+      "link": "https://github.com/kiwii424?tab=repositories&q=Secure+File+Vault+PKI+CSE+RBAC"
+    },
+    {
+      "title": "GPU Optimization for CNN Forward Pass",
+      "time": "2025",
+      "desc": [
+        "Optimized a CNN convolution forward pass on GPU from CPU baseline to optimized kernels, including input unrolling, kernel fusion, and multi-stage profiling; reduced runtime below 50 ms."
+      ],
+      "skills": [
+        "CUDA",
+        "Tiling",
+        "Kernel Fusion",
+        "Profiling"
+      ],
+      "classes": [
+        "Applied Parallel Programming (CUDA)"
+      ],
+      "link": "https://github.com/kiwii424?tab=repositories&q=CUDA+CNN+Forward+Pass"
+    },
+    {
+      "title": "LiveBuddy: LINE Chatbot in Go",
+      "time": "2024",
+      "desc": [
+        "Developed a LINE chatbot integrating weather, FX, news, translation, and reminders. Used goroutines for concurrency and implemented scheduling and user data storage."
+      ],
+      "skills": [
+        "Golang",
+        "Goroutine",
+        "Scheduler",
+        "APIs"
+      ],
+      "classes": [
+        "Go Programming"
+      ],
+      "link": "https://github.com/kiwii424?tab=repositories&q=LiveBuddy+LINE+chatbot+Go"
+    },
+    {
+      "title": "AoA Estimation with FMCW Radar + CNN",
+      "time": "2025",
+      "desc": [
+        "Collected FMCW radar measurements, generated covariance matrices, and trained a CNN for AoA estimation. Achieved >93% accuracy on multi-angle reflector detection."
+      ],
+      "skills": [
+        "FMCW",
+        "Signal Processing",
+        "CNN",
+        "AoA"
+      ],
+      "classes": [
+        "AI Lab for Wireless Communication"
+      ],
+      "link": "https://github.com/kiwii424?tab=repositories&q=FMCW+radar+AoA+CNN"
+    }
+  ],
+  "classes_list": [
+    {
+      "name": "Cryptography Engineering",
+      "detail": "Secure systems, PKI, CSE design"
+    },
+    {
+      "name": "Applied Parallel Programming",
+      "detail": "CUDA kernels, profiling, performance optimization"
+    },
+    {
+      "name": "Go Programming",
+      "detail": "Concurrency with goroutines, scheduling, integration"
+    },
+    {
+      "name": "AI Lab for Wireless Communication",
+      "detail": "FMCW radar, signal processing, CNN based AoA"
+    }
+  ],
+  "certifications_list": [
+    {
+      "title": "Fundamentals of Deep Learning",
+      "issuer": "NVIDIA",
+      "issued": "Jun 2025",
+      "credential_id": "8L3qkP3zS5a4OqmeJ9GcoQ",
+      "url": "https://learn.nvidia.com/certificates?id=8L3qkP3zS5a4OqmeJ9GcoQ",
+      "icon": "nvidia",
+      "icon_img": "/assets/pics/nvidia.jpg"
+    }
+  ],
+  "socials": [
+    {
+      "type": "instagram",
+      "href": "https://www.instagram.com/meredith.4xxiv/",
+      "label": "Instagram"
+    },
+    {
+      "type": "linkedin",
+      "href": "https://www.linkedin.com/in/meredith-huang/?locale=zh_TW",
+      "label": "LinkedIn"
+    },
+    {
+      "type": "github",
+      "href": "https://github.com/kiwii424",
+      "label": "GitHub"
+    },
+    {
+      "type": "email",
+      "href": "mailto:meredith.mh24@gmail.com",
+      "label": "Email"
+    }
+  ],
+  "ui": {
+    "resume_button": "Resume",
+    "active_filters": "Active filters",
+    "all": "All",
+    "all_skills": "All skills",
+    "all_classes": "All classes",
+    "form_name": "Name",
+    "form_email": "Email",
+    "form_message": "Message",
+    "form_send": "Send",
+    "empty_competitions": "No items match this skill filter.",
+    "empty_course": "No course projects match current filters.",
+    "about_col_left": "Photo",
+    "about_col_right": "Intro",
+    "hero_about_title": "About",
+    "hero_resume": "View Resume",
+    "hero_competitions": "Competitions",
+    "hero_course_projects": "Course Projects",
+    "hero_classes": "See Classes",
+    "hero_certs": "See Certifications",
+    "hero_activities": "Activities",
+    "hero_contact": "Get in touch"
+  },
+  "photo": {
+    "href": "/assets/pics/profile.jpg"
+  },
+  "projects": {
+    "title": "Course Projects",
+    "hint": "Each card links to the GitHub repo search under your profile. Replace with the exact repo URL anytime.",
+    "items": [
+      {
+        "name": "Secure File Vault: A PKI-Driven CSE System with Role-Based Access",
+        "when": "2025",
+        "class": "Cryptography Engineering",
+        "skills": [
+          "PKI",
+          "Client-Side Encryption",
+          "KMS",
+          "RBAC"
+        ],
+        "description": "Built an end-to-end encrypted file vault with PKI-based identity, simulated KMS, and role-based access control with key registration, verification, and revocation workflows.",
+        "links": [
+          {
+            "label": "GitHub Repo",
+            "href": "https://github.com/kiwii424?tab=repositories&q=Secure+File+Vault+PKI+CSE+RBAC"
+          }
+        ]
+      },
+      {
+        "name": "GPU Optimization for CNN Forward Pass",
+        "when": "2025",
+        "class": "Applied Parallel Programming (CUDA)",
+        "skills": [
+          "CUDA",
+          "Tiling",
+          "Kernel Fusion",
+          "Profiling"
+        ],
+        "description": "Optimized a CNN convolution forward pass on GPU from CPU baseline to optimized kernels, including input unrolling, kernel fusion, and multi-stage profiling; reduced runtime below 50 ms.",
+        "links": [
+          {
+            "label": "GitHub Repo",
+            "href": "https://github.com/kiwii424?tab=repositories&q=CUDA+CNN+Forward+Pass"
+          }
+        ]
+      },
+      {
+        "name": "LiveBuddy: LINE Chatbot in Go",
+        "when": "2024",
+        "class": "Go Programming",
+        "skills": [
+          "Golang",
+          "Goroutine",
+          "Scheduler",
+          "APIs"
+        ],
+        "description": "Developed a LINE chatbot integrating weather, FX, news, translation, and reminders. Used goroutines for concurrency and implemented scheduling and user data storage.",
+        "links": [
+          {
+            "label": "GitHub Repo",
+            "href": "https://github.com/kiwii424?tab=repositories&q=LiveBuddy+LINE+chatbot+Go"
+          }
+        ]
+      },
+      {
+        "name": "AoA Estimation with FMCW Radar + CNN",
+        "when": "2025",
+        "class": "AI Lab for Wireless Communication",
+        "skills": [
+          "FMCW",
+          "Signal Processing",
+          "CNN",
+          "AoA"
+        ],
+        "description": "Collected FMCW radar measurements, generated covariance matrices, and trained a CNN for AoA estimation. Achieved >93% accuracy on multi-angle reflector detection.",
+        "links": [
+          {
+            "label": "GitHub Repo",
+            "href": "https://github.com/kiwii424?tab=repositories&q=FMCW+radar+AoA+CNN"
+          }
+        ]
+      }
+    ]
+  },
+  "classes_groups": {
+    "nycu": {
+      "title": "NYCU Courses",
+      "subtitle": "National Yang Ming Chiao Tung University",
+      "theme": "nycu",
+      "items": [
+        {
+          "term": "AY110 Summer",
+          "name": "Introduction to Information Management",
+          "key": "Introduction to Information Management",
+          "category": "other"
+        },
+        {
+          "term": "AY111 Fall",
+          "name": "Calculus A (I)",
+          "key": "Calculus A",
+          "category": "basic"
+        },
+        {
+          "term": "AY111 Fall",
+          "name": "Physics (I) (Honors)",
+          "key": "Physics",
+          "category": "basic"
+        },
+        {
+          "term": "AY111 Fall",
+          "name": "Introduction to Computers and Programming",
+          "key": "Introduction to Computers and Programming",
+          "category": "code"
+        },
+        {
+          "term": "AY111 Fall",
+          "name": "Logic Design",
+          "key": "Logic Design",
+          "category": "basic"
+        },
+        {
+          "term": "AY111 Fall",
+          "name": "French (I)",
+          "key": "French",
+          "category": "other"
+        },
+        {
+          "term": "AY111 Fall",
+          "name": "Introduction of Biomedical Engineering",
+          "key": "Introduction of Biomedical Engineering",
+          "category": "other"
+        },
+        {
+          "term": "AY111 Fall",
+          "name": "Leadership",
+          "key": "Leadership",
+          "category": "other"
+        },
+        {
+          "term": "AY111 Fall",
+          "name": "Financial Management",
+          "key": "Financial Management",
+          "category": "other"
+        },
+        {
+          "term": "AY111 Fall",
+          "name": "Introduction to Algorithms",
+          "key": "Introduction to Algorithms",
+          "category": "code"
+        },
+        {
+          "term": "AY111 Fall",
+          "name": "Electronics (II)",
+          "key": "Electronics",
+          "category": "basic"
+        },
+        {
+          "term": "AY111 Fall",
+          "name": "Digital Circuits and Systems",
+          "key": "Digital Circuits and Systems",
+          "category": "basic"
+        },
+        {
+          "term": "AY111 Fall",
+          "name": "Electromagnetics",
+          "key": "Electromagnetics",
+          "category": "basic"
+        },
+        {
+          "term": "AY113 Fall",
+          "name": "Signals and Systems",
+          "key": "Signals and Systems",
+          "category": "basic"
+        },
+        {
+          "term": "AY113 Fall",
+          "name": "Electronics Lab. (II)",
+          "key": "Electronics Lab.",
+          "category": "basic"
+        },
+        {
+          "term": "AY111 Spring",
+          "name": "Calculus A (II)",
+          "key": "Calculus A",
+          "category": "basic"
+        },
+        {
+          "term": "AY111 Spring",
+          "name": "Linear Algebra",
+          "key": "Linear Algebra",
+          "category": "basic"
+        },
+        {
+          "term": "AY111 Spring",
+          "name": "Probability",
+          "key": "Probability",
+          "category": "basic"
+        },
+        {
+          "term": "AY111 Spring",
+          "name": "Discrete Mathematics",
+          "key": "Discrete Mathematics",
+          "category": "basic"
+        },
+        {
+          "term": "AY111 Spring",
+          "name": "Object-Oriented Programming",
+          "key": "Object-Oriented Programming",
+          "category": "code"
+        },
+        {
+          "term": "AY111 Spring",
+          "name": "Service Learning I",
+          "key": "Service Learning I",
+          "category": "other"
+        },
+        {
+          "term": "AY111 Spring",
+          "name": "Moral Reasoning",
+          "key": "Moral Reasoning",
+          "category": "other"
+        },
+        {
+          "term": "AY111 Spring",
+          "name": "Physics (II) (Honors)",
+          "key": "Physics",
+          "category": "basic"
+        },
+        {
+          "term": "AY111 Spring",
+          "name": "International Political Economy",
+          "key": "International Political Economy",
+          "category": "econ"
+        },
+        {
+          "term": "AY111 Spring",
+          "name": "Economics",
+          "key": "Economics",
+          "category": "econ"
+        },
+        {
+          "term": "AY111 Spring",
+          "name": "Statistics",
+          "key": "Statistics",
+          "category": "other"
+        },
+        {
+          "term": "AY111 Spring",
+          "name": "Computer Organization",
+          "key": "Computer Organization",
+          "category": "code"
+        },
+        {
+          "term": "AY111 Spring",
+          "name": "Introduction to Artificial Intelligence",
+          "key": "Introduction to Artificial Intelligence",
+          "category": "code"
+        },
+        {
+          "term": "AY111 Spring",
+          "name": "Introduction to VLSI Design",
+          "key": "Introduction to VLSI Design",
+          "category": "other"
+        },
+        {
+          "term": "AY111 Spring",
+          "name": "Seminar",
+          "key": "Seminar",
+          "category": "other"
+        },
+        {
+          "term": "AY111 Spring",
+          "name": "The Rise and Fall of the Great Powers",
+          "key": "The Rise and Fall of the Great Powers",
+          "category": "other"
+        },
+        {
+          "term": "AY111 Spring",
+          "name": "Class Piano",
+          "key": "Class Piano",
+          "category": "other"
+        },
+        {
+          "term": "AY111 Spring",
+          "name": "Go Programming",
+          "key": "Go Programming",
+          "project_class": "Go Programming",
+          "category": "code"
+        },
+        {
+          "term": "AY111 Spring",
+          "name": "Logic and Thinking",
+          "key": "Logic and Thinking",
+          "category": "other"
+        },
+        {
+          "term": "AY111 Spring",
+          "name": "Special Project on Electrical Engineering (I)",
+          "key": "Special Project on Electrical Engineering",
+          "category": "other"
+        },
+        {
+          "term": "AY111 Summer",
+          "name": "Circuit Theory",
+          "key": "Circuit Theory",
+          "category": "basic"
+        },
+        {
+          "term": "AY112 Fall",
+          "name": "Data Structure",
+          "key": "Data Structure",
+          "category": "code"
+        },
+        {
+          "term": "AY112 Fall",
+          "name": "Numerical Analysis",
+          "key": "Numerical Analysis",
+          "category": "other"
+        },
+        {
+          "term": "AY112 Fall",
+          "name": "Lab on Python for Data Science and Machine Learning",
+          "key": "Lab on Python for Data Science and Machine Learning",
+          "category": "code"
+        },
+        {
+          "term": "AY112 Fall",
+          "name": "Electronics (I)",
+          "key": "Electronics",
+          "category": "basic"
+        },
+        {
+          "term": "AY112 Fall",
+          "name": "Differential Equation",
+          "key": "Differential Equation",
+          "category": "basic"
+        },
+        {
+          "term": "AY112 Fall",
+          "name": "Electronics Lab. (I)",
+          "key": "Electronics Lab.",
+          "category": "basic"
+        },
+        {
+          "term": "AY112 Fall",
+          "name": "Service Learning II",
+          "key": "Service Learning II",
+          "category": "other"
+        },
+        {
+          "term": "AY112 Summer",
+          "name": "Indigenous Mythos & Contemporary Art",
+          "key": "Indigenous Mythos & Contemporary Art",
+          "category": "other"
+        },
+        {
+          "term": "AY112 Summer",
+          "name": "Musicianship",
+          "key": "Musicianship",
+          "category": "other"
+        },
+        {
+          "term": "AY113 Spring",
+          "name": "AI Lab for Wireless Communication",
+          "key": "AI Lab for Wireless Communication",
+          "project_class": "AI Lab for Wireless Communication",
+          "category": "code"
+        },
+        {
+          "term": "AY113 Spring",
+          "name": "Electronic Design Automation Algorithms and Implementation",
+          "key": "Electronic Design Automation Algorithms and Implementation",
+          "category": "code"
+        },
+        {
+          "term": "AY113 Spring",
+          "name": "Robot Technology in Movies and Life",
+          "key": "Robot Technology in Movies and Life",
+          "category": "other"
+        },
+        {
+          "term": "AY113 Spring",
+          "name": "Case Studies in High Tech Companies",
+          "key": "Case Studies in High Tech Companies",
+          "category": "other"
+        },
+        {
+          "term": "AY113 Spring",
+          "name": "Digital Economy and Antitrust Law",
+          "key": "Digital Economy and Antitrust Law",
+          "category": "econ"
+        },
+        {
+          "term": "AY113 Spring",
+          "name": "Cryptography Engineering",
+          "key": "Cryptography Engineering",
+          "project_class": "Cryptography Engineering",
+          "category": "other"
+        },
+        {
+          "term": "AY113 Spring",
+          "name": "Introduction to Electrical Power Engineering",
+          "key": "Introduction to Electrical Power Engineering",
+          "category": "other"
+        },
+        {
+          "term": "AY113 Spring",
+          "name": "Special Project on Electrical Engineering (II)",
+          "key": "Special Project on Electrical Engineering",
+          "category": "other"
+        },
+        {
+          "term": "AY113 Spring",
+          "name": "Introduction of Biomedical Engineering",
+          "key": "Introduction of Biomedical Engineering",
+          "category": "other"
+        },
+        {
+          "term": "AY113 Spring",
+          "name": "Economics (II)",
+          "key": "Economics",
+          "category": "econ"
+        },
+        {
+          "term": "AY113 Spring",
+          "name": "Lectures on Business",
+          "key": "Lectures on Business",
+          "category": "other"
+        },
+        {
+          "term": "AY113 Spring",
+          "name": "Contemporary Civilization",
+          "key": "Contemporary Civilization",
+          "category": "other"
+        }
+      ]
+    },
+    "uiuc": {
+      "title": "UIUC Courses",
+      "subtitle": "University of Illinois Urbana-Champaign",
+      "theme": "uiuc",
+      "items": [
+        {
+          "term": "Fall 2025",
+          "name": "ECE 408 Applied Parallel Programming",
+          "key": "ECE 408 Applied Parallel Programming",
+          "project_class": "Applied Parallel Programming (CUDA)",
+          "category": "code"
+        },
+        {
+          "term": "Fall 2025",
+          "name": "FIN 556 Algorithmic Market Microstructure",
+          "key": "FIN 556 Algorithmic Market Microstructure",
+          "category": "econ"
+        },
+        {
+          "term": "Fall 2025",
+          "name": "IE 421 High Frequency Trading Tech",
+          "key": "IE 421 High Frequency Trading Tech",
+          "category": "econ"
+        }
+      ]
+    }
+  },
+  "more_about": {
+    "title": "More About Me",
+    "hint": "Hover to reveal a card.",
+    "items": [
+      {
+        "label": "Travel",
+        "imgs": [
+          "/assets/pics/travel_1.JPEG",
+          "/assets/pics/travel_2.HEIC",
+          "/assets/pics/travel_3.JPG"
+        ]
+      },
+      {
+        "label": "Surfing",
+        "imgs": [
+          "/assets/pics/surf_1.JPG",
+          "/assets/pics/surf_2.jpg"
+        ]
+      },
+      {
+        "label": "Diving",
+        "imgs": [
+          "/assets/pics/dive_1.PNG",
+          "/assets/pics/dive_2.PNG",
+          "/assets/pics/dive_3.PNG"
+        ]
+      },
+      {
+        "label": "Dancing",
+        "imgs": [
+          "/assets/pics/dance_1.jpg",
+          "/assets/pics/dance_2.JPG",
+          "/assets/pics/dance_3.JPG"
+        ]
+      }
+    ],
+    "cta": "More"
+  },
+  "activities": {
+    "hint": "Select a tab to view details",
+    "tabs": [
+      {
+        "key": "hackathon",
+        "label": "Hsinchu × NTHU/NCTU Meichu Hackathon",
+        "role": "PR Team Member",
+        "time": "Mar 2022 – Nov 2023",
+        "imgs": [
+          "/assets/pics/not_yet.jpg.webp",
+          "/assets/pics/not_yet.jpg.webp",
+          "/assets/pics/not_yet.jpg.webp"
+        ],
+        "bullets": [
+          "Developed and managed sponsor leads: list building, tracking, outreach, and sponsorship negotiation",
+          "Connected with three large companies including Google, 104, and Logitech",
+          "Secured nearly TWD 200,000 in total sponsorship"
+        ]
+      },
+      {
+        "key": "eea_hr",
+        "label": "NYCU EE Student Association",
+        "role": "HR Team Member",
+        "time": "Jul 2023 – Jul 2024",
+        "imgs": [
+          "/assets/pics/not_yet.jpg.webp",
+          "/assets/pics/not_yet.jpg.webp",
+          "/assets/pics/not_yet.jpg.webp"
+        ],
+        "bullets": [
+          "Led staffing for events (e.g., one-day camp, EE week), including manpower scheduling and run-of-show planning",
+          "Coordinated across teams to keep projects on track; strengthened multitasking and reliable execution"
+        ]
+      },
+      {
+        "key": "one_day",
+        "label": "NYCU EE One-day Camp",
+        "role": "Deputy Coordinator",
+        "time": "Oct 2023 – Jan 2024",
+        "imgs": [
+          "/assets/pics/not_yet.jpg.webp",
+          "/assets/pics/not_yet.jpg.webp",
+          "/assets/pics/not_yet.jpg.webp"
+        ],
+        "bullets": [
+          "Coordinated with the department office and three high schools externally; managed staff roles and event flow internally",
+          "Strengthened execution skills and incident response"
+        ]
+      },
+      {
+        "key": "xmas_ball",
+        "label": "NTHU/NCTU Joint Christmas Ball (9 Departments)",
+        "role": "PR Lead",
+        "time": "Apr 2023 – Dec 2023",
+        "imgs": [
+          "/assets/pics/not_yet.jpg.webp",
+          "/assets/pics/not_yet.jpg.webp",
+          "/assets/pics/not_yet.jpg.webp"
+        ],
+        "bullets": [
+          "Led sponsor development and sponsorship negotiations with ~20 companies",
+          "Secured sponsorship resources worth ~TWD 30,000",
+          "Attracted nearly 500 student participants with positive feedback"
+        ]
+      },
+      {
+        "key": "badminton_manager",
+        "label": "NYCU Badminton Varsity Team",
+        "role": "Team Manager",
+        "time": "Sep 2022 – Jul 2025",
+        "imgs": [
+          "/assets/pics/not_yet.jpg.webp",
+          "/assets/pics/not_yet.jpg.webp",
+          "/assets/pics/not_yet.jpg.webp"
+        ],
+        "bullets": [
+          "Handled team operations and long-term tracking tasks; organized match data, managed the website, and coordinated with vendors",
+          "Strengthened attention to detail and stable administrative execution"
+        ]
+      },
+      {
+        "key": "ee_camp",
+        "label": "EE Camp",
+        "role": "Activity Team Member",
+        "time": "Nov 2022 – Aug 2023",
+        "imgs": [
+          "/assets/pics/not_yet.jpg.webp",
+          "/assets/pics/not_yet.jpg.webp",
+          "/assets/pics/not_yet.jpg.webp"
+        ],
+        "bullets": [
+          "Contributed creative ideas and improved activity design and teamwork",
+          "About 120 high-school participants; one activity I proposed became a crowd favorite"
+        ]
+      }
+    ]
+  }
+}
