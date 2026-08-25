@@ -322,6 +322,7 @@ p { margin: 0; }
   color: var(--accent);
   font-family: var(--font-display);
 }
+.hero-title .hero-hi { font-size: 0.58em; }
 .hero-tagline {
   font-family: var(--font-display);
   font-style: italic;
@@ -1377,21 +1378,13 @@ window.SITE_DATA = {
       school: { zh: "國立陽明交通大學", en: "National Yang Ming Chiao Tung University" },
       degree: { zh: "電機工程學系 學士", en: "B.S. in Electronics and Electrical Engineering" },
       time: { zh: "2022.09 – 2026.06", en: "Sep 2022 – Jun 2026" },
-      place: { zh: "新竹 · 台灣", en: "Hsinchu, Taiwan" },
-      coursework: {
-        zh: "生成式人工智慧、機器學習、演算法、資料結構、機率、線性代數",
-        en: "Generative AI, Machine Learning, Algorithms, Data Structures, Probability, Linear Algebra"
-      }
+      place: { zh: "新竹 · 台灣", en: "Hsinchu, Taiwan" }
     },
     {
       school: { zh: "伊利諾大學厄巴納-香檳分校", en: "University of Illinois Urbana-Champaign" },
       degree: { zh: "電機工程 交換學生", en: "Exchange Student in Electrical Engineering" },
       time: { zh: "2025.08 – 2025.12", en: "Aug 2025 – Dec 2025" },
-      place: { zh: "Illinois · 美國", en: "Illinois, USA" },
-      coursework: {
-        zh: "Applied Parallel Programming(CUDA)",
-        en: "Applied Parallel Programming"
-      }
+      place: { zh: "Illinois · 美國", en: "Illinois, USA" }
     }
   ],
 
@@ -1457,7 +1450,7 @@ window.SITE_DATA = {
     programming: { label: { zh: "程式語言", en: "Programming" }, items: ["Python", "C++", "CUDA", "Golang", "Git", "Linux"] },
     frameworks:  { label: { zh: "框架 / 工具", en: "Frameworks" }, items: ["PyTorch", "TensorFlow", "Scikit-Learn", "NumPy", "Diffusers", "LangChain", "FAISS", "sentence-transformers"] },
     cloud:       { label: { zh: "雲端 / DevOps", en: "Cloud / DevOps" }, items: ["Azure", "Kubernetes (K8s)", "Docker", "Terraform"] },
-    fields:      { label: { zh: "領域", en: "Fields" }, items: ["Deep Learning", "Computer Vision", "Diffusion Models", "Adversarial ML", "3D Generation", "Graph Neural Networks", "Generative AI", "RAG", "GPU Optimization"] }
+    fields:      { label: { zh: "領域", en: "Fields" }, items: ["Deep Learning", "Computer Vision", "Diffusion Models", "Adversarial ML", "3D Generation", "Generative AI", "GPU Optimization"] }
   },
 
   competitions: [
@@ -1584,7 +1577,8 @@ window.SITE_DATA = {
     { id: "nyc",       date: "2025.12.27 – 2026.01.02", flag: "🇺🇸", place: { zh: "紐約", en: "New York" }, lat: 40.71, lng: -74.00, note: { zh: "跨年在時代廣場的冷風裡。", en: "New Year's Eve in the Times Square wind." } },
     { id: "dc",        date: "2026.01.02 – 01.04", flag: "🇺🇸", place: { zh: "華盛頓特區", en: "Washington, D.C." }, lat: 38.90, lng: -77.03, note: { zh: "博物館與國家廣場。", en: "Museums and the National Mall." } },
     { id: "nola",      date: "2026.01.07 – 01.14", flag: "🇺🇸", place: { zh: "紐奧良", en: "New Orleans" }, lat: 29.95, lng: -90.07, note: { zh: "爵士樂、法式街區、熱熱的甜甜圈。", en: "Jazz, the French Quarter, hot beignets." } },
-    { id: "kr-2026",  date: "2026.06.14 – 06.19", flag: "🇰🇷", place: { zh: "首爾 · 釜山", en: "Seoul & Busan" }, lat: 36.40, lng: 128.00, note: { zh: "從首爾一路搭到釜山。", en: "Seoul down to Busan by rail." } }
+    { id: "kr-2026",  date: "2026.06.14 – 06.19", flag: "🇰🇷", place: { zh: "首爾 · 釜山", en: "Seoul & Busan" }, lat: 36.40, lng: 128.00, note: { zh: "從首爾一路搭到釜山。", en: "Seoul down to Busan by rail." } },
+    { id: "tr-2026",  date: "2026.09", flag: "🇹🇷", place: { zh: "土耳其", en: "Turkey" }, lat: 39.00, lng: 35.00, note: { zh: "熱氣球、喚拜聲、橫跨兩洲的風。", en: "Balloons, the call to prayer, wind across two continents." } }
   ],
 
   others: [
@@ -1702,11 +1696,13 @@ function Spotlight({ enabled }) {
   return <div ref={ref} className="spotlight" />;
 }
 
+// On small screens scroll flings outrun the observer, so skip the animation there
+const NO_FADE = window.matchMedia && window.matchMedia("(max-width: 780px)").matches;
 function FadeIn({ children, delay = 0, as: As = "div", className = "", style, ...rest }) {
   const ref = useRef(null);
-  const [vis, setVis] = useState(false);
+  const [vis, setVis] = useState(NO_FADE);
   useEffect(() => {
-    if (!ref.current) return;
+    if (vis || !ref.current) return;
     const io = new IntersectionObserver((entries) => {
       entries.forEach(e => {
         if (e.isIntersecting) { setVis(true); io.disconnect(); }
@@ -1771,7 +1767,7 @@ function Home({ lang, setView }) {
       <div>
         <div className="hero-eyebrow">Meredith's home</div>
         <h1 className="hero-title">
-          {lang === "zh" ? (<>Heyyyy!!!!! 我⁠是<br/>{"\u00A0\u00A0"}<em>{name}</em></>) : (<>Heyyyy!!!!! I'm<br/>{"\u00A0\u00A0"}<em>{name}</em></>)}
+          {lang === "zh" ? (<><span className="hero-hi">哈囉<span style={{ letterSpacing: "-0.12em" }}>.ᐟ.ᐟ.ᐟ.ᐟ</span> 我⁠是</span><br/>{"\u00A0\u00A0"}<em>{name}</em></>) : (<><span className="hero-hi">Heyyyy<span style={{ letterSpacing: "-0.12em" }}>.ᐟ.ᐟ.ᐟ.ᐟ</span> I'm</span><br/>{"\u00A0\u00A0"}<em>{name}</em></>)}
         </h1>
         <p className="hero-intro">{t(d.profile.intro, lang)}</p>
         <div className="hero-ctas">
@@ -1857,7 +1853,6 @@ function Professional({ lang }) {
                   <div>
                     <div className="edu-school">{t(e.school, lang)}</div>
                     <div className="edu-degree">{t(e.degree, lang)} · <span className="muted">{t(e.place, lang)}</span></div>
-                    <div className="edu-course">{lang === "zh" ? "相關課程：" : "Coursework: "}{t(e.coursework, lang)}</div>
                   </div>
                 </div>
               ))}
@@ -1876,7 +1871,7 @@ function Professional({ lang }) {
                   <div className="tl-body">
                     <div className="tl-role">{p.title} <span className="proj-tag" style={{ marginLeft: ".4rem", whiteSpace: "nowrap", verticalAlign: "middle" }}>{lang === "zh" ? "一作" : "First Author"}</span></div>
                     <div className="tl-org"><b style={{ color: "var(--ink)" }}>Meredith Huang</b>{p.authors.replace("Meredith Huang", "")}</div>
-                    <p className="tl-desc">{t(p.desc, lang)}</p>
+                    <MobileDesc className="tl-desc" lang={lang}>{t(p.desc, lang)}</MobileDesc>
                     <div className="proj-tags">
                       {p.tags.map((tag, j) => <span className="proj-tag" key={j}>{tag}</span>)}
                     </div>
@@ -2083,7 +2078,8 @@ const WORLD_PATHS = [
 // Real geometry: Natural Earth via world-atlas TopoJSON, equirectangular to match projectLL
 const MAP_PROJ = d3.geoEquirectangular().scale(1000 / (2 * Math.PI)).translate([500, 250]).precision(0.1);
 // Fisheye magnification centered on Taiwan: Taiwan enlarges in place, surroundings shift outward
-const FISH_C = [836.94, 184.17], FISH_R = 48, FISH_M = 12;
+// FISH_R: distortion reach; LENS_R: drawn lens circle. Reach > lens pushes neighbors outside the glass.
+const FISH_C = [836.94, 184.17], FISH_R = 70, FISH_M = 5, LENS_R = 27;
 function fishXY(x, y) {
   const dx = x - FISH_C[0], dy = y - FISH_C[1];
   const r = Math.hypot(dx, dy);
@@ -2158,10 +2154,11 @@ function WorldMap({ mapStyle }) {
           <path d={MAP_PATH(world.land)} fill="var(--paper-2)" stroke="var(--ink-muted)" strokeWidth="0.7" strokeLinejoin="round" />
           <path d={MAP_PATH(world.borders)} fill="none" stroke="var(--hairline)" strokeWidth="0.4" />
           <path d={MAP_PATH(world.taiwan)} fill="#6B2B2A" stroke="var(--accent)" strokeWidth="1.2" strokeLinejoin="round" />
-          <circle cx={FISH_C[0]} cy={FISH_C[1]} r={FISH_R} fill="none" stroke="var(--ink-soft)" strokeWidth="0.8" opacity="0.55" />
-          <circle cx={FISH_C[0]} cy={FISH_C[1]} r={FISH_R + 3.5} fill="none" stroke="var(--ink-soft)" strokeWidth="0.4" opacity="0.3" />
-          <line x1={FISH_C[0] + FISH_R * 0.72} y1={FISH_C[1] + FISH_R * 0.72} x2={FISH_C[0] + FISH_R * 1.18} y2={FISH_C[1] + FISH_R * 1.18} stroke="var(--ink-soft)" strokeWidth="3" strokeLinecap="round" opacity="0.45" />
-          <text x="893" y="178" textAnchor="start" fill="var(--accent)" style={{ font: "italic 14px var(--font-display)" }}>my home</text>
+          <circle cx={FISH_C[0]} cy={FISH_C[1]} r={LENS_R} fill="none" stroke="var(--ink)" strokeWidth="1.4" opacity="0.75" />
+          <circle cx={FISH_C[0]} cy={FISH_C[1]} r={LENS_R + 3.5} fill="none" stroke="var(--ink)" strokeWidth="0.5" opacity="0.4" />
+          <line x1={FISH_C[0] + LENS_R * 0.72} y1={FISH_C[1] + LENS_R * 0.72} x2={FISH_C[0] + LENS_R * 1.18} y2={FISH_C[1] + LENS_R * 1.18} stroke="var(--ink)" strokeWidth="3.5" strokeLinecap="round" opacity="0.65" />
+          <line x1={FISH_C[0] + 10} y1={FISH_C[1] + 16} x2={FISH_C[0] + 26} y2={FISH_C[1] + 34} stroke="var(--accent)" strokeWidth="1.2" strokeDasharray="4 4" />
+          <text x={FISH_C[0] + 30} y={FISH_C[1] + 44} textAnchor="start" fill="var(--accent)" style={{ font: "italic 16px var(--font-display)" }}>my home</text>
         </g>
       ) : (
         <g fill="none" stroke="var(--ink-muted)" strokeWidth="1.1" strokeLinejoin="round" strokeLinecap="round">
