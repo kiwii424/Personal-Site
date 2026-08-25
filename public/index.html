@@ -315,7 +315,7 @@ p { margin: 0; }
 .hero-title {
   font-weight: 400;
   margin: 0 0 0.2em 0;
-  line-height: 1.35;
+  line-height: 1.1;
 }
 .hero-title em {
   font-style: italic;
@@ -1526,7 +1526,7 @@ window.SITE_DATA = {
   activities: [
     { role: { zh: "公關部員", en: "PR Member" }, org: { zh: "新竹 × 清交梅竹黑客松", en: "Hsinchu × NTHU/NCTU Meichu Hackathon" }, time: "2022.03 – 2023.11",
       bullets: { zh: ["負責企業名單開發、建檔、聯繫與贊助洽談", "與三間大型企業接洽,包含 Google、104 人力銀行、羅技電子", "成功爭取總贊助金額近新台幣 200,000"], en: ["Sponsor list development, tracking, outreach, and negotiation", "Connected with Google, 104 Job Bank, and Logitech", "Secured ~TWD 200,000 in total sponsorship"] } },
-    { role: { zh: "公關部長", en: "PR Lead" }, org: { zh: "清交九系聯合耶誕舞會", en: "NTHU/NCTU Joint Christmas Ball" }, time: "2023.04 – 2023.12",
+    { role: { zh: "公關部長/副招集人", en: "PR Lead / Deputy Coordinator" }, org: { zh: "清交九系聯合耶誕舞會", en: "NTHU/NCTU Joint Christmas Ball" }, time: "2023.04 – 2023.12",
       bullets: { zh: ["主責企業開發與贊助接洽,對接近 20 家企業", "獲得總價值約新台幣 30,000 之贊助資源", "活動吸引近 500 位學生參與,回饋良好"], en: ["Led sponsor outreach with ~20 companies", "Secured sponsorship resources worth ~TWD 30,000", "Attracted nearly 500 student participants"] } },
     { role: { zh: "人力部員", en: "HR Member" }, org: { zh: "陽明交大 電機系學會", en: "NYCU EE Student Association" }, time: "2023.07 – 2024.07",
       bullets: { zh: ["擔任一日營、電機週等活動招集人,負責人力調度與活動流程規劃", "與多部門協作溝通,確保專案進度如期完成,培養多任務控管與穩定執行能力"], en: ["Coordinator for One-day Camp & EE Week — staffing & run-of-show", "Cross-team collaboration to keep projects on schedule"] } },
@@ -1719,7 +1719,7 @@ function Home({ lang, setView }) {
       <div>
         <div className="hero-eyebrow">Meredith's home</div>
         <h1 className="hero-title">
-          {lang === "zh" ? (<>Heyyyy!!!!! 我是<br/>{"\u00A0\u00A0\u00A0\u00A0"}<em>{name}</em></>) : (<>Heyyyy!!!!! I'm<br/>{"\u00A0\u00A0\u00A0\u00A0"}<em>{name}</em></>)}
+          {lang === "zh" ? (<>Heyyyy!!!!! 我⁠是<br/>{"\u00A0\u00A0\u00A0\u00A0"}<em>{name}</em></>) : (<>Heyyyy!!!!! I'm<br/>{"\u00A0\u00A0\u00A0\u00A0"}<em>{name}</em></>)}
         </h1>
         <p className="hero-intro">{t(d.profile.intro, lang)}</p>
         <div className="hero-ctas">
