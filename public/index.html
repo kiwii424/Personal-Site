@@ -1421,8 +1421,8 @@ window.SITE_DATA = {
   ],
 
   sidebar: {
-    zh: ["關於", "學歷", "論文發表", "研究經歷", "專案", "競賽", "技能", "課外活動", "聯絡"],
-    en: ["About", "Education", "Publications", "Research", "Projects", "Competitions", "Skills", "Activities", "Contact"]
+    zh: ["關於", "學歷", "論文發表", "研究經歷", "競賽", "專案", "技能", "課外活動", "聯絡"],
+    en: ["About", "Education", "Publications", "Research", "Competitions", "Projects", "Skills", "Activities", "Contact"]
   },
 
   nav: {
@@ -1742,7 +1742,7 @@ function Home({ lang, setView }) {
 
 function Professional({ lang }) {
   const d = window.SITE_DATA;
-  const keys = ["about", "education", "publications", "research", "projects", "competitions", "skills", "activities", "contact"];
+  const keys = ["about", "education", "publications", "research", "competitions", "projects", "skills", "activities", "contact"];
   const labels = d.sidebar[lang];
   const [active, setActive] = useState("about");
   const sectionRefs = useRef({});
@@ -1854,33 +1854,10 @@ function Professional({ lang }) {
           </FadeIn>
         </div>
 
-        {/* 05 PROJECTS */}
-        <div className="prof-section" data-key="projects" ref={el => sectionRefs.current.projects = el}>
-          <FadeIn>
-            <h2><span className="num">05</span> {t(d.ui.section_labels.projects, lang)}</h2>
-            <div className="proj-grid">
-              {d.projects.map((p, i) => (
-                <a className="proj-card" key={i} href={p.link} target="_blank" rel="noopener">
-                  <div className="proj-meta">
-                    <span>{p.time}</span>
-                    <span className="proj-arrow">↗</span>
-                  </div>
-                  <div className="proj-title">{t(p.title, lang)}</div>
-                  <div className="proj-stack">{p.stack}</div>
-                  <div className="proj-desc">{t(p.desc, lang)}</div>
-                  <div className="proj-tags">
-                    {p.tags.map((tag, j) => <span className="proj-tag" key={j}>{tag}</span>)}
-                  </div>
-                </a>
-              ))}
-            </div>
-          </FadeIn>
-        </div>
-
-        {/* 06 COMPETITIONS */}
+        {/* 05 COMPETITIONS */}
         <div className="prof-section" data-key="competitions" ref={el => sectionRefs.current.competitions = el}>
           <FadeIn>
-            <h2><span className="num">06</span> {t(d.ui.section_labels.competitions, lang)}</h2>
+            <h2><span className="num">05</span> {t(d.ui.section_labels.competitions, lang)}</h2>
             <div className="comp-list">
               {d.competitions.map((c, i) => (
                 <div className="comp-item" key={i}>
@@ -1904,6 +1881,29 @@ function Professional({ lang }) {
                     </div>
                   </div>
                 </div>
+              ))}
+            </div>
+          </FadeIn>
+        </div>
+
+        {/* 06 PROJECTS */}
+        <div className="prof-section" data-key="projects" ref={el => sectionRefs.current.projects = el}>
+          <FadeIn>
+            <h2><span className="num">06</span> {t(d.ui.section_labels.projects, lang)}</h2>
+            <div className="proj-grid">
+              {d.projects.map((p, i) => (
+                <a className="proj-card" key={i} href={p.link} target="_blank" rel="noopener">
+                  <div className="proj-meta">
+                    <span>{p.time}</span>
+                    <span className="proj-arrow">↗</span>
+                  </div>
+                  <div className="proj-title">{t(p.title, lang)}</div>
+                  <div className="proj-stack">{p.stack}</div>
+                  <div className="proj-desc">{t(p.desc, lang)}</div>
+                  <div className="proj-tags">
+                    {p.tags.map((tag, j) => <span className="proj-tag" key={j}>{tag}</span>)}
+                  </div>
+                </a>
               ))}
             </div>
           </FadeIn>
