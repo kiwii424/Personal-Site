@@ -1,7 +1,7 @@
-// intro.jsx — riso-print full-screen opener (3 scenes, matches storyboard; 2.6s)
+// intro.jsx — riso-print full-screen opener (3 scenes, matches storyboard; 2.9s)
 (function () {
 const { useState, useEffect, useRef } = React;
-const CUTS = [0, 1.25, 2.1, 2.6]; // BRAND / ABOUT / OUTPUT / end
+const CUTS = [0, 1.25, 2.1, 2.9]; // BRAND / ABOUT / OUTPUT / end
 const Ico = {
   chip: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="6" y="6" width="12" height="12"/><rect x="10" y="10" width="4" height="4" fill="#E15A5A" stroke="none"/><path d="M9 6V2M15 6V2M9 22v-4M15 22v-4M6 9H2M6 15H2M22 9h-4M22 15h-4"/></svg>,
   camera: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="2" y="7" width="20" height="13"/><circle cx="12" cy="13.5" r="4"/><path d="M8 7l2-3h4l2 3"/></svg>,
