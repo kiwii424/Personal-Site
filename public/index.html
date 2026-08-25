@@ -277,7 +277,7 @@ p { margin: 0; }
 .fade-in {
   opacity: 0;
   transform: translateY(22px);
-  transition: opacity 900ms var(--ease-out), transform 900ms var(--ease-out);
+  transition: opacity 500ms var(--ease-out), transform 500ms var(--ease-out);
 }
 .fade-in.in {
   opacity: 1;
@@ -421,6 +421,9 @@ p { margin: 0; }
 @media (max-width: 900px) {
   .hero { grid-template-columns: 1fr; gap: calc(var(--space-unit) * 2); min-height: auto; }
   .hero-aside { border-left: none; padding-left: 0; border-top: 1px solid var(--hairline); padding-top: calc(var(--space-unit) * 2); min-height: auto; }
+  /* CTA buttons move below the aside info */
+  .hero > div:first-child { display: contents; }
+  .hero-ctas { order: 9; }
 }
 
 /* ──────────── PROFESSIONAL page (sidebar + content) ──────────── */
@@ -1320,6 +1323,20 @@ h1,h2,h3{letter-spacing:.01em}
 .trip-card .trip-note{height:3em;overflow:hidden}
 .trip-card .trip-photos{margin-top:auto}
 .site-foot{font-family:var(--font-mono);text-transform:uppercase;letter-spacing:.14em;font-size:.68rem}
+.next-hint{text-align:center;font-family:var(--font-mono);text-transform:uppercase;letter-spacing:.14em;font-size:.68rem;color:var(--ink-soft);padding:2.4rem 0 .4rem}
+.lbl-short{display:none}
+.m-toggle{display:none}
+@media (max-width:480px){
+.lbl-full{display:none}
+.lbl-short{display:inline}
+}
+@media (max-width:780px){
+.m-toggle{display:inline-block;background:none;border:none;padding:0;margin:0 0 .5rem;font-family:var(--font-mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);cursor:pointer}
+.m-closed{display:none}
+html[lang="zh-Hant"] body{line-height:1.95;letter-spacing:.035em}
+}
+.next-hint .arr{display:inline-block;color:var(--accent);animation:hintNudge 1.6s ease-in-out infinite}
+@keyframes hintNudge{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
 
   </style>
 </head>
@@ -1594,6 +1611,9 @@ window.SITE_DATA = {
     hero_enter_prof:    { zh: "進入履歷 →",  en: "Read the resume →" },
     hero_enter_foot:    { zh: "翻開足跡 →",  en: "See the footprints →" },
     hero_enter_other:   { zh: "更多我 →",  en: "More of me →" },
+    hero_enter_prof_s:  { zh: "進入履歷 →",  en: "Resume →" },
+    hero_enter_foot_s:  { zh: "翻開足跡 →",  en: "Footprints →" },
+    hero_enter_other_s: { zh: "更多我 →",  en: "More →" },
     map_caption:        { zh: "腳印地圖", en: "Map of Footprints" },
     trip_count_suffix:  { zh: "個停靠點", en: "stops" },
     tweaks: {
@@ -1633,21 +1653,51 @@ function useLocal(key, initial) {
 
 const t = (val, lang) => (val && typeof val === "object" && "zh" in val) ? val[lang] : val;
 
+// Mobile only: description hidden behind a tap-to-expand toggle
+function MobileDesc({ className, lang, children }) {
+  const [open, setOpen] = useState(false);
+  const toggle = (e) => { e.preventDefault(); e.stopPropagation(); setOpen(o => !o); };
+  return (
+    <>
+      <button className="m-toggle" onClick={toggle}>
+        {open ? (lang === "zh" ? "收合 ▴" : "Less ▴") : (lang === "zh" ? "詳情 ▾" : "More ▾")}
+      </button>
+      <div className={`${className} ${open ? "" : "m-closed"}`}>{children}</div>
+    </>
+  );
+}
+
 function Spotlight({ enabled }) {
   const ref = useRef(null);
   useEffect(() => {
     if (!enabled) return;
-    let raf = 0, x = -500, y = -500, tx = -500, ty = -500;
-    const onMove = (e) => { tx = e.clientX; ty = e.clientY; };
+    let raf = 0, x = -500, y = -500, tx = -500, ty = -500, last = 0;
+    const wake = (cx, cy) => { tx = cx; ty = cy; last = performance.now(); };
+    const onMove = (e) => wake(e.clientX, e.clientY);
+    const onTouch = (e) => wake(e.touches[0].clientX, e.touches[0].clientY);
+    const onTouchEnd = () => { last = 0; };
     const tick = () => {
       x += (tx - x) * 0.18;
       y += (ty - y) * 0.18;
-      if (ref.current) ref.current.style.transform = `translate(${x}px, ${y}px) translate(-50%, -50%)`;
+      if (ref.current) {
+        ref.current.style.transform = `translate(${x}px, ${y}px) translate(-50%, -50%)`;
+        // fade out when the pointer has been idle
+        ref.current.style.opacity = (performance.now() - last > 1500) ? "0" : "";
+      }
       raf = requestAnimationFrame(tick);
     };
     window.addEventListener("mousemove", onMove);
+    window.addEventListener("touchstart", onTouch, { passive: true });
+    window.addEventListener("touchmove", onTouch, { passive: true });
+    window.addEventListener("touchend", onTouchEnd);
     raf = requestAnimationFrame(tick);
-    return () => { window.removeEventListener("mousemove", onMove); cancelAnimationFrame(raf); };
+    return () => {
+      window.removeEventListener("mousemove", onMove);
+      window.removeEventListener("touchstart", onTouch);
+      window.removeEventListener("touchmove", onTouch);
+      window.removeEventListener("touchend", onTouchEnd);
+      cancelAnimationFrame(raf);
+    };
   }, [enabled]);
   return <div ref={ref} className="spotlight" />;
 }
@@ -1661,7 +1711,7 @@ function FadeIn({ children, delay = 0, as: As = "div", className = "", style, ..
       entries.forEach(e => {
         if (e.isIntersecting) { setVis(true); io.disconnect(); }
       });
-    }, { threshold: 0.12 });
+    }, { threshold: 0, rootMargin: "0px 0px 240px 0px" });
     io.observe(ref.current);
     return () => io.disconnect();
   }, []);
@@ -1725,14 +1775,15 @@ function Home({ lang, setView }) {
         </h1>
         <p className="hero-intro">{t(d.profile.intro, lang)}</p>
         <div className="hero-ctas">
-          <button className="cta primary" onClick={() => setView("prof")}><span>{t(d.ui.hero_enter_prof, lang)}</span></button>
-          <button className="cta" onClick={() => setView("foot")}><span>{t(d.ui.hero_enter_foot, lang)}</span></button>
-          <button className="cta" onClick={() => setView("other")}><span>{t(d.ui.hero_enter_other, lang)}</span></button>
+          <button className="cta primary" onClick={() => setView("prof")}><span className="lbl-full">{t(d.ui.hero_enter_prof, lang)}</span><span className="lbl-short">{t(d.ui.hero_enter_prof_s, lang)}</span></button>
+          <button className="cta" onClick={() => setView("foot")}><span className="lbl-full">{t(d.ui.hero_enter_foot, lang)}</span><span className="lbl-short">{t(d.ui.hero_enter_foot_s, lang)}</span></button>
+          <button className="cta" onClick={() => setView("other")}><span className="lbl-full">{t(d.ui.hero_enter_other, lang)}</span><span className="lbl-short">{t(d.ui.hero_enter_other_s, lang)}</span></button>
         </div>
       </div>
       <FadeIn className="hero-aside">
         <div className="hero-meta">{lang === "zh" ? "目前身份" : "Currently"}<b>{lang === "zh" ? "交大 研究助理" : "Research Assistant at NYCU"}</b></div>
         <div className="hero-meta">{lang === "zh" ? "研究方向" : "Research"}<b>{lang === "zh" ? "電腦視覺 · 生成式 AI · EDA" : "Computer Vision · Generative AI · EDA"}</b></div>
+        <div className="hero-meta">{lang === "zh" ? "最近在想什麼" : "Lately"}<b>{lang === "zh" ? "量化機器人、有沒有颱風假、想去滑雪" : "Quant bot · Typhoon-day odds · Skiing plans"}</b></div>
         <div className="hero-meta">{lang === "zh" ? "所在地" : "Based"}<b>{t(d.profile.location, lang)}</b><i className="sub">📍 {lang === "zh" ? "宜蘭、新竹" : "Yilan · Hsinchu"}</i></div>
         <div className="hero-links">
           {d.profile.socials.map((s, i) => (
@@ -1847,7 +1898,7 @@ function Professional({ lang }) {
                   <div className="tl-body">
                     <div className="tl-role">{t(r.lab, lang)}</div>
                     <div className="tl-org">{t(r.advisor, lang)}</div>
-                    <p className="tl-desc">{t(r.desc, lang)}</p>
+                    <MobileDesc className="tl-desc" lang={lang}>{t(r.desc, lang)}</MobileDesc>
                     <div className="proj-tags">
                       {r.tags.map((tag, j) => <span className="proj-tag" key={j}>{tag}</span>)}
                     </div>
@@ -1903,7 +1954,7 @@ function Professional({ lang }) {
                   </div>
                   <div className="proj-title">{t(p.title, lang)}</div>
                   <div className="proj-stack">{p.stack}</div>
-                  <div className="proj-desc">{t(p.desc, lang)}</div>
+                  <MobileDesc className="proj-desc" lang={lang}>{t(p.desc, lang)}</MobileDesc>
                   <div className="proj-tags">
                     {p.tags.map((tag, j) => <span className="proj-tag" key={j}>{tag}</span>)}
                   </div>
@@ -2318,8 +2369,8 @@ function Tweaks({ open, setOpen, lang, accent, setAccent, font, setFont, density
 
 function App() {
   const [view, setView] = useState("home");
-  const [lang, setLang] = useLocal("mh.lang", (navigator.language || "en").toLowerCase().startsWith("zh") ? "zh" : "en");
-  const [theme, setTheme] = useLocal("mh.theme",
+  const [lang, setLang] = useState((navigator.language || "en").toLowerCase().startsWith("zh") ? "zh" : "en");
+  const [theme, setTheme] = useState(
     (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) ? "dark" : "light");
   const [tweaksOpen, setTweaksOpen] = useState(false);
 
@@ -2352,6 +2403,71 @@ function App() {
 
   useEffect(() => { window.scrollTo({ top: 0, behavior: "instant" }); }, [view]);
 
+  // Briefly swallow leftover scroll momentum after an overscroll page switch
+  const navLock = useRef(0);
+  useEffect(() => {
+    const locked = () => performance.now() < navLock.current;
+    const block = (e) => { if (locked()) e.preventDefault(); };
+    const pin = () => { if (locked()) window.scrollTo(0, 0); };
+    window.addEventListener("wheel", block, { passive: false });
+    window.addEventListener("touchmove", block, { passive: false });
+    window.addEventListener("scroll", pin, { passive: true });
+    return () => {
+      window.removeEventListener("wheel", block);
+      window.removeEventListener("touchmove", block);
+      window.removeEventListener("scroll", pin);
+    };
+  }, []);
+
+  // Overscroll past a page edge switches page: down at bottom goes forward,
+  // up at top goes back. Two-stage: the gesture that reaches the edge never
+  // counts; only a fresh scroll made while already at the edge accumulates.
+  useEffect(() => {
+    const next = { prof: "foot", foot: "other" }[view];
+    const prev = { prof: "home", foot: "prof", other: "foot" }[view];
+    if (!next && !prev) return;
+    let acc = 0, dir = 0, armed = false, lastWheel = 0, touchY = null, touchFresh = false;
+    const atBottom = () => window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
+    const atTop = () => window.scrollY <= 2;
+    const edge = (dy) => (dy > 0 && next && atBottom()) ? 1 : (dy < 0 && prev && atTop()) ? -1 : 0;
+    const advance = (dy, fresh) => {
+      const d = edge(dy);
+      if (!d) { acc = 0; dir = 0; armed = false; return; }
+      if (fresh) {
+        if (d === dir) armed = true;
+        else { dir = d; armed = false; acc = 0; }
+      } else if (d !== dir) { dir = d; armed = false; acc = 0; }
+      if (!armed) return;
+      acc += Math.abs(dy);
+      if (acc > 120) { navLock.current = performance.now() + 700; setView(d === 1 ? next : prev); }
+    };
+    const onWheel = (e) => {
+      const now = performance.now();
+      const fresh = now - lastWheel > 300;
+      lastWheel = now;
+      advance(e.deltaY, fresh);
+    };
+    const onTouchStart = (e) => {
+      touchY = e.touches[0].clientY;
+      touchFresh = true;
+    };
+    const onTouchMove = (e) => {
+      if (touchY == null) return;
+      const y = e.touches[0].clientY;
+      advance(touchY - y, touchFresh);
+      touchFresh = false;
+      touchY = y;
+    };
+    window.addEventListener("wheel", onWheel, { passive: true });
+    window.addEventListener("touchstart", onTouchStart, { passive: true });
+    window.addEventListener("touchmove", onTouchMove, { passive: true });
+    return () => {
+      window.removeEventListener("wheel", onWheel);
+      window.removeEventListener("touchstart", onTouchStart);
+      window.removeEventListener("touchmove", onTouchMove);
+    };
+  }, [view]);
+
   return (
     <>
       <Spotlight enabled={cursor === "on"} />
@@ -2361,6 +2477,11 @@ function App() {
       {view === "prof" && <Professional lang={lang} />}
       {view === "foot" && <Footprint lang={lang} mapStyle={mapStyle} />}
       {view === "other" && <OtherMe lang={lang} />}
+      {(view === "prof" || view === "foot") && (
+        <div className="next-hint">
+          <span className="arr">↓</span> {lang === "zh" ? "繼續下滑" : "Keep scrolling"} · {t(view === "prof" ? window.SITE_DATA.nav.footprint : window.SITE_DATA.nav.others, lang)}
+        </div>
+      )}
       <footer className="site-foot">
         <div>© 2026 · {t(window.SITE_DATA.profile.name, lang)}</div>
       </footer>
