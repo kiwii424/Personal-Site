@@ -1,7 +1,7 @@
-// intro.jsx — riso-print full-screen opener (3 scenes, matches storyboard; 3.45s)
+// intro.jsx — riso-print full-screen opener (3 scenes, matches storyboard; 2.6s)
 (function () {
 const { useState, useEffect, useRef } = React;
-const CUTS = [0, 1.6, 2.7, 3.45]; // BRAND / ABOUT / OUTPUT / end
+const CUTS = [0, 1.25, 2.1, 2.6]; // BRAND / ABOUT / OUTPUT / end
 const Ico = {
   chip: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="6" y="6" width="12" height="12"/><rect x="10" y="10" width="4" height="4" fill="#E15A5A" stroke="none"/><path d="M9 6V2M15 6V2M9 22v-4M15 22v-4M6 9H2M6 15H2M22 9h-4M22 15h-4"/></svg>,
   camera: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="2" y="7" width="20" height="13"/><circle cx="12" cy="13.5" r="4"/><path d="M8 7l2-3h4l2 3"/></svg>,
@@ -54,11 +54,11 @@ function Intro({ onDone }) {
               <div className="in-avatar"><img src="uploads/Made with FlexClip AI-2026-08-25T140009.png" alt="" /></div>
             </div>
             {[[Ico.camera, "6vmin", "7vmin", null], [Ico.chip, null, "9vmin", "6vmin"], [Ico.plane, "8vmin", "38vmin", null], [Ico.timeline, null, "36vmin", "7vmin"]].map((c, i) => (
-              <span key={i} className="in-scatter in-pop" style={{ left: c[1] || "auto", right: c[3] || "auto", top: c[2], animationDelay: 380 + i * 80 + "ms" }}>{c[0]}</span>
+              <span key={i} className="in-scatter in-pop" style={{ left: c[1] || "auto", right: c[3] || "auto", top: c[2], animationDelay: 280 + i * 60 + "ms" }}>{c[0]}</span>
             ))}
-            <div className="in-brandname in-slide" style={st(180)}><span className="zhname">黃淯琪</span><span className="enname">Meredith</span></div>
-            <div className="in-brandbar in-wipe" style={st(520)}><span className="in-zh">電腦視覺 · 生成式 AI · EDA</span></div>
-            <div className="in-label in-brandlabel in-rise" style={st(900)}>FAKE IT UNTIL MAKE IT</div>
+            <div className="in-brandname in-slide" style={st(140)}><span className="zhname">黃淯琪</span><span className="enname">Meredith</span></div>
+            <div className="in-brandbar in-wipe" style={st(390)}><span className="in-zh">電腦視覺 · 生成式 AI · EDA</span></div>
+            <div className="in-label in-brandlabel in-rise" style={st(680)}>FAKE IT UNTIL MAKE IT</div>
           </div>
         </div>
       )}
@@ -68,9 +68,9 @@ function Intro({ onDone }) {
             <div className="in-rows">
               {rows.map((r, i) => (
                 <div key={i} className="in-row">
-                  <div className="in-mega in-slide" style={{ ...st(60 + i * 140), color: r.red ? "#E15A5A" : "#171717" }}>{r.word}</div>
-                  <div className="in-zh rzh in-wipe" style={st(220 + i * 140)}>{r.zh}</div>
-                  <span className="in-pop" style={st(160 + i * 140)}>{r.ico}</span>
+                  <div className="in-mega in-slide" style={{ ...st(50 + i * 105), color: r.red ? "#E15A5A" : "#171717" }}>{r.word}</div>
+                  <div className="in-zh rzh in-wipe" style={st(165 + i * 105)}>{r.zh}</div>
+                  <span className="in-pop" style={st(120 + i * 105)}>{r.ico}</span>
                 </div>
               ))}
             </div>
@@ -81,9 +81,9 @@ function Intro({ onDone }) {
         <div className="in-scene in-tex in-coral">
           <div className="in-stage">
             <div className="in-ghost" style={{ animation: "inGhost 300ms ease-out both" }}>26</div>
-            <div className="in-mega in-out-mega in-slide" style={st(40)}>HEYYYY!</div>
-            <div className="in-out-arrow" style={{ animation: "inArrow 360ms cubic-bezier(.22,1,.36,1) 200ms both" }}></div>
-            <div className="in-out-word in-wipe" style={st(430)}>WELCOME</div>
+            <div className="in-mega in-out-mega in-slide" style={st(30)}>HEYYYY!</div>
+            <div className="in-out-arrow" style={{ animation: "inArrow 360ms cubic-bezier(.22,1,.36,1) 150ms both" }}></div>
+            <div className="in-out-word in-wipe" style={st(320)}>WELCOME</div>
           </div>
         </div>
       )}
