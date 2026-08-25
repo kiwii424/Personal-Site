@@ -22,3 +22,9 @@ rad.json
 TestResults.xml
 .DS_Store
 
+
+# Local archive of the previous site (kept out of git; history has the old tracked files)
+__archive/
+
+# Session notes
+compact_note/

@@ -1,0 +1,65 @@
+/* Intro — riso print full-screen opener */
+#mh-intro{position:fixed;inset:0;z-index:200;overflow:hidden;cursor:pointer;font-family:'LXGW WenKai TC',sans-serif;color:#171717}
+#mh-intro *{box-sizing:border-box}
+.in-scene{position:absolute;inset:0;background:#F2EEE4}
+.in-tex::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(45deg,rgba(23,23,23,.05) 0 1px,transparent 1px 7px);pointer-events:none}
+.in-dark{background:#171717;color:#F4F2ED}
+.in-coral{background:#E15A5A}
+/* motions */
+@keyframes inPop{0%{transform:scale(.6);opacity:0}70%{transform:scale(1.06);opacity:1}100%{transform:scale(1)}}
+@keyframes inWipe{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
+@keyframes inSlide{from{transform:translateX(-8%);letter-spacing:.06em;opacity:0}to{transform:translateX(0);letter-spacing:-.01em;opacity:1}}
+@keyframes inBanner{from{transform:translateY(-101%)}to{transform:translateY(0)}}
+@keyframes inRise{from{transform:translateY(30px);opacity:0}to{transform:none;opacity:1}}
+@keyframes inSpin{to{transform:rotate(360deg)}}
+@keyframes inArrow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes inGhost{from{transform:scale(.8);opacity:0}to{transform:scale(1);opacity:1}}
+.in-pop{animation:inPop 260ms cubic-bezier(.34,1.56,.64,1) both}
+.in-wipe{animation:inWipe 280ms cubic-bezier(.22,1,.36,1) both}
+.in-slide{animation:inSlide 360ms cubic-bezier(0,0,.2,1) both}
+.in-banner{animation:inBanner 300ms cubic-bezier(.22,1,.36,1) both}
+.in-rise{animation:inRise 300ms cubic-bezier(0,0,.2,1) both}
+.in-draw path,.in-draw line,.in-draw ellipse{stroke-dasharray:300;stroke-dashoffset:300;animation:inDraw 320ms ease-out forwards}
+@keyframes inDraw{to{stroke-dashoffset:0}}
+/* type */
+.in-mega{font-family:'LXGW WenKai TC',sans-serif;font-weight:700;line-height:.95;white-space:nowrap;letter-spacing:0}
+.in-label{font-family:'Space Mono',monospace;font-weight:700;letter-spacing:.3em;text-transform:uppercase;font-size:clamp(9px,1.6vmin,13px)}
+.in-zh{font-family:'LXGW WenKai TC',sans-serif;font-weight:700;letter-spacing:.15em}
+/* BRAND */
+.in-avatar-wrap{position:absolute;left:50%;top:6vmin;width:53vmin;height:53vmin;margin-left:-26.5vmin}
+.in-avatar{position:relative;width:100%;height:100%;border-radius:50%;background:#E15A5A;overflow:hidden}
+.in-avatar-ring{position:absolute;inset:-2.4vmin;border-radius:50%;animation:inSpin 14s linear infinite;z-index:2}
+.in-avatar img{width:132%;height:132%;object-fit:cover;margin-left:-16%;margin-top:-16%;border-radius:0}
+.in-brandname{position:absolute;left:0;top:60vmin;width:100%;text-align:center;font-family:'Great Vibes','LXGW WenKai TC',cursive;font-weight:400;font-size:12.5vmin;color:#E15A5A}
+.in-brandname small{font-family:'Great Vibes','LXGW WenKai TC',cursive;font-weight:400;font-size:7vmin;letter-spacing:.02em;margin-left:2vmin;color:#171717}
+.in-brandbar{position:absolute;left:50%;top:76.5vmin;width:64vmin;margin-left:-32vmin;height:7.4vmin;background:#E15A5A;display:flex;align-items:center;justify-content:center}
+.in-brandbar .in-zh{font-size:3.1vmin;color:#F2EEE4}
+.in-brandlabel{position:absolute;left:0;top:87.5vmin;width:100%;text-align:center;color:#E15A5A}
+.in-scatter{position:absolute}
+.in-scatter svg{width:8vmin;height:8vmin;display:block}
+/* quick scenes */
+.in-bannerbar{position:absolute;left:0;top:0;width:100%;height:26vmin;background:#E15A5A}
+.in-key{position:absolute;left:-3vmin;top:30vmin;font-size:24vmin}
+.in-key-icon{position:absolute;right:10vmin;top:12vmin}
+.in-key-icon svg{width:14vmin;height:14vmin}
+.in-key-label{position:absolute;left:6.5vmin;bottom:12vmin;font-size:3.6vmin}
+.in-vert{position:absolute;right:-9vmin;top:4vmin;font-size:20vmin;writing-mode:vertical-rl;text-orientation:mixed}
+.in-card{position:absolute;left:8vmin;top:22vmin;width:52vmin;height:40vmin;background:#F6F5F1;border:2px solid #171717;padding:5vmin}
+.in-card::after{content:"";position:absolute;right:0;top:0;border-style:solid;border-width:0 6vmin 6vmin 0;border-color:transparent #E15A5A transparent transparent}
+.in-cardline{height:2px;background:#171717;margin-bottom:3.4vmin;transform-origin:0 50%}
+.in-stack{position:absolute;left:6vmin;top:22vmin;font-size:19vmin;line-height:.92}
+.in-stack .red{color:#E15A5A}
+.in-longarrow{position:absolute;left:6vmin;top:63vmin;width:70vmin;height:2px;background:#E15A5A;transform-origin:0 50%}
+.in-longarrow::after{content:"";position:absolute;right:-1px;top:-1.4vmin;border-left:2.6vmin solid #E15A5A;border-top:1.5vmin solid transparent;border-bottom:1.5vmin solid transparent}
+.in-boxes{position:absolute;left:6vmin;top:69vmin;display:flex;gap:3vmin}
+.in-boxes .bx{width:11vmin;height:11vmin;border:2px solid #F4F2ED;display:flex;align-items:center;justify-content:center}
+.in-boxes svg{width:6vmin;height:6vmin}
+/* OUTPUT */
+.in-ghost{position:absolute;right:-6vmin;top:6vmin;font-family:'Anton',sans-serif;font-size:34vmin;color:#6B2B2A;line-height:1}
+.in-out-mega{position:absolute;left:-3vmin;top:20vmin;font-size:26vmin}
+.in-out-arrow{position:absolute;left:0;top:58vmin;width:100%;height:12vmin;background:#171717;transform-origin:0 50%}
+.in-out-word{position:absolute;left:6.5vmin;top:61.2vmin;font-size:5vmin;color:#F2EEE4;z-index:2}
+/* skip */
+.in-skip{position:absolute;right:3.5vmin;top:3.5vmin;z-index:5;border:1.5px solid #171717;background:transparent;color:#171717;font-family:'Space Mono',monospace;font-weight:700;font-size:11px;letter-spacing:.2em;padding:.55em 1em;cursor:pointer;opacity:0;animation:inRise 400ms ease-out 2s forwards}
+.in-dark .in-skip,.in-skip.lite{border-color:#F4F2ED;color:#F4F2ED}
+@media (max-width:768px){.in-brandname{font-size:19vmin;top:26vmin}.in-card{width:70vmin}}

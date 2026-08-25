@@ -1,31 +1,2379 @@
 <!doctype html>
-<html lang="en">
+<html lang="zh-Hant" data-theme="light" data-font="wenkai" data-density="normal" data-cursor="on">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Portfolio</title>
-  <link rel="stylesheet" href="/assets/style.css?v=20251222c" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>黃淯琪 Meredith Huang</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo+Black&family=Space+Mono:wght@700&family=Noto+Sans+TC:wght@500;600;700&family=Great+Vibes&family=Ma+Shan+Zheng&family=Zhi+Mang+Xing&family=LXGW+WenKai+TC:wght@400;700&family=Huninn&family=Iansui&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="intro.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400;1,500&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&family=Inter:wght@400;500;600&family=Noto+Serif+TC:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+/* Meredith Huang — Personal Site
+   Editorial / literary magazine aesthetic.
+   Serif type pairing; warm paper / deep ink; terracotta accent.
+*/
+
+:root {
+  /* Typography stacks (tweakable via data-font) */
+  --font-display: "Anton", "Noto Sans TC", sans-serif;
+  --font-body: "Noto Sans TC", system-ui, sans-serif;
+  --font-mono: "Space Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* Core palette — riso light */
+  --paper: #F2EEE4;
+  --paper-2: #F6F5F1;
+  --ink: #171717;
+  --ink-muted: #43403a;
+  --ink-soft: #76705f;
+  --hairline: rgba(23, 23, 23, 0.4);
+  --hairline-soft: rgba(23, 23, 23, 0.16);
+
+  /* Accent (tweakable) */
+  --accent: #E15A5A;
+  --accent-ink: #171717;
+
+  /* Density */
+  --space-unit: 1rem;
+  --sidebar-w: 232px;
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+[data-theme="dark"] {
+  --paper: #171717;
+  --paper-2: #211f1c;
+  --ink: #F4F2ED;
+  --ink-muted: #c9c4b8;
+  --ink-soft: #8d877a;
+  --hairline: rgba(244, 242, 237, 0.4);
+  --hairline-soft: rgba(244, 242, 237, 0.16);
+}
+
+[data-density="compact"] { --space-unit: 0.78rem; }
+[data-density="comfy"]   { --space-unit: 1.15rem; }
+
+[data-font="mono-sans"] {
+  --font-display: "Space Mono", ui-monospace, monospace;
+  --font-body: "Noto Sans TC", system-ui, sans-serif;
+}
+[data-font="wenkai"] {
+  --font-display: "LXGW WenKai TC", "Cormorant Garamond", serif;
+  --font-body: "LXGW WenKai TC", Georgia, serif;
+}
+[data-font="round"] {
+  --font-display: "Huninn", "Noto Sans TC", sans-serif;
+  --font-body: "Huninn", system-ui, sans-serif;
+}
+[data-font="iansui"] {
+  --font-display: "Iansui", "Noto Sans TC", sans-serif;
+  --font-body: "Iansui", system-ui, sans-serif;
+}
+[data-font="serif-classic"] {
+  --font-display: "Cormorant Garamond", "Noto Serif TC", Georgia, serif;
+  --font-body: "EB Garamond", "Noto Serif TC", Georgia, serif;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0; padding: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.58;
+  -webkit-font-smoothing: antialiased;
+  transition: background 420ms var(--ease-out), color 420ms var(--ease-out);
+}
+
+body {
+  min-height: 100vh;
+  text-wrap: pretty;
+}
+
+a { color: inherit; text-decoration: none; }
+
+h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 500; letter-spacing: -0.01em; line-height: 1.08; margin: 0; }
+h1 { font-size: clamp(2.6rem, 7.2vw, 5.4rem); font-weight: 400; }
+h2 { font-size: clamp(1.7rem, 3.2vw, 2.4rem); font-weight: 400; }
+h3 { font-size: 1.28rem; font-weight: 500; }
+
+p { margin: 0; }
+
+/* ──────────── Cursor spotlight ──────────── */
+.spotlight {
+  position: fixed;
+  pointer-events: none;
+  width: 520px; height: 520px;
+  left: 0; top: 0;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(closest-side, color-mix(in oklab, var(--accent) 26%, transparent), transparent 72%);
+  mix-blend-mode: multiply;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 380ms var(--ease-out);
+  will-change: transform;
+}
+[data-theme="dark"] .spotlight { mix-blend-mode: screen; }
+[data-cursor="on"] .spotlight { opacity: 1; }
+
+/* ──────────── Top Nav ──────────── */
+.topnav {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: color-mix(in oklab, var(--paper) 88%, transparent);
+  backdrop-filter: saturate(1.2) blur(10px);
+  -webkit-backdrop-filter: saturate(1.2) blur(10px);
+  border-bottom: 1px solid var(--hairline-soft);
+}
+.topnav-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: calc(var(--space-unit) * 0.9) calc(var(--space-unit) * 1.4);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: calc(var(--space-unit));
+}
+.brand {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  display: flex;
+  align-items: center;
+  gap: 0.6em;
+}
+.brand .dot {
+  width: 9px; height: 9px; border-radius: 50%;
+  background: var(--accent);
+  display: inline-block;
+  transition: transform 420ms var(--ease-out);
+}
+.brand:hover .dot { transform: scale(1.4) rotate(45deg); }
+
+.nav-links {
+  display: flex; gap: calc(var(--space-unit) * 1.6);
+  align-items: center;
+}
+.nav-link {
+  position: relative;
+  font-family: var(--font-body);
+  font-size: 0.97rem;
+  color: var(--ink-muted);
+  padding: 0.3rem 0.1rem;
+  transition: color 280ms var(--ease-out);
+  cursor: pointer;
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: -2px;
+  height: 1px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 340ms var(--ease-out);
+}
+.nav-link:hover { color: var(--ink); }
+.nav-link:hover::after { transform: scaleX(1); }
+.nav-link.active { color: var(--ink); }
+.nav-link.active::after { transform: scaleX(1); }
+
+.nav-controls {
+  display: flex; align-items: center; gap: calc(var(--space-unit) * 0.5);
+}
+.pill {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.42rem 0.72rem;
+  border: 1px solid var(--hairline);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink-muted);
+  cursor: pointer;
+  transition: all 260ms var(--ease-out);
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+}
+.pill:hover { color: var(--ink); border-color: var(--ink); transform: translateY(-1px); }
+
+.pill-icon {
+  display: inline-flex;
+  width: 28px; height: 28px;
+  align-items: center; justify-content: center;
+  border: 1px solid var(--hairline);
+  border-radius: 999px;
+  color: var(--ink-muted);
+  cursor: pointer;
+  background: transparent;
+  transition: all 260ms var(--ease-out);
+}
+.pill-icon:hover { color: var(--ink); border-color: var(--ink); transform: translateY(-1px); }
+
+.lang-toggle {
+  display: inline-flex;
+  border: 1px solid var(--hairline);
+  border-radius: 999px;
+  overflow: hidden;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+}
+.lang-toggle button {
+  padding: 0.42rem 0.7rem;
+  background: transparent;
+  color: var(--ink-muted);
+  border: none;
+  cursor: pointer;
+  line-height: 1;
+  transition: all 260ms var(--ease-out);
+}
+.lang-toggle button.on {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+/* ──────────── Mobile nav toggle ──────────── */
+.nav-mobile-btn { display: none; }
+@media (max-width: 780px) {
+  .nav-links { display: none; }
+  .nav-mobile-btn { display: inline-flex; }
+  .nav-mobile-open .nav-links {
+    display: flex;
+    position: absolute;
+    top: 100%;
+    left: 0; right: 0;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    background: var(--paper);
+    border-bottom: 1px solid var(--hairline-soft);
+    padding: calc(var(--space-unit) * 0.8) calc(var(--space-unit) * 1.4);
+    box-shadow: 0 14px 30px -18px rgba(0,0,0,0.25);
+  }
+  .nav-mobile-open .nav-link { border: 1px solid var(--hairline); padding: 0.45rem 0.9rem; font-size: 0.95rem; }
+  .nav-mobile-open .nav-link::after { display: none; }
+  .nav-mobile-open .nav-link.active { border-color: var(--accent); color: var(--accent); }
+}
+
+/* ──────────── Generic page ──────────── */
+.page {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: calc(var(--space-unit) * 2) calc(var(--space-unit) * 1.4);
+}
+
+.fade-in {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 900ms var(--ease-out), transform 900ms var(--ease-out);
+}
+.fade-in.in {
+  opacity: 1;
+  transform: none;
+}
+
+/* ──────────── HOME / Hero ──────────── */
+.hero {
+  min-height: calc(100vh - 68px);
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: calc(var(--space-unit) * 3);
+  align-items: center;
+  padding: calc(var(--space-unit) * 3) calc(var(--space-unit) * 1.4);
+  max-width: 1400px;
+  margin: 0 auto;
+  position: relative;
+}
+.hero-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin-bottom: 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.8em;
+}
+.hero-eyebrow::before {
+  content: "";
+  width: 32px; height: 1px;
+  background: var(--accent);
+}
+.hero-title {
+  font-weight: 400;
+  margin: 0 0 0.2em 0;
+  line-height: 1.35;
+}
+.hero-title em {
+  font-style: italic;
+  color: var(--accent);
+  font-family: var(--font-display);
+}
+.hero-tagline {
+  font-family: var(--font-display);
+  font-style: italic;
+  color: var(--ink-muted);
+  font-size: clamp(1.15rem, 1.8vw, 1.5rem);
+  margin-top: 0.4rem;
+  margin-bottom: 1.8rem;
+}
+.hero-intro {
+  max-width: 40ch;
+  color: var(--ink-muted);
+  font-size: 1.08rem;
+  margin-bottom: 2rem;
+}
+.hero-ctas {
+  display: flex;
+  gap: calc(var(--space-unit) * 1);
+  flex-wrap: wrap;
+}
+.cta {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  padding: 0.9rem 1.4rem;
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  letter-spacing: 0.01em;
+  border: 1px solid var(--ink);
+  color: var(--ink);
+  background: transparent;
+  cursor: pointer;
+  overflow: hidden;
+  transition: color 360ms var(--ease-out);
+  border-radius: 2px;
+}
+.cta::before {
+  content: "";
+  position: absolute; inset: 0;
+  background: var(--ink);
+  transform: translateY(101%);
+  transition: transform 420ms var(--ease-out);
+  z-index: 0;
+}
+.cta > * { position: relative; z-index: 1; }
+.cta:hover { color: var(--paper); }
+.cta:hover::before { transform: translateY(0); }
+.cta.primary { background: var(--ink); color: var(--paper); }
+.cta.primary::before { background: var(--accent); }
+.cta.primary:hover { color: var(--accent-ink); }
+
+.hero-aside {
+  position: relative;
+  border-left: 1px solid var(--hairline);
+  padding-left: calc(var(--space-unit) * 2);
+  min-height: 380px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.6rem;
+}
+.hero-meta {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.hero-meta b {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1.35rem;
+  color: var(--ink);
+  letter-spacing: 0;
+  text-transform: none;
+  margin-top: 0.25rem;
+}
+.hero-marginalia {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.05rem;
+  color: var(--ink-muted);
+  line-height: 1.5;
+  max-width: 32ch;
+}
+.hero-marginalia::before {
+  content: "“";
+  display: block;
+  font-size: 3.8rem;
+  line-height: 0.3;
+  color: var(--accent);
+  margin-bottom: 1.5rem;
+  font-family: var(--font-display);
+}
+
+@media (max-width: 900px) {
+  .hero { grid-template-columns: 1fr; gap: calc(var(--space-unit) * 2); min-height: auto; }
+  .hero-aside { border-left: none; padding-left: 0; border-top: 1px solid var(--hairline); padding-top: calc(var(--space-unit) * 2); min-height: auto; }
+}
+
+/* ──────────── PROFESSIONAL page (sidebar + content) ──────────── */
+.prof-layout {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+.prof-sidebar {
+  position: sticky;
+  top: 92px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+.prof-sidebar .eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 0.8rem;
+  padding-left: 0.15rem;
+}
+.prof-side-link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.55rem 0.15rem;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--ink-muted);
+  cursor: pointer;
+  border-left: 1px solid transparent;
+  padding-left: 0.9rem;
+  margin-left: -0.9rem;
+  transition: all 260ms var(--ease-out);
+  position: relative;
+}
+.prof-side-link .num {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+  letter-spacing: 0.06em;
+}
+.prof-side-link:hover {
+  color: var(--ink);
+  border-left-color: var(--hairline);
+  transform: translateX(2px);
+}
+.prof-side-link.active {
+  color: var(--ink);
+  border-left-color: var(--accent);
+}
+.prof-side-link.active .num { color: var(--accent); }
+
+.prof-download {
+  margin-top: calc(var(--space-unit) * 1.4);
+  padding-top: calc(var(--space-unit) * 1);
+  border-top: 1px solid var(--hairline-soft);
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  transition: color 280ms var(--ease-out);
+}
+.prof-download:hover { color: var(--accent); }
+
+.prof-content { min-width: 0; max-width: 880px; margin: 0 auto; padding: calc(var(--space-unit) * 1.6) calc(var(--space-unit) * 1.4) calc(var(--space-unit) * 2.4); }
+.prof-section {
+  padding: calc(var(--space-unit) * 2.4) 0;
+  border-top: 1px solid var(--hairline-soft);
+  scroll-margin-top: 92px;
+}
+.prof-section:first-child { border-top: none; padding-top: 0; }
+.prof-section h2 {
+  margin-bottom: 1.6rem;
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+}
+.prof-section h2 .num {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  letter-spacing: 0.1em;
+}
+
+/* About big type */
+.about-lead {
+  font-family: var(--font-display);
+  font-size: clamp(1.45rem, 2.4vw, 2rem);
+  line-height: 1.35;
+  color: var(--ink);
+  max-width: 34ch;
+  margin-bottom: 1.6rem;
+}
+.about-lead em { color: var(--accent); font-style: italic; }
+
+.about-body {
+  color: var(--ink-muted);
+  font-size: 1.08rem;
+  max-width: 52ch;
+}
+
+/* Experience timeline */
+.timeline { display: flex; flex-direction: column; gap: 2.2rem; }
+.tl-item {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: calc(var(--space-unit) * 1.6);
+  position: relative;
+  padding-left: 0;
+}
+.tl-period {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  color: var(--ink-soft);
+  text-transform: uppercase;
+  padding-top: 0.35rem;
+}
+.tl-body { position: relative; padding-left: 1.4rem; border-left: 1px solid var(--hairline); }
+.tl-body::before {
+  content: "";
+  position: absolute;
+  left: -4px; top: 0.6rem;
+  width: 7px; height: 7px;
+  background: var(--accent);
+  border-radius: 50%;
+  transition: transform 320ms var(--ease-out), box-shadow 320ms var(--ease-out);
+}
+.tl-item:hover .tl-body::before {
+  transform: scale(1.7);
+  box-shadow: 0 0 0 4px color-mix(in oklab, var(--accent) 18%, transparent);
+}
+.tl-role {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  color: var(--ink);
+  margin-bottom: 0.1rem;
+}
+.tl-org {
+  color: var(--ink-muted);
+  font-style: italic;
+  margin-bottom: 0.9rem;
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+}
+.tl-bullets {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+.tl-bullets li {
+  position: relative;
+  padding-left: 1.2rem;
+  color: var(--ink-muted);
+  font-size: 1rem;
+}
+.tl-bullets li::before {
+  content: "—";
+  position: absolute; left: 0;
+  color: var(--accent);
+}
+@media (max-width: 640px) {
+  .tl-item { grid-template-columns: 1fr; gap: 0.4rem; }
+  .tl-body { padding-left: 1.2rem; }
+}
+
+/* Projects grid */
+.proj-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border-top: 1px solid var(--hairline-soft);
+}
+.proj-card {
+  padding: calc(var(--space-unit) * 1.4);
+  border-bottom: 1px solid var(--hairline-soft);
+  border-right: 1px solid var(--hairline-soft);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: background 320ms var(--ease-out);
+}
+.proj-card:nth-child(2n) { border-right: none; }
+.proj-card::before {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 1px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 420ms var(--ease-out);
+}
+.proj-card:hover { background: var(--paper-2); }
+.proj-card:hover::before { transform: scaleX(1); }
+.proj-title {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  margin-bottom: 0.4rem;
+  transition: transform 320ms var(--ease-out);
+}
+.proj-card:hover .proj-title {
+  transform: translateX(3px);
+  color: var(--accent);
+}
+.proj-desc {
+  color: var(--ink-muted);
+  font-size: 0.98rem;
+  margin-bottom: 1rem;
+  max-width: 42ch;
+}
+.proj-tags {
+  display: flex; flex-wrap: wrap; gap: 0.4rem;
+}
+.proj-tag {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.5rem;
+  background: transparent;
+  color: var(--ink-soft);
+  border: 1px solid var(--hairline-soft);
+  border-radius: 0;
+}
+@media (max-width: 640px) {
+  .proj-grid { grid-template-columns: 1fr; }
+  .proj-card { border-right: none; }
+}
+
+/* Skills */
+.skills-grid {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--space-unit) * 1.3);
+}
+.skill-group-title {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 0.8rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--hairline-soft);
+}
+.skill-list {
+  list-style: none; padding: 0; margin: 0;
+  display: flex; flex-wrap: wrap; gap: 0.5rem;
+}
+.skill-list li {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--ink);
+  border: 1px solid var(--hairline);
+  padding: 0.32rem 0.8rem;
+  transition: border-color 260ms var(--ease-out), color 260ms var(--ease-out);
+  cursor: default;
+}
+.skill-list li:hover { color: var(--accent); border-color: var(--accent); }
+@media (max-width: 780px) { .skill-list li { font-size: 0.9rem; padding: 0.3rem 0.7rem; } }
+
+/* Education */
+.edu-list { display: flex; flex-direction: column; gap: 1.4rem; }
+.edu-item {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: calc(var(--space-unit) * 1.6);
+}
+.edu-item .tl-period { padding-top: 0.2rem; }
+.edu-school { font-family: var(--font-display); font-size: 1.2rem; }
+.edu-degree { color: var(--ink-muted); font-style: italic; }
+@media (max-width: 640px) { .edu-item { grid-template-columns: 1fr; gap: 0.3rem; } }
+
+/* Publications */
+.pub-list { display: flex; flex-direction: column; gap: 1rem; }
+.pub-item {
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--hairline-soft);
+}
+.pub-title { font-family: var(--font-display); font-size: 1.15rem; }
+.pub-venue {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  color: var(--ink-soft);
+  text-transform: uppercase;
+  margin-top: 0.25rem;
+}
+
+/* Contact */
+.contact-list { display: flex; flex-wrap: wrap; gap: 1rem; }
+.contact-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  padding: 0.7rem 1.2rem;
+  border: 1px solid var(--hairline);
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  transition: all 320ms var(--ease-out);
+  position: relative;
+  overflow: hidden;
+}
+.contact-link:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+@media (max-width: 900px) {
+  .prof-layout { grid-template-columns: 1fr; }
+  .prof-sidebar {
+    position: static;
+    flex-direction: row;
+    overflow-x: auto;
+    gap: 0.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--hairline-soft);
+    scrollbar-width: thin;
+  }
+  .prof-sidebar .eyebrow, .prof-download { display: none; }
+  .prof-side-link {
+    border-left: none;
+    border-bottom: 1px solid transparent;
+    padding: 0.4rem 0.8rem;
+    margin-left: 0;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .prof-side-link.active {
+    border-left: none;
+    border-bottom-color: var(--accent);
+  }
+  .prof-side-link:hover { transform: none; }
+}
+
+/* ──────────── FOOTPRINT page ──────────── */
+.foot-header {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: calc(var(--space-unit) * 2) calc(var(--space-unit) * 1.4) calc(var(--space-unit) * 0.5);
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: calc(var(--space-unit) * 3);
+  align-items: end;
+}
+.foot-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 5vw, 3.6rem);
+  line-height: 1.05;
+  margin: 0 0 0.3rem 0;
+  font-weight: 400;
+}
+.foot-title em { font-style: italic; color: var(--accent); }
+.foot-subtitle {
+  font-family: var(--font-display);
+  font-style: italic;
+  color: var(--ink-muted);
+  font-size: 1.2rem;
+  max-width: 40ch;
+}
+.foot-counts {
+  display: flex; gap: calc(var(--space-unit) * 2);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.foot-counts b {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 2.2rem;
+  color: var(--ink);
+  letter-spacing: 0;
+  text-transform: none;
+  margin-bottom: 0.25rem;
+}
+
+.map-wrap {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: calc(var(--space-unit) * 1.2) calc(var(--space-unit) * 1.4);
+  position: relative;
+}
+.map-frame {
+  border: 1px solid var(--hairline);
+  background: var(--paper-2);
+  position: relative;
+  aspect-ratio: 2 / 1;
+  overflow: hidden;
+}
+.map-svg { width: 100%; height: 100%; display: block; }
+
+.pin {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  z-index: 2;
+}
+.pin-dot {
+  width: 16px; height: 16px;
+  color: var(--accent);
+  display: block;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.35));
+  transition: all 320ms var(--ease-out);
+}
+.pin:hover .pin-dot,
+.pin.active .pin-dot {
+  transform: scale(1.35);
+}
+.route-svg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
+.pin-round { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); border: 2px solid var(--paper); filter: none; }
+.pin-label {
+  position: absolute;
+  left: 16px; top: -8px;
+  white-space: nowrap;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 0.35rem 0.7rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateX(-6px);
+  transition: opacity 280ms var(--ease-out), transform 280ms var(--ease-out);
+}
+.pin:hover .pin-label,
+.pin.active .pin-label {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.pin-pulse {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  border: 1px solid var(--accent);
+  transform: translate(-50%, -50%);
+  animation: pulse 2.4s var(--ease-out) infinite;
+  pointer-events: none;
+}
+@keyframes pulse {
+  0% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; }
+  100% { transform: translate(-50%, -50%) scale(4); opacity: 0; }
+}
+
+/* Trip list below map */
+.trip-list-wrap {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: calc(var(--space-unit) * 2) calc(var(--space-unit) * 1.4);
+}
+.trip-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 0;
+  border-top: 1px solid var(--hairline);
+  border-left: 1px solid var(--hairline);
+}
+.trip-card {
+  padding: calc(var(--space-unit) * 1.3);
+  border-right: 1px solid var(--hairline);
+  border-bottom: 1px solid var(--hairline);
+  cursor: pointer;
+  position: relative;
+  transition: background 320ms var(--ease-out);
+  overflow: hidden;
+}
+.trip-card:hover, .trip-card.active { background: var(--paper-2); }
+.trip-card .trip-date {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 0.5rem;
+}
+.trip-card .trip-place {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  margin-bottom: 0.3rem;
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  transition: transform 280ms var(--ease-out), color 280ms var(--ease-out);
+}
+.trip-flag {
+  font-size: 1.15rem;
+  line-height: 1;
+  filter: saturate(0.92);
+}
+.trip-card:hover .trip-place { transform: translateX(3px); color: var(--accent); }
+.trip-card .trip-note {
+  color: var(--ink-muted);
+  font-style: italic;
+  font-family: var(--font-display);
+  font-size: 1.02rem;
+  max-width: 32ch;
+}
+.trip-photos {
+  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+}
+.trip-photo {
+  aspect-ratio: 4 / 3;
+  background: var(--paper-2);
+  border: 1px solid var(--hairline-soft);
+  color: var(--ink-soft);
+  transition: transform 320ms var(--ease-out), border-color 260ms var(--ease-out);
+  overflow: hidden;
+  position: relative;
+}
+.trip-photo svg { display: block; width: 100%; height: 100%; }
+.trip-card:hover .trip-photo { border-color: var(--hairline); }
+.trip-photo:hover { transform: scale(1.04); z-index: 2; border-color: var(--accent); }
+
+/* Footprint responsive */
+.other-grid{max-width:1100px;margin:0 auto;padding:0 calc(var(--space-unit)*1.4) calc(var(--space-unit)*3);display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:calc(var(--space-unit)*1)}
+.other-card{border:1px solid var(--hairline-soft);padding:calc(var(--space-unit)*0.8);transition:border-color 300ms var(--ease-out)}
+.other-card:hover{border-color:var(--accent)}
+.other-num{font-family:var(--font-mono);font-size:.65rem;color:var(--ink-soft);letter-spacing:.1em;margin-bottom:.5rem}
+.other-photo{aspect-ratio:4/3;margin-bottom:.7rem}
+.other-title{font-family:var(--font-display);font-size:1.25rem}
+@media (max-width:780px){.other-grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width: 780px) {
+  .foot-header { grid-template-columns: 1fr; gap: 1.2rem; }
+  .foot-counts { gap: 1.4rem; }
+}
+
+/* ──────────── TWEAKS panel ──────────── */
+.tweaks-panel {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 90;
+  width: 280px;
+  background: var(--paper);
+  border: 1px solid var(--hairline);
+  padding: 1rem 1.1rem 1.1rem;
+  font-family: var(--font-body);
+  box-shadow: 0 12px 40px -10px rgba(0,0,0,0.18);
+  display: none;
+  animation: panel-in 360ms var(--ease-out);
+}
+.tweaks-panel.on { display: block; }
+@keyframes panel-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+.tweaks-title {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 0.9rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid var(--hairline-soft);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.tweak-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.65rem;
+  gap: 0.6rem;
+}
+.tweak-row:last-child { margin-bottom: 0; }
+.tweak-label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  color: var(--ink-muted);
+  text-transform: uppercase;
+}
+.tweak-swatches {
+  display: flex; gap: 0.3rem;
+}
+.tweak-swatch {
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  border: 1px solid var(--hairline);
+  cursor: pointer;
+  transition: transform 220ms var(--ease-out);
+}
+.tweak-swatch:hover { transform: scale(1.15); }
+.tweak-swatch.on { transform: scale(1.2); border-color: var(--ink); }
+
+.tweak-select {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  padding: 0.3rem 0.5rem;
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid var(--hairline);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.tweak-toggle {
+  display: inline-flex;
+  border: 1px solid var(--hairline);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.tweak-toggle button {
+  padding: 0.28rem 0.55rem;
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: transparent;
+  color: var(--ink-muted);
+  border: none;
+  cursor: pointer;
+}
+.tweak-toggle button.on {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+/* ──────────── Footer ──────────── */
+.site-foot {
+  border-top: 1px solid var(--hairline-soft);
+  padding: calc(var(--space-unit) * 1.6) calc(var(--space-unit) * 1.4);
+  max-width: 1400px;
+  margin: 0 auto;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+
+/* ────────────────────────────────────────
+   Additions for v2: projects with link cards,
+   research/competitions timeline, edu coursework,
+   sidebar meta, contact arrow span.
+   ──────────────────────────────────────── */
+
+.muted { color: var(--ink-soft); }
+
+.prof-side-meta {
+  margin-top: calc(var(--space-unit) * 1.2);
+  padding-top: calc(var(--space-unit) * 0.9);
+  border-top: 1px solid var(--hairline-soft);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+  color: var(--ink-soft);
+  line-height: 1.7;
+  word-break: break-all;
+}
+
+/* Education coursework line */
+.edu-course {
+  margin-top: 0.4rem;
+  font-family: var(--font-body);
+  font-size: 0.96rem;
+  color: var(--ink-muted);
+}
+
+/* Research / activities timeline desc paragraph */
+.tl-desc {
+  margin: 0.5rem 0 0.7rem;
+  color: var(--ink-muted);
+  font-size: 1.02rem;
+  max-width: 60ch;
+}
+
+/* Project cards now anchors with meta + stack + arrow */
+.proj-card {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+.proj-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 0.7rem;
+}
+.proj-arrow {
+  font-size: 1rem;
+  letter-spacing: 0;
+  transition: transform 320ms var(--ease-out);
+  color: var(--ink-muted);
+}
+.proj-card:hover .proj-arrow {
+  transform: translate(3px, -3px);
+  color: var(--accent);
+}
+.proj-stack {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+  letter-spacing: 0.02em;
+  margin: 0.3rem 0 0.7rem;
+}
+
+/* Competitions */
+.comp-list {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--space-unit) * 1.6);
+}
+.comp-item {
+  display: grid;
+  grid-template-columns: 130px 1fr;
+  gap: calc(var(--space-unit) * 1.4);
+  padding-bottom: calc(var(--space-unit) * 1.4);
+  border-bottom: 1px solid var(--hairline-soft);
+}
+.comp-item:last-child { border-bottom: none; }
+.comp-time {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  color: var(--ink-soft);
+  padding-top: 0.3rem;
+}
+.comp-title {
+  font-family: var(--font-display);
+  font-size: 1.45rem;
+  letter-spacing: -0.005em;
+  margin-bottom: 0.25rem;
+}
+.comp-award {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  border: 1px solid color-mix(in oklab, var(--accent) 50%, var(--hairline));
+  padding: 0.28rem 0.55rem;
+  border-radius: 0;
+  margin-bottom: 0.6rem;
+  background: color-mix(in oklab, var(--accent) 6%, transparent);
+}
+.comp-metrics {
+  display: flex;
+  gap: calc(var(--space-unit) * 1.4);
+  margin: 0.8rem 0 0.9rem;
+  padding: 0.9rem 1.1rem;
+  border: 1px solid var(--hairline-soft);
+  border-left: 2px solid var(--accent);
+  background: var(--paper-2);
+}
+.metric { display: flex; flex-direction: column; gap: 0.15rem; }
+.metric-value {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  color: var(--accent);
+  line-height: 1;
+}
+.metric-label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+@media (max-width: 640px) {
+  .comp-item { grid-template-columns: 1fr; gap: 0.3rem; }
+  .comp-metrics { gap: 1.2rem; }
+}
+
+/* Contact link arrow (span instead of ::after) */
+.contact-link {
+  gap: 0.6em;
+}
+.contact-link .arr {
+  transition: transform 320ms var(--ease-out);
+  display: inline-block;
+}
+.contact-link:hover .arr { transform: translateX(4px); }
+
+/* Home masthead (v3) */
+.home{max-width:1400px;margin:0 auto;padding:calc(var(--space-unit)*3.2) calc(var(--space-unit)*1.4) calc(var(--space-unit)*2)}
+.home-kicker{font-family:var(--font-mono);font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:1.4rem}
+.home-name{font-size:clamp(3.2rem,10.5vw,8.5rem);line-height:.98;font-weight:400;letter-spacing:-.02em;margin:0}
+.home-name-en{display:block;font-style:italic;color:var(--accent);font-size:clamp(1.9rem,5.6vw,4.4rem);margin-top:.15em}
+.home-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:calc(var(--space-unit)*3);border-top:1px solid var(--hairline);margin-top:calc(var(--space-unit)*2.6);padding:calc(var(--space-unit)*2) 0}
+.home-intro{font-size:1.14rem;color:var(--ink-muted);max-width:56ch;margin:0}
+.home-facts{display:flex;flex-direction:column;gap:.9rem;border-left:1px solid var(--hairline);padding-left:calc(var(--space-unit)*1.6)}
+.home-fact{font-family:var(--font-body);font-size:1.02rem;color:var(--ink)}
+.home-fact span{display:block;font-family:var(--font-mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:.15rem}
+.home-doors{display:flex;flex-direction:column}
+.hero-links{display:flex;flex-wrap:wrap;gap:.55rem .5rem;margin-top:.4rem}
+.hero-links a{font-family:var(--font-mono);font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);border:1px solid var(--hairline);padding:.45rem .8rem;transition:color 260ms var(--ease-out),border-color 260ms var(--ease-out)}
+.hero-links a:hover{color:var(--accent);border-color:var(--accent)}
+.hero-meta .sub{display:block;font-style:normal;font-size:.82rem;color:var(--ink-soft);margin-top:.18rem}
+@keyframes riseIn{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
+.hero-anim .hero-eyebrow,.hero-anim .hero-title,.hero-anim .hero-tagline,.hero-anim .hero-intro,.hero-anim .hero-ctas{opacity:0;animation:riseIn 720ms var(--ease-out) forwards}
+.hero-anim .hero-eyebrow{animation-delay:40ms}
+.hero-anim .hero-title{animation-delay:140ms}
+.hero-anim .hero-tagline{animation-delay:300ms}
+.hero-anim .hero-intro{animation-delay:440ms}
+.hero-anim .hero-ctas{animation-delay:580ms}
+.hero-anim .hero-aside > *{opacity:0;animation:riseIn 720ms var(--ease-out) forwards}
+.hero-anim .hero-aside > *:nth-child(1){animation-delay:520ms}
+.hero-anim .hero-aside > *:nth-child(2){animation-delay:610ms}
+.hero-anim .hero-aside > *:nth-child(3){animation-delay:700ms}
+.hero-anim .hero-aside > *:nth-child(4){animation-delay:790ms}
+.hero-anim .hero-aside > *:nth-child(5){animation-delay:880ms}
+.hero-anim .hero-aside > *:nth-child(6){animation-delay:960ms}
+@media (prefers-reduced-motion:reduce){.hero-anim *,.hero-anim .hero-aside > *{animation:none!important;opacity:1!important}}
+.door{display:grid;grid-template-columns:auto auto 1fr auto;align-items:baseline;gap:calc(var(--space-unit)*1.4);padding:calc(var(--space-unit)*1.5) 0;border-top:1px solid var(--hairline);cursor:pointer;transition:color 300ms var(--ease-out)}
+.door:last-child{border-bottom:1px solid var(--hairline)}
+.door-num{font-family:var(--font-mono);font-size:.78rem;color:var(--ink-soft)}
+.door-title{font-family:var(--font-display);font-size:clamp(1.7rem,3.8vw,2.8rem);line-height:1}
+.door-sub{font-family:var(--font-display);font-style:italic;color:var(--ink-soft);font-size:1rem;justify-self:end}
+.door-arr{font-size:1.4rem;transition:transform 300ms var(--ease-out)}
+.door:hover{color:var(--accent)}
+.door:hover .door-arr{transform:translateX(10px)}
+@media (max-width:780px){.home-grid{grid-template-columns:1fr;gap:calc(var(--space-unit)*1.6)}.home-facts{border-left:none;padding-left:0;border-top:1px solid var(--hairline-soft);padding-top:calc(var(--space-unit)*1.4)}.door-sub{display:none}}
+
+/* Professional sticky top section-nav (v3) */
+.prof-topnav{position:sticky;top:68px;z-index:35;display:flex;align-items:center;gap:.1rem;overflow-x:auto;scrollbar-width:none;background:color-mix(in oklab,var(--paper) 92%,transparent);backdrop-filter:saturate(1.2) blur(10px);-webkit-backdrop-filter:saturate(1.2) blur(10px);border-bottom:1px solid var(--hairline-soft);padding:0 calc(var(--space-unit)*1.4)}
+.prof-topnav::-webkit-scrollbar{display:none}
+.pt-link{display:inline-flex;align-items:baseline;gap:.45rem;padding:.85rem .8rem;font-family:var(--font-body);font-size:.95rem;color:var(--ink-muted);cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;margin-bottom:-1px;transition:color 260ms var(--ease-out),border-color 260ms var(--ease-out)}
+.pt-link .num{font-family:var(--font-mono);font-size:.66rem;color:var(--ink-soft);letter-spacing:.06em}
+.pt-link:hover{color:var(--ink)}
+.pt-link.active{color:var(--ink);border-bottom-color:var(--accent)}
+.pt-link.active .num{color:var(--accent)}
+.pt-download{margin-left:auto;font-family:var(--font-mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-muted);white-space:nowrap;padding:.85rem .2rem .85rem 1rem;transition:color 260ms var(--ease-out)}
+.pt-download:hover{color:var(--accent)}
+
+/* Mobile: section nav becomes a left side rail */
+@media (max-width:780px){
+.prof-topnav{position:fixed;top:50%;left:0;transform:translateY(-50%);flex-direction:column;align-items:stretch;gap:0;padding:.25rem;width:auto;overflow:visible;border:1px solid var(--hairline-soft);border-left:none;border-radius:0 6px 6px 0;box-shadow:2px 4px 18px -8px rgba(0,0,0,.15)}
+.pt-link{min-height:44px;min-width:44px;padding:.4rem .55rem;justify-content:center;border-bottom:none;border-left:2px solid transparent;margin-bottom:0}
+.pt-link span:not(.num){display:none}
+.pt-link .num{font-size:.72rem}
+.pt-link.active{border-bottom-color:transparent;border-left-color:var(--accent)}
+.pt-download{display:none}
+.prof-content{padding-left:calc(52px + var(--space-unit))}
+}
+
+/* ──── Riso skin overrides ──── */
+body::before{content:"";position:fixed;inset:0;background:repeating-linear-gradient(45deg,color-mix(in oklab,var(--ink) 5%,transparent) 0 1px,transparent 1px 7px);pointer-events:none;z-index:60}
+body{font-size:16px;line-height:1.66}
+h1,h2,h3{letter-spacing:.01em}
+.hero-title em,.foot-title em,.home-name-en{font-style:normal;color:var(--accent)}
+.hero-title em{font-family:'Great Vibes',var(--font-display);font-weight:400;font-size:1.08em;letter-spacing:.02em}
+.hero-eyebrow{color:var(--accent)}
+.topnav{backdrop-filter:none;-webkit-backdrop-filter:none;background:var(--paper);border-bottom:2px solid var(--ink)}
+.nav-link::after{height:3px;background:var(--accent)}
+.cta,.hero-links a,.pill-icon,.lang-toggle,.tweak-select{border-radius:0!important}
+.cta{border:2px solid var(--ink);font-family:var(--font-mono);font-weight:700;text-transform:uppercase;letter-spacing:.12em;font-size:.78rem}
+.cta.primary{background:var(--accent);color:#171717;border-color:var(--ink)}
+.hero-links a{border:2px solid var(--ink);font-weight:700}
+.skill-list li{border:1.5px solid var(--ink)}
+.proj-card,.other-card,.comp-item,.edu-item{border-radius:0}
+.other-card{border:2px solid var(--ink)}
+.trip-note{font-style:normal;color:var(--ink-muted)}
+.about-lead em{font-style:normal;color:var(--accent)}
+.prof-topnav{backdrop-filter:none;-webkit-backdrop-filter:none;background:var(--paper)}
+.pt-link.active{border-bottom-width:3px}
+.map-frame{border:2px solid var(--ink)}
+.trip-list > *{display:flex}
+.trip-card{width:100%;display:flex;flex-direction:column}
+.trip-card .trip-place{height:2.3em;min-height:0;overflow:hidden;align-items:flex-start}
+.trip-card .trip-note{height:3em;overflow:hidden}
+.trip-card .trip-photos{margin-top:auto}
+.site-foot{font-family:var(--font-mono);text-transform:uppercase;letter-spacing:.14em;font-size:.68rem}
+
+  </style>
 </head>
 <body>
-  <div class="layout" style="grid-template-columns:1fr">
-    <main class="main">
-      <div class="container">
-        <div class="hero">
-          <h1 class="h1">Choose a language</h1>
-          <p class="sub">Static portfolio with bilingual routing, filters, and a contact form.</p>
-          <div class="grid" style="grid-template-columns:1fr 1fr">
-            <div class="card">
-              <h2 style="margin:0 0 10px">English</h2>
-              <a class="btn" href="/en/">Open</a>
-            </div>
-            <div class="card">
-              <h2 style="margin:0 0 10px">中文</h2>
-              <a class="btn" href="/zh/">打開</a>
-            </div>
+  <div id="root"></div>
+  <script>
+window.SITE_DATA = {
+  profile: {
+    name: { zh: "黃淯琪 Meredith Huang", en: "Meredith Huang" },
+    role: {
+      zh: "NYCU 電機工程 · UIUC EE 交換",
+      en: "NYCU Electrical Engineering · UIUC EE Exchange"
+    },
+    tagline: {
+      zh: "(I/E)NTP",
+      en: "(I/E)NTP"
+    },
+    intro: {
+      zh: "電機系學生,目前在交大進行電腦視覺研究,聚焦於對抗式機器學習。曾於 UIUC 交換,累積 EDA 物理設計的競賽經驗與 GPU 平行化的實作經驗。預計申請美國研究所繼續深耕。",
+      en: "An EE student at NYCU, working on computer vision with a focus on adversarial machine learning. I spent Fall 2025 on exchange at UIUC, and have competition experience in EDA physical design plus hands-on GPU work. Applying to grad schools in the US next."
+    },
+    location: { zh: "台灣", en: "Taiwan" },
+    contact: {
+      phone: "+886 925-317-261",
+      email: "meredith.mh24@gmail.com",
+      languages: { zh: "中文(母語) · 英文 IELTS 7.5", en: "Mandarin (native) · English (IELTS 7.5)" }
+    },
+    socials: [
+      { label: "Email",     href: "mailto:meredith.mh24@gmail.com" },
+      { label: "GitHub",    href: "https://github.com/kiwii424" },
+      { label: "LinkedIn",  href: "https://www.linkedin.com/in/meredith-huang/" },
+      { label: "Instagram", href: "https://www.instagram.com/meredith.4xxiv/" }
+    ]
+  },
+
+  education: [
+    {
+      school: { zh: "國立陽明交通大學", en: "National Yang Ming Chiao Tung University" },
+      degree: { zh: "電機工程學系 學士", en: "B.S. in Electronics and Electrical Engineering" },
+      time: { zh: "2022.09 – 2026.06", en: "Sep 2022 – Jun 2026" },
+      place: { zh: "新竹 · 台灣", en: "Hsinchu, Taiwan" },
+      coursework: {
+        zh: "生成式人工智慧、機器學習、演算法、資料結構、機率、線性代數",
+        en: "Generative AI, Machine Learning, Algorithms, Data Structures, Probability, Linear Algebra"
+      }
+    },
+    {
+      school: { zh: "伊利諾大學厄巴納-香檳分校", en: "University of Illinois Urbana-Champaign" },
+      degree: { zh: "電機工程 交換學生", en: "Exchange Student in Electrical Engineering" },
+      time: { zh: "2025.08 – 2025.12", en: "Aug 2025 – Dec 2025" },
+      place: { zh: "Illinois · 美國", en: "Illinois, USA" },
+      coursework: {
+        zh: "Applied Parallel Programming(CUDA)",
+        en: "Applied Parallel Programming"
+      }
+    }
+  ],
+
+  publications: [
+    {
+      title: "A Blind Spot in Image Immunization: Subject-Preserving Background Replacement Reveals a Hidden Vulnerability",
+      authors: "Meredith Huang, Ling Lo, Tzu-Ling Lin, Hong-Han Shuai",
+      venue: { zh: "審稿中 · AAAI 2027", en: "Under review · AAAI 2027" },
+      desc: {
+        zh: "提出 subject-preserving background replacement 作為 diffusion image immunization 中被忽視的威脅;設計不需 clean image 或防禦知識的 reference-free trajectory 與 attention objectives;評測六種防禦方法,並提出 background-aware immunization,將攻擊成功率從 96% 降至 10.5%。",
+        en: "Proposed subject-preserving background replacement as an overlooked threat to diffusion image immunization. Designed reference-free trajectory and attention objectives requiring no clean image or defense knowledge. Benchmarked six defenses; proposed background-aware immunization cutting attack success from 96% to 10.5%."
+      },
+      tags: ["Adversarial ML", "Diffusion", "Image Immunization"]
+    }
+  ],
+
+  research: [
+    {
+      lab: { zh: "Lab for Digital Twin based Optimization, Delta Research Center", en: "Lab for Digital Twin based Optimization, Delta Research Center" },
+      advisor: { zh: "研究實習生", en: "Research Intern" },
+      time: { zh: "2026.07 – 2026.08", en: "Jul 2026 – Aug 2026" },
+      desc: {
+        zh: "建構 end-to-end 單張影像 3D 資產生成 pipeline,評測 TRELLIS 與 Hunyuan3D;透過 guidance、LoRA、logo restoration、mesh decimation 與 texture refinement 修正產品特定缺陷;訓練 pairwise Bradley-Terry ranker 從 12 個候選中挑選最佳結果(VLM judges 被證實不可靠)。",
+        en: "Built an end-to-end single-image 3D asset generation pipeline; benchmarked TRELLIS and Hunyuan3D. Fixed product-specific defects via guidance, LoRA, logo restoration, mesh decimation, and texture refinement. Trained a pairwise Bradley-Terry ranker to select the best of 12 candidates; VLM judges proved unreliable."
+      },
+      tags: ["3D Generation", "Diffusion", "LoRA", "Ranking"]
+    },
+    {
+      lab: { zh: "Big Data Analytics and Social Intelligent Computing Lab", en: "Big Data Analytics and Social Intelligent Computing Lab" },
+      advisor: { zh: "指導教授:帥宏翰", en: "Advisor: Prof. Hong-Han Shuai" },
+      time: { zh: "2026.02 – 至今", en: "Feb 2026 – Present" },
+      desc: {
+        zh: "研究對抗式機器學習方法應用於影像與影片的「免疫化(immunization)」,並評估其對 Stable Diffusion 編輯與 LoRA fine-tuning 攻擊的防禦能力。",
+        en: "Investigating adversarial machine learning methods for image and video immunization, focusing on evaluating defenses against Stable Diffusion editing and LoRA fine-tuning attacks."
+      },
+      tags: ["Adversarial ML", "Image Immunization", "Stable Diffusion", "LoRA"]
+    },
+    {
+      lab: { zh: "Mixed-Signal Electronic Design Automation Lab", en: "Mixed-Signal Electronic Design Automation Lab" },
+      advisor: { zh: "指導教授:劉建男", en: "Advisor: Prof. Chien-Nan Liu" },
+      time: { zh: "2024.09 – 2025.09", en: "Sep 2024 – Sep 2025" },
+      desc: {
+        zh: "探索基於 ML 的綜合(synthesis)與 floorplanning 優化方法,聚焦在 EDA workflow 中的限制式優化與時序感知目標。",
+        en: "Explored ML-driven optimization methods for synthesis and floorplanning, with an emphasis on constrained optimization and timing-aware objectives in EDA workflows."
+      },
+      tags: ["EDA", "ML for Synthesis", "Floorplanning", "Timing"]
+    }
+  ],
+
+  sidebar: {
+    zh: ["關於", "學歷", "論文發表", "研究經歷", "專案", "競賽", "技能", "課外活動", "聯絡"],
+    en: ["About", "Education", "Publications", "Research", "Projects", "Competitions", "Skills", "Activities", "Contact"]
+  },
+
+  nav: {
+    home:         { zh: "首頁",  en: "Home" },
+    professional: { zh: "履歷",  en: "Professional" },
+    footprint:    { zh: "足跡",  en: "Footprint" },
+    others:       { zh: "更多我",  en: "More of Me" }
+  },
+
+  skills: {
+    programming: { label: { zh: "程式語言", en: "Programming" }, items: ["Python", "C++", "CUDA", "Golang", "Git", "Linux"] },
+    frameworks:  { label: { zh: "框架 / 工具", en: "Frameworks" }, items: ["PyTorch", "TensorFlow", "Scikit-Learn", "NumPy", "Diffusers", "LangChain", "FAISS", "sentence-transformers"] },
+    cloud:       { label: { zh: "雲端 / DevOps", en: "Cloud / DevOps" }, items: ["Azure", "Kubernetes (K8s)", "Docker", "Terraform"] },
+    fields:      { label: { zh: "領域", en: "Fields" }, items: ["Deep Learning", "Computer Vision", "Diffusion Models", "Adversarial ML", "3D Generation", "Graph Neural Networks", "Generative AI", "RAG", "GPU Optimization"] }
+  },
+
+  competitions: [
+    {
+      title: "ICCAD 2025 CAD Contest — Problem C (NVIDIA)",
+      time: { zh: "2025.01 – 2025.09", en: "Jan 2025 – Sep 2025" },
+      award: { zh: "全球第 8 名 · Honorable Mention", en: "Ranked 8th worldwide · Honorable Mention" },
+      desc: {
+        zh: "建構 end-to-end placement pipeline,包含 legalization、detailed placement、STA feedback 與 CUDA 加速 evaluation。將 TNS 改善 67.78%,同時略微降低 HPWL 與功耗。",
+        en: "Built an end-to-end placement pipeline with legalization, detailed placement, STA feedback, and CUDA-accelerated evaluation. Improved TNS by 67.78% while slightly reducing HPWL and power."
+      },
+      metrics: [
+        { label: "TNS", value: "+67.78%" },
+        { label: "Rank", value: "#8 / world" }
+      ],
+      tags: ["EDA", "Placement", "STA", "CUDA"]
+    },
+    {
+      title: "CME Group University Trading Challenge",
+      time: { zh: "2025.09 – 2025.11", en: "Sep 2025 – Nov 2025" },
+      desc: {
+        zh: "赴美交換期間參與國際金融衍生性商品競賽,與跨國團隊在 CME 模擬平台設計與執行交易策略,並應用資料分析提升決策精準度。",
+        en: "International derivatives competition during exchange at UIUC. Designed trading strategies with an international team on CME's simulated platform; applied data analysis to improve decision quality."
+      },
+      tags: ["Trading", "Microstructure", "Data Analysis"]
+    }
+  ],
+
+  projects: [
+    {
+      title: "Document QA based on RAG",
+      time: "2025",
+      stack: "Python · FastAPI · LangChain · FAISS · BM25 · Kubernetes · Docker · Terraform · Azure",
+      desc: {
+        zh: "建構 RAG 系統用於 NLP 論文問答,整合 hybrid retrieval、HyDE、RRF fusion 與 reranking;以 Docker/Kubernetes 部署輕量 cloud-native 服務於 AKS,並用 Terraform 管理基礎設施。將 answer correctness 提升至 66/100、evidence score 至 0.35,優於 baseline 的 48/100 與 0.26。",
+        en: "Built a RAG system for question answering over NLP papers with hybrid retrieval, HyDE, RRF fusion, and reranking. Deployed a lightweight cloud-native service on AKS using Docker/Kubernetes with Terraform-managed infrastructure. Improved answer correctness to 66/100 and evidence score to 0.35 (baseline: 48 / 0.26)."
+      },
+      tags: ["RAG", "LangChain", "FAISS", "LLM", "K8s", "Azure"],
+      link: "https://github.com/kiwii424/Generative-Artificial-Intelligence"
+    },
+    {
+      title: "Node Classification with GATv2",
+      time: "2025",
+      stack: "Python · PyTorch · GATv2 · GNN",
+      desc: {
+        zh: "建構並調校 GATv2 pipeline,用於社群圖的多類別節點分類。透過 noise injection、AMP、regularization 與 mixed-precision 訓練,將 accuracy 比 baseline 提升 4.2 個百分點。",
+        en: "Built and tuned a GATv2 pipeline for multi-class node classification on a social graph. Improved accuracy by 4.2 points over baseline using noise injection, AMP, regularization, and mixed-precision training."
+      },
+      tags: ["GNN", "GATv2", "PyTorch"],
+      link: "https://github.com/kiwii424/Generative-Artificial-Intelligence"
+    },
+    {
+      title: "GPU Optimization for CNN Forward Convolution",
+      time: "2025",
+      stack: "CUDA C/C++ · GPU Profiling",
+      desc: {
+        zh: "使用 im2col、kernel fusion、tiling、loop unrolling 與 stream parallelism 優化 CNN 前向卷積。end-to-end 執行時間從 73.85 ms 降至 38.49 ms,改善 47.9%。",
+        en: "Optimized CNN forward convolution using im2col, kernel fusion, tiling, loop unrolling, and stream parallelism. Reduced end-to-end runtime by 47.9%, from 73.85 ms to 38.49 ms."
+      },
+      tags: ["CUDA", "Kernel Fusion", "Tiling", "Profiling"],
+      link: "https://github.com/kiwii424/Applied-Parallel-Programming"
+    },
+    {
+      title: "Secure File Vault",
+      time: "2024",
+      stack: "Next.js · TypeScript · React · Tailwind · Firebase · NextAuth.js",
+      desc: {
+        zh: "類 Google Drive 的網頁應用,支援雲端儲存、檔案上傳、資料夾導覽與關鍵字搜尋。以 NextAuth.js 實作具身分驗證的檔案管理流程,並提供跨裝置 responsive 介面。",
+        en: "A Google Drive-like web app supporting cloud storage, file upload, folder navigation, and keyword search. Implemented authenticated file management with NextAuth.js and a responsive cross-device UI."
+      },
+      tags: ["Next.js", "TypeScript", "Firebase", "NextAuth"],
+      link: "https://github.com/kiwii424/balance-tracker"
+    }
+  ],
+
+  certifications: [
+    {
+      title: "Fundamentals of Deep Learning",
+      issuer: "NVIDIA",
+      issued: { zh: "2025.06", en: "Jun 2025" },
+      url: "https://learn.nvidia.com/certificates?id=8L3qkP3zS5a4OqmeJ9GcoQ"
+    }
+  ],
+
+  activities: [
+    { role: { zh: "公關部員", en: "PR Member" }, org: { zh: "新竹 × 清交梅竹黑客松", en: "Hsinchu × NTHU/NCTU Meichu Hackathon" }, time: "2022.03 – 2023.11",
+      bullets: { zh: ["負責企業名單開發、建檔、聯繫與贊助洽談", "與三間大型企業接洽,包含 Google、104 人力銀行、羅技電子", "成功爭取總贊助金額近新台幣 200,000"], en: ["Sponsor list development, tracking, outreach, and negotiation", "Connected with Google, 104 Job Bank, and Logitech", "Secured ~TWD 200,000 in total sponsorship"] } },
+    { role: { zh: "公關部長", en: "PR Lead" }, org: { zh: "清交九系聯合耶誕舞會", en: "NTHU/NCTU Joint Christmas Ball" }, time: "2023.04 – 2023.12",
+      bullets: { zh: ["主責企業開發與贊助接洽,對接近 20 家企業", "獲得總價值約新台幣 30,000 之贊助資源", "活動吸引近 500 位學生參與,回饋良好"], en: ["Led sponsor outreach with ~20 companies", "Secured sponsorship resources worth ~TWD 30,000", "Attracted nearly 500 student participants"] } },
+    { role: { zh: "人力部員", en: "HR Member" }, org: { zh: "陽明交大 電機系學會", en: "NYCU EE Student Association" }, time: "2023.07 – 2024.07",
+      bullets: { zh: ["擔任一日營、電機週等活動招集人,負責人力調度與活動流程規劃", "與多部門協作溝通,確保專案進度如期完成,培養多任務控管與穩定執行能力"], en: ["Coordinator for One-day Camp & EE Week — staffing & run-of-show", "Cross-team collaboration to keep projects on schedule"] } },
+    { role: { zh: "副招集人", en: "Deputy Coordinator" }, org: { zh: "陽明交大電機系 一日營", en: "NYCU EE One-day Camp" }, time: "2023.10 – 2024.01",
+      bullets: { zh: ["對外與系辦及三所高中協調,對內統籌人力與活動流程", "強化活動執行與突發狀況應對能力"], en: ["Coordinated with EE office & three high schools; managed staffing and flow", "Strengthened execution and incident response"] } },
+    { role: { zh: "籌辦團隊成員", en: "Organizing Team" }, org: { zh: "新竹市政府「怕胖市集」", en: "Hsinchu City 'Pa-Pang' Market Festival" }, time: "2023.04 – 2023.07",
+      bullets: { zh: ["與攝商及合作單位進行溝通協調,並協助大型市集活動流程規劃與現場執行", "培養資源整合與群眾應對能力"], en: ["Vendor & partner coordination; event planning and on-site execution", "Built resource integration and crowd-handling skills"] } },
+    { role: { zh: "球隊經理", en: "Team Manager" }, org: { zh: "陽明交大 羽球校隊", en: "NYCU Badminton Varsity" }, time: "2022.09 – 2025.07",
+      bullets: { zh: ["處理球隊內勤行政、比賽資料整理、網站管理與廠商聯繫", "強化細節控管與穩定行政執行能力"], en: ["Team operations, match data, website, vendor coordination", "Strong attention to detail and reliable execution"] } }
+  ],
+
+  trips: [
+    { id: "hk-2016",  date: "2016.08.22 – 08.24", flag: "🇭🇰", place: { zh: "香港", en: "Hong Kong" }, lat: 22.30, lng: 114.17, note: { zh: "小時候的香港。", en: "Hong Kong, as a kid." } },
+    { id: "sg-2017",  date: "2017.07.24 – 07.27", flag: "🇸🇬", place: { zh: "新加坡", en: "Singapore" }, lat: 1.31,  lng: 103.85, note: { zh: "一個人的遊學。", en: "A solo study trip." } },
+    { id: "jp-2017",  date: "2017.08.03",         flag: "🇯🇵", place: { zh: "石垣島", en: "Ishigaki" }, lat: 24.40, lng: 124.14, note: { zh: "郵輪停靠的小島。", en: "A small island, a cruise stop." } },
+    { id: "kr-2018",  date: "2018.08.23",         flag: "🇰🇷", place: { zh: "韓國 · 首爾近郊", en: "Korea · around Seoul" }, lat: 37.28, lng: 127.20, note: { zh: "夏天的京畿道。", en: "Gyeonggi in summer." } },
+    { id: "pt-2023",  date: "2023.08.09 – 08.18", flag: "🇵🇹", place: { zh: "葡萄牙", en: "Portugal" }, lat: 39.60, lng: -8.60, note: { zh: "從波多一路南下里斯本。", en: "Porto down to Lisbon." } },
+    { id: "kr-2023",  date: "2023.11.30 – 12.03", flag: "🇰🇷", place: { zh: "首爾", en: "Seoul" }, lat: 37.57, lng: 126.98, note: { zh: "初冬的首爾。", en: "Seoul at the edge of winter." } },
+    { id: "th-2024",  date: "2024.06.24 – 06.29", flag: "🇹🇭", place: { zh: "曼谷", en: "Bangkok" }, lat: 13.75, lng: 100.52, note: { zh: "街頭、河岸與夜市。", en: "Streets, the river, night markets." } },
+    { id: "sh-2024",  date: "2024.08.12 – 08.16", flag: "🇨🇳", place: { zh: "上海", en: "Shanghai" }, lat: 31.23, lng: 121.47, note: { zh: "外灘與弄堂。", en: "The Bund and the old lanes." } },
+    { id: "jp-cruise", date: "2025.01.05 – 01.08", flag: "🇯🇵", place: { zh: "沖繩 · 石垣", en: "Okinawa · Ishigaki" }, lat: 26.21, lng: 127.68, note: { zh: "海風裡第一次看見新年的日出。", en: "Watching the first sunrise of the year from the deck." } },
+    { id: "kr-solo",   date: "2025.02.10 – 02.13", flag: "🇰🇷", place: { zh: "韓國 · 獨旅", en: "Korea · Solo" }, lat: 37.56, lng: 126.97, note: { zh: "第一次一個人走在陌生語言的街上。", en: "First time walking alone through a language I don't read." } },
+    { id: "camping",   date: "2025.02.28 – 03.02", flag: "🇹🇼", place: { zh: "露營", en: "Camping" }, lat: 24.2,  lng: 121.3,  note: { zh: "帳篷、星星、冷到睡不著。", en: "Tent, stars, too cold to sleep." } },
+    { id: "taichung",  date: "2025.03.16 – 03.19", flag: "🇹🇼", place: { zh: "台中", en: "Taichung" }, lat: 24.15, lng: 120.67, note: { zh: "老宅咖啡與午後陽光。", en: "Old-house cafés and slow afternoons." } },
+    { id: "phuquoc",   date: "2025.04.01 – 04.05", flag: "🇻🇳", place: { zh: "富國島", en: "Phú Quốc" }, lat: 10.22, lng: 103.96, note: { zh: "海水比想像中藍。", en: "The sea bluer than expected." } },
+    { id: "tainan",    date: "2025.04.27 – 05.02", flag: "🇹🇼", place: { zh: "台南", en: "Tainan" }, lat: 22.99, lng: 120.21, note: { zh: "小吃的城市,每一餐都是散文。", en: "A city of street food; every meal reads like an essay." } },
+    { id: "hk",        date: "2025.06.21 – 06.25", flag: "🇭🇰", place: { zh: "香港 · 澳門", en: "Hong Kong · Macau" }, lat: 22.32, lng: 114.17, note: { zh: "叮叮車、維多利亞港與大三巴。", en: "Trams, the harbor, and the Ruins of St. Paul's." } },
+    { id: "vn",        date: "2025.07.15 – 07.19", flag: "🇻🇳", place: { zh: "峴港", en: "Da Nang" }, lat: 16.05, lng: 108.21, note: { zh: "濾掛咖啡與摩托車的洪流。", en: "Drip coffee and rivers of scooters." } },
+    { id: "chicago",   date: "2025.08.13",         flag: "🇺🇸", place: { zh: "芝加哥", en: "Chicago" }, lat: 41.88, lng: -87.63, note: { zh: "降落在交換之地的第一天。", en: "Day one of the exchange." } },
+    { id: "niagara",   date: "2025.08.29 – 09.01", flag: "🇨🇦", place: { zh: "尼加拉瀑布", en: "Niagara Falls" }, lat: 43.09, lng: -79.07, note: { zh: "水聲蓋過一整天的疲累。", en: "The roar drowned out a whole day's tiredness." } },
+    { id: "sf",        date: "2025.09.19 – 09.22", flag: "🇺🇸", place: { zh: "舊金山", en: "San Francisco" }, lat: 37.77, lng: -122.42, note: { zh: "霧、橋、上坡路。", en: "Fog, bridge, uphill." } },
+    { id: "austin",    date: "2025.10.17 – 10.20", flag: "🇺🇸", place: { zh: "奧斯丁", en: "Austin" }, lat: 30.27, lng: -97.74, note: { zh: "德州烤肉與現場音樂。", en: "Texas BBQ and live music." } },
+    { id: "lv",        date: "2025.10.24 – 10.27", flag: "🇺🇸", place: { zh: "拉斯維加斯", en: "Las Vegas" }, lat: 36.17, lng: -115.14, note: { zh: "沙漠之間的霓虹。", en: "Neon in the middle of the desert." } },
+    { id: "miami",     date: "2025.11.21 – 11.24", flag: "🇺🇸", place: { zh: "邁阿密", en: "Miami" }, lat: 25.76, lng: -80.19, note: { zh: "海、南灘、夕陽。", en: "Sea, South Beach, golden hour." } },
+    { id: "orlando",   date: "2025.11.24 – 11.28", flag: "🇺🇸", place: { zh: "奧蘭多", en: "Orlando" }, lat: 28.42, lng: -81.45, note: { zh: "主題樂園的幾天。", en: "A few days of theme parks." } },
+    { id: "nyc",       date: "2025.12.27 – 2026.01.02", flag: "🇺🇸", place: { zh: "紐約", en: "New York" }, lat: 40.71, lng: -74.00, note: { zh: "跨年在時代廣場的冷風裡。", en: "New Year's Eve in the Times Square wind." } },
+    { id: "dc",        date: "2026.01.02 – 01.04", flag: "🇺🇸", place: { zh: "華盛頓特區", en: "Washington, D.C." }, lat: 38.90, lng: -77.03, note: { zh: "博物館與國家廣場。", en: "Museums and the National Mall." } },
+    { id: "nola",      date: "2026.01.07 – 01.14", flag: "🇺🇸", place: { zh: "紐奧良", en: "New Orleans" }, lat: 29.95, lng: -90.07, note: { zh: "爵士樂、法式街區、熱熱的甜甜圈。", en: "Jazz, the French Quarter, hot beignets." } },
+    { id: "kr-2026",  date: "2026.06.14 – 06.19", flag: "🇰🇷", place: { zh: "首爾 · 釜山", en: "Seoul & Busan" }, lat: 36.40, lng: 128.00, note: { zh: "從首爾一路搭到釜山。", en: "Seoul down to Busan by rail." } }
+  ],
+
+  others: [
+    { title: { zh: "跳舞", en: "Dance" } },
+    { title: { zh: "潛水證照", en: "Scuba License" } },
+    { title: { zh: "騎馬", en: "Horse Riding" } },
+    { title: { zh: "音樂班", en: "Music Program" } }
+  ],
+
+  ui: {
+    download_resume: { zh: "下載履歷 PDF", en: "Download Resume PDF" },
+    resume_path: "uploads/Resume_Meredith_AI-46b41e2b.pdf",
+    section_labels: {
+      about:          { zh: "關於",     en: "About" },
+      education:      { zh: "學歷",     en: "Education" },
+      publications:   { zh: "論文發表", en: "Publications" },
+      research:       { zh: "研究經歷", en: "Research" },
+      projects:       { zh: "專案",     en: "Projects" },
+      competitions:   { zh: "競賽",     en: "Competitions" },
+      skills:         { zh: "技能",     en: "Skills" },
+      activities:     { zh: "課外活動", en: "Activities" },
+      contact:        { zh: "聯絡",     en: "Contact" }
+    },
+    hero_enter_prof:    { zh: "進入履歷 →",  en: "Read the resume →" },
+    hero_enter_foot:    { zh: "翻開足跡 →",  en: "See the footprints →" },
+    hero_enter_other:   { zh: "更多我 →",  en: "More of me →" },
+    map_caption:        { zh: "腳印地圖", en: "Map of Footprints" },
+    trip_count_suffix:  { zh: "個停靠點", en: "stops" },
+    tweaks: {
+      accent:  { zh: "主色",     en: "Accent" },
+      font:    { zh: "字體",     en: "Font" },
+      nav:     { zh: "導覽位置", en: "Nav" },
+      density: { zh: "密度",     en: "Density" },
+      cursor:  { zh: "游標光暈", en: "Cursor" },
+      map:     { zh: "地圖樣式", en: "Map style" }
+    }
+  }
+};
+
+  </script>
+  <script src="https://unpkg.com/d3@7.9.0/dist/d3.min.js" integrity="sha384-CjloA8y00+1SDAUkjs099PVfnY2KmDC2BZnws9kh8D/lX1s46w6EPhpXdqMfjK6i" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/topojson-client@3.1.0/dist/topojson-client.min.js" integrity="sha384-Ukv1p/xTma6P4/2bY5KzWBw+ydSpXmhCMtyciIQVDJ1RmOxtCYNMF1uXT9T63H67" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <script type="text/babel" src="intro.jsx"></script>
+  <script type="text/babel">
+// app.jsx — Meredith Huang personal site
+const { useState, useEffect, useRef } = React;
+
+function useLocal(key, initial) {
+  const [v, setV] = useState(() => {
+    try {
+      const raw = localStorage.getItem(key);
+      return raw == null ? initial : JSON.parse(raw);
+    } catch { return initial; }
+  });
+  useEffect(() => {
+    try { localStorage.setItem(key, JSON.stringify(v)); } catch {}
+  }, [key, v]);
+  return [v, setV];
+}
+
+const t = (val, lang) => (val && typeof val === "object" && "zh" in val) ? val[lang] : val;
+
+function Spotlight({ enabled }) {
+  const ref = useRef(null);
+  useEffect(() => {
+    if (!enabled) return;
+    let raf = 0, x = -500, y = -500, tx = -500, ty = -500;
+    const onMove = (e) => { tx = e.clientX; ty = e.clientY; };
+    const tick = () => {
+      x += (tx - x) * 0.18;
+      y += (ty - y) * 0.18;
+      if (ref.current) ref.current.style.transform = `translate(${x}px, ${y}px) translate(-50%, -50%)`;
+      raf = requestAnimationFrame(tick);
+    };
+    window.addEventListener("mousemove", onMove);
+    raf = requestAnimationFrame(tick);
+    return () => { window.removeEventListener("mousemove", onMove); cancelAnimationFrame(raf); };
+  }, [enabled]);
+  return <div ref={ref} className="spotlight" />;
+}
+
+function FadeIn({ children, delay = 0, as: As = "div", className = "", style, ...rest }) {
+  const ref = useRef(null);
+  const [vis, setVis] = useState(false);
+  useEffect(() => {
+    if (!ref.current) return;
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { setVis(true); io.disconnect(); }
+      });
+    }, { threshold: 0.12 });
+    io.observe(ref.current);
+    return () => io.disconnect();
+  }, []);
+  return (
+    <As ref={ref} className={`fade-in ${vis ? "in" : ""} ${className}`} style={{ transitionDelay: delay + "ms", ...(style || {}) }} {...rest}>
+      {children}
+    </As>
+  );
+}
+
+function TopNav({ view, setView, lang, setLang, theme, setTheme, tweaksOn, setTweaksOn }) {
+  const [mobile, setMobile] = useState(false);
+  const d = window.SITE_DATA;
+  const go = (v) => { setView(v); setMobile(false); };
+  return (
+    <header className={`topnav ${mobile ? "nav-mobile-open" : ""}`}>
+      <div className="topnav-inner" style={{ position: "relative" }}>
+        <a className="brand" onClick={() => go("home")} style={{ cursor: "pointer" }}>
+          <span className="dot" />
+          <span>{t(d.profile.name, lang)}</span>
+        </a>
+        <nav className="nav-links">
+          <a className={`nav-link ${view === "home" ? "active" : ""}`} onClick={() => go("home")}>{t(d.nav.home, lang)}</a>
+          <a className={`nav-link ${view === "prof" ? "active" : ""}`} onClick={() => go("prof")}>{t(d.nav.professional, lang)}</a>
+          <a className={`nav-link ${view === "foot" ? "active" : ""}`} onClick={() => go("foot")}>{t(d.nav.footprint, lang)}</a>
+          <a className={`nav-link ${view === "other" ? "active" : ""}`} onClick={() => go("other")}>{t(d.nav.others, lang)}</a>
+        </nav>
+        <div className="nav-controls">
+          <div className="lang-toggle" title="Language">
+            <button className={lang === "zh" ? "on" : ""} onClick={() => setLang("zh")}>中</button>
+            <button className={lang === "en" ? "on" : ""} onClick={() => setLang("en")}>EN</button>
           </div>
+          <button className="pill-icon" title="Theme" onClick={() => setTheme(theme === "dark" ? "light" : "dark")}>
+            {theme === "dark" ? (
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+            ) : (
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+            )}
+          </button>
+          <button className="pill-icon" title="Tweaks" onClick={() => setTweaksOn(o => !o)}>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><circle cx="7" cy="7" r="2.2"/><path d="M9.2 7h10.8"/><path d="M2.5 7H4.8"/><circle cx="17" cy="17" r="2.2"/><path d="M14.8 17H2.5"/><path d="M19.2 17h2.3"/></svg>
+          </button>
+          <button className="pill-icon nav-mobile-btn" onClick={() => setMobile(m => !m)} title="Menu">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M3 7h18M3 12h18M3 17h18"/></svg>
+          </button>
         </div>
       </div>
-    </main>
-  </div>
+    </header>
+  );
+}
+
+function Home({ lang, setView }) {
+  const d = window.SITE_DATA;
+  const name = t(d.profile.name, lang);
+  return (
+    <section className="hero hero-anim">
+      <div>
+        <div className="hero-eyebrow">Meredith's home</div>
+        <h1 className="hero-title">
+          {lang === "zh" ? (<>Heyyyy!!!!! 我是<br/>{"\u00A0\u00A0\u00A0\u00A0"}<em>{name}</em></>) : (<>Heyyyy!!!!! I'm<br/>{"\u00A0\u00A0\u00A0\u00A0"}<em>{name}</em></>)}
+        </h1>
+        <p className="hero-intro">{t(d.profile.intro, lang)}</p>
+        <div className="hero-ctas">
+          <button className="cta primary" onClick={() => setView("prof")}><span>{t(d.ui.hero_enter_prof, lang)}</span></button>
+          <button className="cta" onClick={() => setView("foot")}><span>{t(d.ui.hero_enter_foot, lang)}</span></button>
+          <button className="cta" onClick={() => setView("other")}><span>{t(d.ui.hero_enter_other, lang)}</span></button>
+        </div>
+      </div>
+      <FadeIn className="hero-aside">
+        <div className="hero-meta">{lang === "zh" ? "目前身份" : "Currently"}<b>{lang === "zh" ? "交大 研究助理" : "Research Assistant at NYCU"}</b></div>
+        <div className="hero-meta">{lang === "zh" ? "研究方向" : "Research"}<b>{lang === "zh" ? "電腦視覺 · 生成式 AI · EDA" : "Computer Vision · Generative AI · EDA"}</b></div>
+        <div className="hero-meta">{lang === "zh" ? "所在地" : "Based"}<b>{t(d.profile.location, lang)}</b><i className="sub">📍 {lang === "zh" ? "宜蘭、新竹" : "Yilan · Hsinchu"}</i></div>
+        <div className="hero-links">
+          {d.profile.socials.map((s, i) => (
+            <a key={i} href={s.href} target="_blank" rel="noopener">{s.label}</a>
+          ))}
+        </div>
+      </FadeIn>
+    </section>
+  );
+}
+
+function Professional({ lang }) {
+  const d = window.SITE_DATA;
+  const keys = ["about", "education", "publications", "research", "projects", "competitions", "skills", "activities", "contact"];
+  const labels = d.sidebar[lang];
+  const [active, setActive] = useState("about");
+  const sectionRefs = useRef({});
+
+  useEffect(() => {
+    // Topmost-section scroll-spy: active = last section whose top passed the nav line
+    const LINE = 140;
+    const onScroll = () => {
+      let cur = keys[0];
+      for (const k of keys) {
+        const el = sectionRefs.current[k];
+        if (el && el.getBoundingClientRect().top <= LINE) cur = k;
+      }
+      if (window.innerHeight + window.pageYOffset >= document.documentElement.scrollHeight - 4) cur = keys[keys.length - 1];
+      setActive(cur);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [lang]);
+
+  const scrollTo = (k) => {
+    const el = sectionRefs.current[k];
+    if (el) window.scrollTo({ top: window.pageYOffset + el.getBoundingClientRect().top - 124, behavior: "smooth" });
+  };
+  const num = (i) => String(i + 1).padStart(2, "0");
+
+  return (
+    <section className="prof-layout">
+      <nav className="prof-topnav">
+        {keys.map((k, i) => (
+          <a key={k} className={`pt-link ${active === k ? "active" : ""}`} onClick={() => scrollTo(k)}>
+            <span className="num">{num(i)}</span>
+            <span>{labels[i]}</span>
+          </a>
+        ))}
+        <a className="pt-download" href={d.ui.resume_path} target="_blank" rel="noopener">↓ PDF</a>
+      </nav>
+
+      <div className="prof-content">
+        {/* 01 ABOUT */}
+        <div className="prof-section" data-key="about" ref={el => sectionRefs.current.about = el}>
+          <FadeIn>
+            <h2><span className="num">01</span> {t(d.ui.section_labels.about, lang)}</h2>
+            <p className="about-body">{t(d.profile.intro, lang)}</p>
+          </FadeIn>
+        </div>
+
+        {/* 02 EDUCATION */}
+        <div className="prof-section" data-key="education" ref={el => sectionRefs.current.education = el}>
+          <FadeIn>
+            <h2><span className="num">02</span> {t(d.ui.section_labels.education, lang)}</h2>
+            <div className="edu-list">
+              {d.education.map((e, i) => (
+                <div className="edu-item" key={i}>
+                  <div className="tl-period">{t(e.time, lang)}</div>
+                  <div>
+                    <div className="edu-school">{t(e.school, lang)}</div>
+                    <div className="edu-degree">{t(e.degree, lang)} · <span className="muted">{t(e.place, lang)}</span></div>
+                    <div className="edu-course">{lang === "zh" ? "相關課程：" : "Coursework: "}{t(e.coursework, lang)}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </FadeIn>
+        </div>
+
+        {/* 03 PUBLICATIONS */}
+        <div className="prof-section" data-key="publications" ref={el => sectionRefs.current.publications = el}>
+          <FadeIn>
+            <h2><span className="num">03</span> {t(d.ui.section_labels.publications, lang)}</h2>
+            <div className="timeline">
+              {d.publications.map((p, i) => (
+                <div className="tl-item" key={i}>
+                  <div className="tl-period">{t(p.venue, lang)}</div>
+                  <div className="tl-body">
+                    <div className="tl-role">{p.title} <span className="proj-tag" style={{ marginLeft: ".4rem", whiteSpace: "nowrap", verticalAlign: "middle" }}>{lang === "zh" ? "一作" : "First Author"}</span></div>
+                    <div className="tl-org"><b style={{ color: "var(--ink)" }}>Meredith Huang</b>{p.authors.replace("Meredith Huang", "")}</div>
+                    <p className="tl-desc">{t(p.desc, lang)}</p>
+                    <div className="proj-tags">
+                      {p.tags.map((tag, j) => <span className="proj-tag" key={j}>{tag}</span>)}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </FadeIn>
+        </div>
+
+        {/* 04 RESEARCH */}
+        <div className="prof-section" data-key="research" ref={el => sectionRefs.current.research = el}>
+          <FadeIn>
+            <h2><span className="num">04</span> {t(d.ui.section_labels.research, lang)}</h2>
+            <div className="timeline">
+              {d.research.map((r, i) => (
+                <div className="tl-item" key={i}>
+                  <div className="tl-period">{t(r.time, lang)}</div>
+                  <div className="tl-body">
+                    <div className="tl-role">{t(r.lab, lang)}</div>
+                    <div className="tl-org">{t(r.advisor, lang)}</div>
+                    <p className="tl-desc">{t(r.desc, lang)}</p>
+                    <div className="proj-tags">
+                      {r.tags.map((tag, j) => <span className="proj-tag" key={j}>{tag}</span>)}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </FadeIn>
+        </div>
+
+        {/* 05 PROJECTS */}
+        <div className="prof-section" data-key="projects" ref={el => sectionRefs.current.projects = el}>
+          <FadeIn>
+            <h2><span className="num">05</span> {t(d.ui.section_labels.projects, lang)}</h2>
+            <div className="proj-grid">
+              {d.projects.map((p, i) => (
+                <a className="proj-card" key={i} href={p.link} target="_blank" rel="noopener">
+                  <div className="proj-meta">
+                    <span>{p.time}</span>
+                    <span className="proj-arrow">↗</span>
+                  </div>
+                  <div className="proj-title">{t(p.title, lang)}</div>
+                  <div className="proj-stack">{p.stack}</div>
+                  <div className="proj-desc">{t(p.desc, lang)}</div>
+                  <div className="proj-tags">
+                    {p.tags.map((tag, j) => <span className="proj-tag" key={j}>{tag}</span>)}
+                  </div>
+                </a>
+              ))}
+            </div>
+          </FadeIn>
+        </div>
+
+        {/* 06 COMPETITIONS */}
+        <div className="prof-section" data-key="competitions" ref={el => sectionRefs.current.competitions = el}>
+          <FadeIn>
+            <h2><span className="num">06</span> {t(d.ui.section_labels.competitions, lang)}</h2>
+            <div className="comp-list">
+              {d.competitions.map((c, i) => (
+                <div className="comp-item" key={i}>
+                  <div className="comp-time">{t(c.time, lang)}</div>
+                  <div className="comp-body">
+                    <div className="comp-title">{t(c.title, lang)}</div>
+                    {c.award && <div className="comp-award">★ {t(c.award, lang)}</div>}
+                    <p className="tl-desc">{t(c.desc, lang)}</p>
+                    {c.metrics && (
+                      <div className="comp-metrics">
+                        {c.metrics.map((m, j) => (
+                          <div className="metric" key={j}>
+                            <div className="metric-value">{m.value}</div>
+                            <div className="metric-label">{m.label}</div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                    <div className="proj-tags">
+                      {c.tags.map((tag, j) => <span className="proj-tag" key={j}>{tag}</span>)}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </FadeIn>
+        </div>
+
+        {/* 07 SKILLS */}
+        <div className="prof-section" data-key="skills" ref={el => sectionRefs.current.skills = el}>
+          <FadeIn>
+            <h2><span className="num">07</span> {t(d.ui.section_labels.skills, lang)}</h2>
+            <div className="skills-grid">
+              {Object.values(d.skills).map((g, i) => (
+                <div key={i}>
+                  <div className="skill-group-title">{t(g.label, lang)}</div>
+                  <ul className="skill-list">
+                    {g.items.map((s, j) => <li key={j}>{s}</li>)}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </FadeIn>
+        </div>
+
+        {/* 08 ACTIVITIES */}
+        <div className="prof-section" data-key="activities" ref={el => sectionRefs.current.activities = el}>
+          <FadeIn>
+            <h2><span className="num">08</span> {t(d.ui.section_labels.activities, lang)}</h2>
+            <div className="timeline">
+              {d.activities.map((a, i) => (
+                <div className="tl-item" key={i}>
+                  <div className="tl-period">{a.time}</div>
+                  <div className="tl-body">
+                    <div className="tl-role">{t(a.role, lang)}</div>
+                    <div className="tl-org">{t(a.org, lang)}</div>
+                    <ul className="tl-bullets">
+                      {t(a.bullets, lang).map((b, j) => <li key={j}>{b}</li>)}
+                    </ul>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </FadeIn>
+        </div>
+
+        {/* 09 CONTACT */}
+        <div className="prof-section" data-key="contact" ref={el => sectionRefs.current.contact = el}>
+          <FadeIn>
+            <h2><span className="num">09</span> {t(d.ui.section_labels.contact, lang)}</h2>
+            <p className="about-body" style={{ marginBottom: "1.6rem" }}>
+              {lang === "zh" ? "歡迎聊聊研究、合作或是任何旅途上的相遇。" : "Always happy to talk about research, collaboration, or anything along the way."}
+            </p>
+            <div className="contact-list">
+              {d.profile.socials.map((s, i) => (
+                <a className="contact-link" key={i} href={s.href} target="_blank" rel="noopener">
+                  <span>{s.label}</span><span className="arr">→</span>
+                </a>
+              ))}
+            </div>
+          </FadeIn>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+const projectLL = (lat, lng) => {
+  const f = fishXY(((lng + 180) / 360) * 1000, ((90 - lat) / 180) * 500);
+  return { left: `${f[0] / 10}%`, top: `${f[1] / 5}%` };
+};
+
+function dotField() {
+  const pts = [];
+  const regions = [
+    [80, 80, 270, 220], [240, 230, 310, 410], [460, 95, 560, 170],
+    [470, 175, 540, 380], [560, 100, 880, 240], [780, 305, 880, 375],
+  ];
+  regions.forEach(([x1, y1, x2, y2]) => {
+    for (let x = x1; x < x2; x += 10) {
+      for (let y = y1; y < y2; y += 10) {
+        if (Math.sin(x * 12.9898 + y * 78.233) > -0.3) pts.push({ x, y });
+      }
+    }
+  });
+  return pts;
+}
+
+// Simplified world outline (continents as line paths, equirectangular ~1000x500)
+// Hand-traced, deliberately abstract — matches the editorial line aesthetic.
+const WORLD_PATHS = [
+  // North America
+  "M 90,110 L 130,95 L 175,90 L 215,100 L 250,115 L 268,135 L 275,160 L 270,185 L 250,205 L 225,215 L 215,235 L 230,260 L 245,275 L 240,295 L 220,290 L 200,275 L 185,255 L 170,235 L 155,215 L 140,205 L 125,200 L 108,185 L 95,165 L 88,140 Z",
+  // Central America + Caribbean tail
+  "M 220,290 L 235,310 L 250,330 L 260,348 L 252,355 L 240,345 L 228,325 L 218,308 Z",
+  // South America
+  "M 270,355 L 285,348 L 305,355 L 318,375 L 322,400 L 312,425 L 298,445 L 282,455 L 268,448 L 260,425 L 258,400 L 263,378 Z",
+  // Greenland
+  "M 360,75 L 388,68 L 410,80 L 405,100 L 388,108 L 370,100 Z",
+  // Europe
+  "M 478,130 L 500,118 L 528,118 L 552,128 L 568,140 L 562,158 L 545,168 L 525,170 L 502,168 L 488,158 L 478,144 Z",
+  // UK & Ireland
+  "M 462,135 L 472,128 L 478,142 L 472,158 L 462,156 Z",
+  // Scandinavia
+  "M 510,90 L 528,82 L 548,90 L 552,108 L 540,118 L 522,115 L 512,105 Z",
+  // Africa
+  "M 510,180 L 545,178 L 575,188 L 595,210 L 605,235 L 600,265 L 588,290 L 568,315 L 548,335 L 525,338 L 510,325 L 502,300 L 498,275 L 500,250 L 505,225 L 508,200 Z",
+  // Madagascar
+  "M 615,295 L 622,288 L 626,308 L 620,322 L 614,315 Z",
+  // Middle East tail
+  "M 575,188 L 595,182 L 615,195 L 612,212 L 595,215 L 580,205 Z",
+  // Asia main
+  "M 568,140 L 605,128 L 645,118 L 690,115 L 740,118 L 790,130 L 830,148 L 858,168 L 870,188 L 868,212 L 850,228 L 820,238 L 785,242 L 750,238 L 715,232 L 685,222 L 655,212 L 625,205 L 605,195 L 588,180 L 575,165 Z",
+  // SE Asia + Indonesia
+  "M 780,250 L 805,245 L 825,255 L 832,275 L 822,288 L 802,290 L 785,278 Z",
+  "M 815,295 L 845,290 L 865,300 L 858,315 L 832,318 L 815,308 Z",
+  // Japan
+  "M 880,170 L 895,160 L 902,178 L 895,195 L 882,190 Z",
+  // Australia
+  "M 830,355 L 870,348 L 905,355 L 920,375 L 912,395 L 880,402 L 848,398 L 828,382 Z",
+  // New Zealand
+  "M 945,415 L 958,410 L 962,425 L 952,432 L 942,425 Z",
+];
+
+// Real geometry: Natural Earth via world-atlas TopoJSON, equirectangular to match projectLL
+const MAP_PROJ = d3.geoEquirectangular().scale(1000 / (2 * Math.PI)).translate([500, 250]).precision(0.1);
+// Fisheye magnification centered on Taiwan: Taiwan enlarges in place, surroundings shift outward
+const FISH_C = [836.94, 184.17], FISH_R = 48, FISH_M = 12;
+function fishXY(x, y) {
+  const dx = x - FISH_C[0], dy = y - FISH_C[1];
+  const r = Math.hypot(dx, dy);
+  if (r >= FISH_R || r === 0) return [x, y];
+  const rn = r / FISH_R;
+  const k = ((FISH_M + 1) * rn) / (FISH_M * rn + 1);
+  return [FISH_C[0] + (dx / r) * k * FISH_R, FISH_C[1] + (dy / r) * k * FISH_R];
+}
+const FISH_PROJ = { stream: (s) => MAP_PROJ.stream({ point(x, y) { const f = fishXY(x, y); s.point(f[0], f[1]); }, lineStart() { s.lineStart(); }, lineEnd() { s.lineEnd(); }, polygonStart() { s.polygonStart(); }, polygonEnd() { s.polygonEnd(); }, sphere() { if (s.sphere) s.sphere(); } }) };
+const MAP_PATH = d3.geoPath(FISH_PROJ);
+let worldCache = null;
+function useWorld() {
+  const [world, setWorld] = useState(worldCache);
+  useEffect(() => {
+    if (worldCache) return;
+    let alive = true;
+    fetch("https://cdn.jsdelivr.net/npm/world-atlas@2.0.2/countries-110m.json")
+      .then(r => r.json())
+      .then(topo => {
+        const geoms = topo.objects.countries.geometries;
+        worldCache = {
+          land: topojson.merge(topo, geoms.filter(g => g.id !== "010")),
+          borders: topojson.mesh(topo, topo.objects.countries, (a, b) => a !== b),
+          taiwan: topojson.feature(topo, geoms.find(g => g.id === "158"))
+        };
+        if (alive) setWorld(worldCache);
+      }).catch(() => {});
+    return () => { alive = false; };
+  }, []);
+  return world;
+}
+
+function WorldMap({ mapStyle }) {
+  const showGraticule = mapStyle !== "dots";
+  const world = useWorld();
+  const [dots, setDots] = useState(null);
+  useEffect(() => {
+    if (!world || mapStyle !== "dots" || dots) return;
+    const cv = document.createElement("canvas"); cv.width = 1000; cv.height = 500;
+    const cx = cv.getContext("2d");
+    const cp = d3.geoPath(FISH_PROJ, cx);
+    cx.beginPath(); cp(world.land); cx.fill();
+    const img = cx.getImageData(0, 0, 1000, 500).data;
+    const pts = [];
+    for (let y = 3; y < 500; y += 7) for (let x = 3; x < 1000; x += 7) if (img[(y * 1000 + x) * 4 + 3] > 128) pts.push({ x, y });
+    setDots(pts);
+  }, [world, mapStyle]);
+  return (
+    <svg viewBox="0 0 1000 500" className="map-svg" preserveAspectRatio="xMidYMid meet">
+      {/* graticule */}
+      {showGraticule && (
+        <g stroke="var(--hairline-soft)" strokeWidth="0.4" fill="none" opacity="0.55">
+          {[0, 83, 167, 250, 333, 417, 500].map((y, i) => (
+            <line key={"h" + i} x1="0" x2="1000" y1={y} y2={y} />
+          ))}
+          {[0, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000].map((x, i) => (
+            <line key={"v" + i} x1={x} x2={x} y1="0" y2="500" />
+          ))}
+          {/* equator + prime meridian, slightly stronger */}
+          <line x1="0" x2="1000" y1="250" y2="250" stroke="var(--hairline)" strokeWidth="0.5" strokeDasharray="4 5" />
+          <line x1="500" x2="500" y1="0" y2="500" stroke="var(--hairline)" strokeWidth="0.5" strokeDasharray="4 5" />
+        </g>
+      )}
+
+      {/* land */}
+      {mapStyle === "dots" ? (
+        <g fill="var(--ink-soft)" opacity="0.5">
+          {(dots || dotField()).map((p, i) => (<circle key={i} cx={p.x} cy={p.y} r="1.1" />))}
+        </g>
+      ) : world ? (
+        <g>
+          <path d={MAP_PATH(world.land)} fill="var(--paper-2)" stroke="var(--ink-muted)" strokeWidth="0.7" strokeLinejoin="round" />
+          <path d={MAP_PATH(world.borders)} fill="none" stroke="var(--hairline)" strokeWidth="0.4" />
+          <path d={MAP_PATH(world.taiwan)} fill="#6B2B2A" stroke="var(--accent)" strokeWidth="1.2" strokeLinejoin="round" />
+          <circle cx={FISH_C[0]} cy={FISH_C[1]} r={FISH_R} fill="none" stroke="var(--ink-soft)" strokeWidth="0.8" opacity="0.55" />
+          <circle cx={FISH_C[0]} cy={FISH_C[1]} r={FISH_R + 3.5} fill="none" stroke="var(--ink-soft)" strokeWidth="0.4" opacity="0.3" />
+          <line x1={FISH_C[0] + FISH_R * 0.72} y1={FISH_C[1] + FISH_R * 0.72} x2={FISH_C[0] + FISH_R * 1.18} y2={FISH_C[1] + FISH_R * 1.18} stroke="var(--ink-soft)" strokeWidth="3" strokeLinecap="round" opacity="0.45" />
+          <text x="893" y="178" textAnchor="start" fill="var(--accent)" style={{ font: "italic 14px var(--font-display)" }}>my home</text>
+        </g>
+      ) : (
+        <g fill="none" stroke="var(--ink-muted)" strokeWidth="1.1" strokeLinejoin="round" strokeLinecap="round">
+          {WORLD_PATHS.map((d, i) => <path key={i} d={d} />)}
+        </g>
+      )}
+    </svg>
+  );
+}
+
+function Footprint({ lang, mapStyle }) {
+  const d = window.SITE_DATA;
+  const [active, setActive] = useState(null);
+  const ymTok = (tok, base) => { const p = tok.split("."); if (p.length >= 3) return p[0] + "." + p[1]; if (p.length === 2) return p[0].length === 4 ? tok : base + "." + p[0]; return tok; };
+  const fmtDate = (s) => { const parts = s.split("–").map(x => x.trim()); const a = ymTok(parts[0], ""); if (parts.length < 2 || !parts[1]) return a; const b = ymTok(parts[1], parts[0].split(".")[0]); return b === a ? a : a + " – " + b; };
+
+  return (
+    <>
+      <FadeIn as="section" className="foot-header">
+        <div>
+          <div className="hero-eyebrow">{t(d.ui.map_caption, lang)}</div>
+          <h1 className="foot-title">
+            {lang === "zh" ? <>走過的<em>每一個</em>地方</> : <>Every <em>place</em> I've been</>}
+          </h1>
+          <p className="foot-subtitle">
+            {lang === "zh" ? "一段段短暫的停留,一張張還沒洗出來的照片。" : "Brief stops, and photos still waiting to be developed."}
+          </p>
+        </div>
+        <div className="foot-counts">
+          <div><b>{d.trips.length}</b>{t(d.ui.trip_count_suffix, lang)}</div>
+        </div>
+      </FadeIn>
+
+      <FadeIn as="section" className="map-wrap">
+        <div className="map-frame">
+          <WorldMap mapStyle={mapStyle} />
+          <svg className="route-svg" viewBox="0 0 1000 500" preserveAspectRatio="xMidYMid meet">
+            {(() => { const P = (lat, lng) => fishXY(((lng + 180) / 360) * 1000, ((90 - lat) / 180) * 500); const home = P(23.7, 121.0); const usBase = P(40.1, -88.2); const fromUS = ["niagara", "sf", "austin", "lv", "miami", "orlando", "nyc", "dc", "nola"];
+              const arc = (a, b) => { const mx = (a[0] + b[0]) / 2, my = (a[1] + b[1]) / 2; const lift = Math.min(60, Math.hypot(b[0] - a[0], b[1] - a[1]) * 0.22); return `M ${a[0]} ${a[1]} Q ${mx} ${my - lift} ${b[0]} ${b[1]}`; };
+              return d.trips.filter(tr => tr.flag !== "🇹🇼").map(tr => { const b = P(tr.lat, tr.lng); const o = fromUS.includes(tr.id) ? usBase : home; let bx = b[0]; const paths = []; if (bx - o[0] > 500) bx -= 1000; else if (bx - o[0] < -500) bx += 1000; paths.push(arc(o, [bx, b[1]])); if (bx !== b[0]) paths.push(arc([o[0] - (bx - b[0]), o[1]], b));
+                return paths.map((p, i) => <path key={tr.id + i} d={p} fill="none" stroke="var(--accent)" strokeWidth={active === tr.id ? 1.6 : 0.9} strokeDasharray="5 5" opacity={active === tr.id ? 0.95 : 0.4} />); }); })()}
+          </svg>
+          {d.trips.map((trip) => {
+            const pos = projectLL(trip.lat, trip.lng);
+            const isActive = active === trip.id;
+            return (
+              <div key={trip.id} className={`pin ${isActive ? "active" : ""}`} style={pos}
+                onMouseEnter={() => setActive(trip.id)}
+                onMouseLeave={() => setActive(null)}
+                onClick={() => {
+                  const el = document.getElementById("trip-" + trip.id);
+                  if (el) {
+                    const rect = el.getBoundingClientRect();
+                    const y = window.pageYOffset + rect.top - (window.innerHeight / 2) + (rect.height / 2);
+                    window.scrollTo({ top: y, behavior: "smooth" });
+                  }
+                }}>
+                <div style={{ position: "relative" }}>
+                  {trip.flag === "🇹🇼" ? <div className="pin-dot pin-round"></div> : (trip.id === "jp-cruise" || trip.id === "jp-2017") ? <svg className="pin-dot" viewBox="0 0 24 24" fill="currentColor"><rect x="10" y="7" width="4" height="5"/><rect x="11" y="4" width="2" height="3"/><path d="M4 14.5l8-2.8 8 2.8-1.8 5H5.8z"/></svg> : <svg className="pin-dot" viewBox="0 0 24 24" fill="currentColor"><path d="M21.5 15.5v-2l-8.5-5V3.2a1.3 1.3 0 0 0-2.6 0v5.3l-8.5 5v2l8.5-2.6v5.4l-2.2 1.6v1.6l3.5-1 3.5 1v-1.6l-2.2-1.6v-5.4z"/></svg>}
+                  {isActive && <div className="pin-pulse" />}
+                </div>
+                <div className="pin-label">{trip.flag ? trip.flag + " " : ""}{t(trip.place, lang)}</div>
+              </div>
+            );
+          })}
+        </div>
+      </FadeIn>
+
+      <section className="trip-list-wrap">
+        <div className="trip-list">
+          {[...d.trips].reverse().map((trip, i) => (
+            <FadeIn key={trip.id} delay={i * 35} as="div">
+              <div id={"trip-" + trip.id}
+                className={`trip-card ${active === trip.id ? "active" : ""}`}
+                onMouseEnter={() => setActive(trip.id)}
+                onMouseLeave={() => setActive(null)}>
+                <div className="trip-date">{fmtDate(trip.date)}</div>
+                <div className="trip-place">
+                  {trip.flag && <span className="trip-flag">{trip.flag}</span>}
+                  {t(trip.place, lang)}
+                </div>
+                <div className="trip-note">{t(trip.note, lang)}</div>
+                <div className="trip-photos">
+                  {[0, 1, 2].map(k => (
+                    <div className="trip-photo" key={k}>
+                      <svg viewBox="0 0 80 60" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+                        <rect width="80" height="60" fill="currentColor" opacity="0.04"/>
+                        <line x1="0" y1="0" x2="80" y2="60" stroke="currentColor" strokeWidth="0.4" opacity="0.35"/>
+                        <line x1="80" y1="0" x2="0" y2="60" stroke="currentColor" strokeWidth="0.4" opacity="0.35"/>
+                      </svg>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </FadeIn>
+          ))}
+        </div>
+      </section>
+    </>
+  );
+}
+
+const ACCENTS = [
+  { id: "terra",  color: "#E15A5A" },
+  { id: "ink",    color: "#1a1a1a" },
+  { id: "olive",  color: "#7a8450" },
+  { id: "plum",   color: "#8b5a6b" },
+  { id: "indigo", color: "#4a5899" },
+];
+const FONT_PAIRS = [
+  { id: "wenkai",        label: "楙體 WenKai" },
+  { id: "round",         label: "粉圓 Huninn" },
+  { id: "iansui",        label: "芫荽 Iansui" },
+  { id: "riso",          label: "Riso Sans" },
+  { id: "mono-sans",     label: "Mono" },
+  { id: "serif-classic", label: "雜誌 Serif" },
+];
+
+function OtherMe({ lang }) {
+  const d = window.SITE_DATA;
+  return (
+    <>
+      <FadeIn as="section" className="foot-header">
+        <div>
+          <div className="hero-eyebrow">{lang === "zh" ? "履歷之外" : "Beyond the resume"}</div>
+          <h1 className="foot-title">{lang === "zh" ? (<>更多<em>的我</em></>) : (<>More <em>of me</em></>)}</h1>
+        </div>
+      </FadeIn>
+      <section className="other-grid">
+        {d.others.map((o, i) => (
+          <FadeIn key={i} delay={i * 60} className="other-card">
+            <div className="other-num">{String(i + 1).padStart(2, "0")}</div>
+            <div className="trip-photo other-photo">
+              <svg viewBox="0 0 80 60" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+                <rect width="80" height="60" fill="currentColor" opacity="0.04"/>
+                <line x1="0" y1="0" x2="80" y2="60" stroke="currentColor" strokeWidth="0.4" opacity="0.35"/>
+                <line x1="80" y1="0" x2="0" y2="60" stroke="currentColor" strokeWidth="0.4" opacity="0.35"/>
+              </svg>
+            </div>
+            <div className="other-title">{t(o.title, lang)}</div>
+          </FadeIn>
+        ))}
+      </section>
+    </>
+  );
+}
+
+function Tweaks({ open, setOpen, lang, accent, setAccent, font, setFont, density, setDensity, cursor, setCursor, mapStyle, setMapStyle, navSide, setNavSide }) {
+  const d = window.SITE_DATA;
+  if (!open) return null;
+  return (
+    <div className="tweaks-panel on">
+      <div className="tweaks-title">
+        <span>Tweaks</span>
+        <span style={{ cursor: "pointer", fontSize: "1.1rem" }} onClick={() => setOpen(false)}>×</span>
+      </div>
+      <div className="tweak-row">
+        <span className="tweak-label">{t(d.ui.tweaks.accent, lang)}</span>
+        <div className="tweak-swatches">
+          {ACCENTS.map(a => (
+            <div key={a.id} className={`tweak-swatch ${accent === a.id ? "on" : ""}`}
+              style={{ background: a.color }} onClick={() => setAccent(a.id)} title={a.id} />
+          ))}
+        </div>
+      </div>
+      <div className="tweak-row">
+        <span className="tweak-label">{t(d.ui.tweaks.font, lang)}</span>
+        <select className="tweak-select" value={font} onChange={e => setFont(e.target.value)}>
+          {FONT_PAIRS.map(f => <option key={f.id} value={f.id}>{f.label}</option>)}
+        </select>
+      </div>
+      <div className="tweak-row">
+        <span className="tweak-label">{t(d.ui.tweaks.density, lang)}</span>
+        <div className="tweak-toggle">
+          <button className={density === "compact" ? "on" : ""} onClick={() => setDensity("compact")}>Cmp</button>
+          <button className={density === "normal" ? "on" : ""} onClick={() => setDensity("normal")}>Std</button>
+          <button className={density === "comfy" ? "on" : ""} onClick={() => setDensity("comfy")}>Cmf</button>
+        </div>
+      </div>
+      <div className="tweak-row">
+        <span className="tweak-label">{t(d.ui.tweaks.cursor, lang)}</span>
+        <div className="tweak-toggle">
+          <button className={cursor === "on" ? "on" : ""} onClick={() => setCursor("on")}>On</button>
+          <button className={cursor === "off" ? "on" : ""} onClick={() => setCursor("off")}>Off</button>
+        </div>
+      </div>
+      <div className="tweak-row">
+        <span className="tweak-label">{t(d.ui.tweaks.map, lang)}</span>
+        <select className="tweak-select" value={mapStyle} onChange={e => setMapStyle(e.target.value)}>
+          <option value="blob">Outline</option>
+          <option value="dots">Dots</option>
+          <option value="grid">Grid</option>
+        </select>
+      </div>
+      <div className="tweak-row">
+        <span className="tweak-label">{t(d.ui.tweaks.nav, lang)}</span>
+        <div className="tweak-toggle">
+          <button className={navSide === "top" ? "on" : ""} onClick={() => setNavSide("top")}>Top</button>
+          <button className={navSide === "side" ? "on" : ""} onClick={() => setNavSide("side")}>Side</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function App() {
+  const [view, setView] = useLocal("mh.view", "home");
+  const [lang, setLang] = useLocal("mh.lang", (navigator.language || "en").toLowerCase().startsWith("zh") ? "zh" : "en");
+  const [theme, setTheme] = useLocal("mh.theme",
+    (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) ? "dark" : "light");
+  const [tweaksOpen, setTweaksOpen] = useState(false);
+
+  const [accent, setAccent]     = useLocal("mh.accent", "terra");
+  const [font, setFont]         = useLocal("mh.font", "wenkai");
+  useEffect(() => {
+    try {
+      if (localStorage.getItem("mh.fontMigr") !== "2") {
+        localStorage.setItem("mh.fontMigr", "2");
+        if (["serif-all", "serif-sans", "serif-mag", "riso"].includes(font)) setFont("wenkai");
+      } else if (["serif-all", "serif-sans", "serif-mag"].includes(font)) setFont("wenkai");
+    } catch {}
+  }, [font]);
+  const [density, setDensity]   = useLocal("mh.density", "normal");
+  const [cursor, setCursor]     = useLocal("mh.cursor", "on");
+  const [mapStyle, setMapStyle] = useLocal("mh.map", "blob");
+  const [navSide, setNavSide]   = useLocal("mh.navside", "top");
+  const [introDone, setIntroDone] = useState(() => { try { return sessionStorage.getItem("mh.introPlayed") === "1"; } catch { return true; } });
+
+  useEffect(() => {
+    const r = document.documentElement;
+    r.setAttribute("data-theme", theme);
+    r.setAttribute("data-font", font);
+    r.setAttribute("data-density", density);
+    r.setAttribute("data-cursor", cursor);
+    const accentColor = ACCENTS.find(a => a.id === accent)?.color || "#E15A5A";
+    r.style.setProperty("--accent", accentColor);
+    r.setAttribute("lang", lang === "zh" ? "zh-Hant" : "en");
+  }, [theme, font, density, cursor, accent, lang]);
+
+  useEffect(() => { window.scrollTo({ top: 0, behavior: "instant" }); }, [view]);
+
+  return (
+    <>
+      <Spotlight enabled={cursor === "on"} />
+      <TopNav view={view} setView={setView} lang={lang} setLang={setLang}
+              theme={theme} setTheme={setTheme} tweaksOn={tweaksOpen} setTweaksOn={setTweaksOpen} />
+      {view === "home" && <Home lang={lang} setView={setView} />}
+      {view === "prof" && <Professional lang={lang} />}
+      {view === "foot" && <Footprint lang={lang} mapStyle={mapStyle} />}
+      {view === "other" && <OtherMe lang={lang} />}
+      <footer className="site-foot">
+        <div>© 2026 · {t(window.SITE_DATA.profile.name, lang)}</div>
+      </footer>
+      <Tweaks open={tweaksOpen} setOpen={setTweaksOpen} lang={lang}
+        accent={accent} setAccent={setAccent}
+        font={font} setFont={setFont}
+        density={density} setDensity={setDensity}
+        cursor={cursor} setCursor={setCursor}
+        mapStyle={mapStyle} setMapStyle={setMapStyle}
+        navSide={navSide} setNavSide={setNavSide} />
+      {!introDone && window.Intro && <window.Intro onDone={() => setIntroDone(true)} />}
+    </>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+
+  </script>
 </body>
 </html>
