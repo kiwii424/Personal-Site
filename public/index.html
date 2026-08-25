@@ -315,7 +315,7 @@ p { margin: 0; }
 .hero-title {
   font-weight: 400;
   margin: 0 0 0.2em 0;
-  line-height: 1.1;
+  line-height: 1.35;
 }
 .hero-title em {
   font-style: italic;
@@ -1285,10 +1285,12 @@ p { margin: 0; }
 .pt-link{padding:.7rem .55rem;font-size:.88rem}
 .pt-download{display:none}
 }
-/* Mobile: shrink the hero name so it never wraps */
+/* Mobile: shrink the hero name so it never wraps, CTAs in one row */
 @media (max-width:480px){
 .hero-title{font-size:min(2.6rem,calc((100vw - 48px)/8.5))}
 .hero-title em{white-space:nowrap}
+.hero-ctas{flex-wrap:nowrap;gap:.5rem}
+.hero-ctas .cta{flex:1;justify-content:center;padding:.7rem .2rem}
 }
 
 /* ──── Riso skin overrides ──── */
@@ -1719,7 +1721,7 @@ function Home({ lang, setView }) {
       <div>
         <div className="hero-eyebrow">Meredith's home</div>
         <h1 className="hero-title">
-          {lang === "zh" ? (<>Heyyyy!!!!! 我⁠是<br/>{"\u00A0\u00A0\u00A0\u00A0"}<em>{name}</em></>) : (<>Heyyyy!!!!! I'm<br/>{"\u00A0\u00A0\u00A0\u00A0"}<em>{name}</em></>)}
+          {lang === "zh" ? (<>Heyyyy!!!!! 我⁠是<br/>{"\u00A0\u00A0"}<em>{name}</em></>) : (<>Heyyyy!!!!! I'm<br/>{"\u00A0\u00A0"}<em>{name}</em></>)}
         </h1>
         <p className="hero-intro">{t(d.profile.intro, lang)}</p>
         <div className="hero-ctas">
@@ -2315,7 +2317,7 @@ function Tweaks({ open, setOpen, lang, accent, setAccent, font, setFont, density
 }
 
 function App() {
-  const [view, setView] = useLocal("mh.view", "home");
+  const [view, setView] = useState("home");
   const [lang, setLang] = useLocal("mh.lang", (navigator.language || "en").toLowerCase().startsWith("zh") ? "zh" : "en");
   const [theme, setTheme] = useLocal("mh.theme",
     (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) ? "dark" : "light");
