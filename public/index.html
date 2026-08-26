@@ -1339,6 +1339,27 @@ html[lang="zh-Hant"] body{line-height:1.95;letter-spacing:.035em}
 .next-hint .arr{display:inline-block;color:var(--accent);animation:hintNudge 1.6s ease-in-out infinite}
 @keyframes hintNudge{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
 
+/* Coursework page */
+.course-page{max-width:880px;margin:0 auto;padding:calc(var(--space-unit)*2) calc(var(--space-unit)*1.4) calc(var(--space-unit)*3)}
+.back-btn{font-family:var(--font-mono);font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;border:1.5px solid var(--ink);background:transparent;color:var(--ink);padding:.5em 1em;cursor:pointer;margin-bottom:1.6rem;transition:color 260ms var(--ease-out),border-color 260ms var(--ease-out)}
+.back-btn:hover{color:var(--accent);border-color:var(--accent)}
+.course-photo{position:relative;aspect-ratio:3/2;max-height:420px;width:100%;margin:1.4rem 0 2rem;border:1px solid var(--hairline);overflow:hidden;color:var(--ink-soft)}
+.course-photo svg{position:absolute;inset:0;width:100%;height:100%}
+.course-photo .ph-label{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-family:var(--font-mono);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase}
+.course-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.course-groups{display:flex;flex-direction:column;gap:calc(var(--space-unit)*1.3)}
+.edu-item.clickable{cursor:pointer;padding:.6rem;margin:-.6rem;transition:background 300ms var(--ease-out)}
+.edu-item.clickable:hover{background:var(--paper-2)}
+.edu-item.clickable:hover .edu-school{color:var(--accent)}
+.edu-more{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-top:.35rem;opacity:0;transform:translateX(-4px);transition:opacity 300ms var(--ease-out),transform 300ms var(--ease-out)}
+.edu-item.clickable:hover .edu-more{opacity:1;transform:none}
+.course-link{color:inherit;text-decoration:none;transition:color 240ms var(--ease-out)}
+.course-link:hover{color:var(--accent)}
+.course-link .arr{color:var(--accent)}
+.proj-demo{font-family:var(--font-mono);font-weight:700;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);border:1.5px solid var(--accent);padding:.25em .7em;cursor:pointer;transition:all 240ms var(--ease-out)}
+.proj-demo:hover{background:var(--accent);color:var(--paper)}
+@media (max-width:780px){.edu-more{opacity:.85;transform:none}}
+
   </style>
 </head>
 <body>
@@ -1376,12 +1397,14 @@ window.SITE_DATA = {
   education: [
     {
       school: { zh: "國立陽明交通大學", en: "National Yang Ming Chiao Tung University" },
+      course: "nycu",
       degree: { zh: "電機工程學系 學士", en: "B.S. in Electronics and Electrical Engineering" },
       time: { zh: "2022.09 – 2026.06", en: "Sep 2022 – Jun 2026" },
       place: { zh: "新竹 · 台灣", en: "Hsinchu, Taiwan" }
     },
     {
       school: { zh: "伊利諾大學厄巴納-香檳分校", en: "University of Illinois Urbana-Champaign" },
+      course: "uiuc",
       degree: { zh: "電機工程 交換學生", en: "Exchange Student in Electrical Engineering" },
       time: { zh: "2025.08 – 2025.12", en: "Aug 2025 – Dec 2025" },
       place: { zh: "Illinois · 美國", en: "Illinois, USA" }
@@ -1481,15 +1504,40 @@ window.SITE_DATA = {
 
   projects: [
     {
+      title: "Conditional EDM Diffusion from Scratch",
+      time: "2026",
+      stack: "PyTorch · EDM / Karras · CLIP · CFG · Heun Sampler",
+      desc: {
+        zh: "從零手刻 conditional diffusion：~54M 參數 UNet、EDM preconditioning、Heun sampler 與 EMA 全部自實作，無任何預訓練生成權重。多 guidance oversample + FID-aware 挑選，FID 27.88 / CLIP-T 0.2800，雙指標超過最強 baseline，評測排名第 1。",
+        en: "Conditional diffusion built fully from scratch: ~54M-param UNet, EDM preconditioning, Heun sampler, and EMA all hand-implemented, no pretrained generative weights. Multi-guidance oversampling with FID-aware selection reached FID 27.88 / CLIP-T 0.2800, beating the strongest baseline on both metrics and ranking 1st."
+      },
+      tags: ["Diffusion", "EDM", "CFG", "PyTorch"],
+      link: "https://github.com/kiwii424/Generative-Artificial-Intelligence/tree/main/06-conditional-edm-image-generation",
+      demo: "demo-edm.html"
+    },
+    {
       title: "Document QA based on RAG",
-      time: "2025",
+      time: "2026",
       stack: "Python · FastAPI · LangChain · FAISS · BM25 · Kubernetes · Docker · Terraform · Azure",
       desc: {
-        zh: "建構 RAG 系統用於 NLP 論文問答,整合 hybrid retrieval、HyDE、RRF fusion 與 reranking;以 Docker/Kubernetes 部署輕量 cloud-native 服務於 AKS,並用 Terraform 管理基礎設施。將 answer correctness 提升至 66/100、evidence score 至 0.35,優於 baseline 的 48/100 與 0.26。",
-        en: "Built a RAG system for question answering over NLP papers with hybrid retrieval, HyDE, RRF fusion, and reranking. Deployed a lightweight cloud-native service on AKS using Docker/Kubernetes with Terraform-managed infrastructure. Improved answer correctness to 66/100 and evidence score to 0.35 (baseline: 48 / 0.26)."
+        zh: "建構 RAG 系統用於 NLP 論文問答,整合 hybrid retrieval、HyDE、RRF fusion 與 reranking;以 Docker/Kubernetes 部署輕量 cloud-native 服務於 AKS,並用 Terraform 管理基礎設施。將 answer correctness 提升至 65/100、evidence score 至 0.32,優於 baseline 的 48/100 與 0.26。",
+        en: "Built a RAG system for question answering over NLP papers with hybrid retrieval, HyDE, RRF fusion, and reranking. Deployed a lightweight cloud-native service on AKS using Docker/Kubernetes with Terraform-managed infrastructure. Improved answer correctness to 65/100 and evidence score to 0.32 (baseline: 48 / 0.26)."
       },
       tags: ["RAG", "LangChain", "FAISS", "LLM", "K8s", "Azure"],
-      link: "https://github.com/kiwii424/Generative-Artificial-Intelligence"
+      link: "https://github.com/kiwii424/Generative-Artificial-Intelligence/tree/main/02-research-paper-rag",
+      demo: "demo-rag.html"
+    },
+    {
+      title: "OpenROAD QoR Explorer",
+      time: "2026",
+      stack: "Python · Tcl · Docker · OpenROAD / ORFS · ASAP7",
+      desc: {
+        zh: "在 OpenROAD-flow-scripts 的完整 RTL-to-GDS 流程上做參數掃描與 QoR 分析:aes 設計、ASAP7 製程、4 個 flow 旋鈕、34 組 run(含 Latin-hypercube 取樣)。產出 sensitivity 排名與 power-vs-timing Pareto front,發現 SDC 時脈週期主導所有 QoR 指標(|ρ| 0.93–0.99),而 PLACE_DENSITY ≤ 0.70 會被 placer 靜默 clamp。",
+        en: "Parameter sweep and QoR analysis over a full RTL-to-GDS flow on OpenROAD-flow-scripts: the aes design on ASAP7, 4 flow knobs, 34 runs including Latin-hypercube sampling. Produced a sensitivity ranking and a power-vs-timing Pareto front; found the SDC clock period dominates every QoR metric (|ρ| 0.93–0.99) while PLACE_DENSITY ≤ 0.70 is silently clamped by the placer."
+      },
+      tags: ["EDA", "OpenROAD", "Physical Design", "QoR"],
+      link: "https://github.com/kiwii424/OpenROAD-QoR-Explorer",
+      demo: "demo-openroad.html"
     },
     {
       title: "Node Classification with GATv2",
@@ -1507,22 +1555,12 @@ window.SITE_DATA = {
       time: "2025",
       stack: "CUDA C/C++ · GPU Profiling",
       desc: {
-        zh: "使用 im2col、kernel fusion、tiling、loop unrolling 與 stream parallelism 優化 CNN 前向卷積。end-to-end 執行時間從 73.85 ms 降至 38.49 ms,改善 47.9%。",
-        en: "Optimized CNN forward convolution using im2col, kernel fusion, tiling, loop unrolling, and stream parallelism. Reduced end-to-end runtime by 47.9%, from 73.85 ms to 38.49 ms."
+        zh: "使用 im2col、kernel fusion、tiling、loop unrolling 與 stream parallelism 優化 CNN 前向卷積。op time 總和從 60 ms 的滿分門檻壓到 38.49 ms,再快 35.9%。",
+        en: "Optimized CNN forward convolution using im2col, kernel fusion, tiling, loop unrolling, and stream parallelism. Brought total op time to 38.49 ms, 35.9% under the 60 ms full-credit bar."
       },
       tags: ["CUDA", "Kernel Fusion", "Tiling", "Profiling"],
-      link: "https://github.com/kiwii424/Applied-Parallel-Programming"
-    },
-    {
-      title: "Secure File Vault",
-      time: "2024",
-      stack: "Next.js · TypeScript · React · Tailwind · Firebase · NextAuth.js",
-      desc: {
-        zh: "類 Google Drive 的網頁應用,支援雲端儲存、檔案上傳、資料夾導覽與關鍵字搜尋。以 NextAuth.js 實作具身分驗證的檔案管理流程,並提供跨裝置 responsive 介面。",
-        en: "A Google Drive-like web app supporting cloud storage, file upload, folder navigation, and keyword search. Implemented authenticated file management with NextAuth.js and a responsive cross-device UI."
-      },
-      tags: ["Next.js", "TypeScript", "Firebase", "NextAuth"],
-      link: "https://github.com/kiwii424/balance-tracker"
+      link: "https://github.com/kiwii424/Applied-Parallel-Programming/tree/main/Project",
+      demo: "demo-cuda.html"
     }
   ],
 
@@ -1587,6 +1625,34 @@ window.SITE_DATA = {
     { title: { zh: "騎馬", en: "Horse Riding" } },
     { title: { zh: "音樂班", en: "Music Program" } }
   ],
+
+  coursework: {
+    nycu: {
+      eyebrow: { zh: "修課紀錄", en: "Coursework" },
+      title: { zh: "陽明交大 · 電機工程", en: "NYCU · Electrical Engineering" },
+      photo: "uploads/grad-nycu.jpg",
+      photoLabel: { zh: "畢業照", en: "Graduation photo" },
+      groups: [
+        { label: { zh: "AI 與機器學習", en: "AI & Machine Learning" }, items: [{ zh: "生成式人工智慧", en: "Generative Artificial Intelligence", url: "https://github.com/kiwii424/Generative-Artificial-Intelligence" }, { zh: "機器學習概論與實作", en: "Introduction to Machine Learning and Practice", url: "https://github.com/kiwii424/Rockfall-Riot_HCI-AR-Game" }, { zh: "人工智慧導論", en: "Introduction to Artificial Intelligence" }, { zh: "AI 無線通訊系統實驗", en: "AI Lab for Wireless Communication" }] },
+        { label: { zh: "晶片與 EDA", en: "Chips & EDA" }, items: [{ zh: "電子設計自動化演算法與實作", en: "Electronic Design Automation Algorithms and Implementation", url: "https://github.com/kiwii424/113-Spring_EDA" }, { zh: "超大型積體電路設計導論", en: "Introduction to VLSI Design" }, { zh: "數位電路與系統", en: "Digital Circuits and Systems" }, { zh: "邏輯設計", en: "Logic Design" }] },
+        { label: { zh: "程式與演算法", en: "Programming & Algorithms" }, items: [{ zh: "演算法導論", en: "Introduction to Algorithms" }, { zh: "資料結構", en: "Data Structure" }, { zh: "物件導向程式設計", en: "Object-Oriented Programming" }, { zh: "Go 程式設計", en: "Go Programming", url: "https://github.com/kiwii424/113-Autumn_Go-Programming" }, { zh: "密碼工程", en: "Cryptography Engineering", url: "https://github.com/kiwii424/113-Spring_Cryptography" }, { zh: "計算機概論與程式設計", en: "Introduction to Computers and Programming" }] },
+        { label: { zh: "電機基礎", en: "EE Fundamentals" }, items: [{ zh: "電子學(一)(二)", en: "Electronics (I) / (II)" }, { zh: "電子實驗(一)(二)", en: "Electronics Lab. (I) / (II)" }, { zh: "電路學", en: "Circuit Theory" }, { zh: "訊號與系統", en: "Signals and Systems" }, { zh: "電磁學", en: "Electromagnetics" }, { zh: "電力工程導論", en: "Introduction to Electrical Power Engineering" }] },
+        { label: { zh: "數學與物理", en: "Math & Physics" }, items: [{ zh: "微積分甲(一)(二)", en: "Calculus A (I) / (II)" }, { zh: "線性代數", en: "Linear Algebra" }, { zh: "機率", en: "Probability" }, { zh: "統計學", en: "Statistics" }, { zh: "離散數學", en: "Discrete Mathematics" }, { zh: "微分方程", en: "Differential Equation" }, { zh: "物理(一)(二)榮譽班", en: "Physics (I) / (II)" }] },
+        { label: { zh: "商管與跨域", en: "Business & Beyond" }, items: [{ zh: "財務管理", en: "Financial Management" }, { zh: "經濟學(一)(二)", en: "Economics (I) / (II)" }, { zh: "高科技公司個案研究", en: "Case Studies in High Tech Companies" }, { zh: "國際政治經濟學", en: "International Political Economy" }, { zh: "數位經濟與反托拉斯法", en: "Digital Economy and Antitrust Law" }, { zh: "經營講座", en: "Lectures on Business" }] }
+      ]
+    },
+    uiuc: {
+      eyebrow: { zh: "交換修課", en: "Exchange Coursework" },
+      title: { zh: "UIUC · 電機工程交換", en: "UIUC · EE Exchange" },
+      photo: "uploads/grad-uiuc.jpg",
+      photoLabel: { zh: "交換回憶", en: "Exchange memories" },
+      groups: [
+        { label: { zh: "平行運算", en: "Parallel Computing" }, items: [{ zh: "應用平行程式設計 (CUDA)", en: "Applied Parallel Programming (CUDA)", url: "https://github.com/kiwii424/Applied-Parallel-Programming" }] },
+        { label: { zh: "金融科技與交易", en: "FinTech & Trading" }, items: [{ zh: "演算法市場微結構", en: "Algorithmic Mkt Microstructure" }, { zh: "高頻交易技術", en: "High Frequency Trading Tech" }] },
+        { label: { zh: "體育", en: "Sports" }, items: [{ zh: "保齡球", en: "Bowling" }, { zh: "滑冰", en: "Ice Skating" }] }
+      ]
+    }
+  },
 
   ui: {
     download_resume: { zh: "下載履歷 PDF", en: "Download Resume PDF" },
@@ -1731,7 +1797,7 @@ function TopNav({ view, setView, lang, setLang, theme, setTheme, tweaksOn, setTw
         </a>
         <nav className="nav-links">
           <a className={`nav-link ${view === "home" ? "active" : ""}`} onClick={() => go("home")}>{t(d.nav.home, lang)}</a>
-          <a className={`nav-link ${view === "prof" ? "active" : ""}`} onClick={() => go("prof")}>{t(d.nav.professional, lang)}</a>
+          <a className={`nav-link ${view === "prof" || view.startsWith("course-") ? "active" : ""}`} onClick={() => go("prof")}>{t(d.nav.professional, lang)}</a>
           <a className={`nav-link ${view === "foot" ? "active" : ""}`} onClick={() => go("foot")}>{t(d.nav.footprint, lang)}</a>
           <a className={`nav-link ${view === "other" ? "active" : ""}`} onClick={() => go("other")}>{t(d.nav.others, lang)}</a>
         </nav>
@@ -1779,7 +1845,7 @@ function Home({ lang, setView }) {
       <FadeIn className="hero-aside">
         <div className="hero-meta">{lang === "zh" ? "目前身份" : "Currently"}<b>{lang === "zh" ? "交大 研究助理" : "Research Assistant at NYCU"}</b></div>
         <div className="hero-meta">{lang === "zh" ? "研究方向" : "Research"}<b>{lang === "zh" ? "電腦視覺 · 生成式 AI · EDA" : "Computer Vision · Generative AI · EDA"}</b></div>
-        <div className="hero-meta">{lang === "zh" ? "最近在想什麼" : "Lately"}<b>{lang === "zh" ? "量化機器人、有沒有颱風假、想去滑雪" : "Quant bot · Typhoon-day odds · Skiing plans"}</b></div>
+        <div className="hero-meta">{lang === "zh" ? "最近在想什麼" : "Lately"}<b>{lang === "zh" ? "量化交易、有沒有放假、想去滑雪" : "Quant · Days off · Skiing plans"}</b></div>
         <div className="hero-meta">{lang === "zh" ? "所在地" : "Based"}<b>{t(d.profile.location, lang)}</b><i className="sub">📍 {lang === "zh" ? "宜蘭、新竹" : "Yilan · Hsinchu"}</i></div>
         <div className="hero-links">
           {d.profile.socials.map((s, i) => (
@@ -1791,7 +1857,7 @@ function Home({ lang, setView }) {
   );
 }
 
-function Professional({ lang }) {
+function Professional({ lang, setView }) {
   const d = window.SITE_DATA;
   const keys = ["about", "education", "publications", "research", "competitions", "projects", "skills", "activities", "contact"];
   const labels = d.sidebar[lang];
@@ -1848,11 +1914,12 @@ function Professional({ lang }) {
             <h2><span className="num">02</span> {t(d.ui.section_labels.education, lang)}</h2>
             <div className="edu-list">
               {d.education.map((e, i) => (
-                <div className="edu-item" key={i}>
+                <div className={"edu-item" + (e.course ? " clickable" : "")} key={i} onClick={() => { if (e.course) { setView("course-" + e.course); window.scrollTo(0, 0); } }}>
                   <div className="tl-period">{t(e.time, lang)}</div>
                   <div>
                     <div className="edu-school">{t(e.school, lang)}</div>
                     <div className="edu-degree">{t(e.degree, lang)} · <span className="muted">{t(e.place, lang)}</span></div>
+                    {e.course && <div className="edu-more">{lang === "zh" ? "點我看修課紀錄 ↗" : "See my coursework ↗"}</div>}
                   </div>
                 </div>
               ))}
@@ -1915,17 +1982,19 @@ function Professional({ lang }) {
                   <div className="comp-body">
                     <div className="comp-title">{t(c.title, lang)}</div>
                     {c.award && <div className="comp-award">★ {t(c.award, lang)}</div>}
-                    <p className="tl-desc">{t(c.desc, lang)}</p>
-                    {c.metrics && (
-                      <div className="comp-metrics">
-                        {c.metrics.map((m, j) => (
-                          <div className="metric" key={j}>
-                            <div className="metric-value">{m.value}</div>
-                            <div className="metric-label">{m.label}</div>
-                          </div>
-                        ))}
-                      </div>
-                    )}
+                    <MobileDesc className="comp-detail" lang={lang}>
+                      <p className="tl-desc">{t(c.desc, lang)}</p>
+                      {c.metrics && (
+                        <div className="comp-metrics">
+                          {c.metrics.map((m, j) => (
+                            <div className="metric" key={j}>
+                              <div className="metric-value">{m.value}</div>
+                              <div className="metric-label">{m.label}</div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </MobileDesc>
                     <div className="proj-tags">
                       {c.tags.map((tag, j) => <span className="proj-tag" key={j}>{tag}</span>)}
                     </div>
@@ -1942,10 +2011,13 @@ function Professional({ lang }) {
             <h2><span className="num">06</span> {t(d.ui.section_labels.projects, lang)}</h2>
             <div className="proj-grid">
               {d.projects.map((p, i) => (
-                <a className="proj-card" key={i} href={p.link} target="_blank" rel="noopener">
+                <a className="proj-card" key={i} href={p.demo || p.link} target={p.demo && !p.demo.startsWith("http") ? "_self" : "_blank"} rel="noopener">
                   <div className="proj-meta">
                     <span>{p.time}</span>
-                    <span className="proj-arrow">↗</span>
+                    <span style={{ display: "flex", gap: "0.8rem", alignItems: "center" }}>
+                      {p.demo && <span className="proj-demo" onClick={(e) => { e.preventDefault(); e.stopPropagation(); window.open(p.link, "_blank"); }}>{lang === "zh" ? "看 Code ↗" : "Code ↗"}</span>}
+                      <span className="proj-arrow">↗</span>
+                    </span>
                   </div>
                   <div className="proj-title">{t(p.title, lang)}</div>
                   <div className="proj-stack">{p.stack}</div>
@@ -2266,7 +2338,7 @@ const ACCENTS = [
   { id: "ink",    color: "#1a1a1a" },
   { id: "olive",  color: "#7a8450" },
   { id: "plum",   color: "#8b5a6b" },
-  { id: "indigo", color: "#4a5899" },
+  { id: "indigo", color: "#4a5899" }
 ];
 const FONT_PAIRS = [
   { id: "wenkai",        label: "楙體 WenKai" },
@@ -2276,6 +2348,33 @@ const FONT_PAIRS = [
   { id: "mono-sans",     label: "Mono" },
   { id: "serif-classic", label: "雜誌 Serif" },
 ];
+
+function Coursework({ lang, school, setView }) {
+  const d = window.SITE_DATA;
+  const c = d.coursework[school];
+  return (
+    <section className="course-page">
+      <button className="back-btn" onClick={() => { setView("prof"); window.scrollTo(0, 0); }}>← {lang === "zh" ? "返回履歷" : "Back to resume"}</button>
+      <FadeIn>
+        <div className="hero-eyebrow">{t(c.eyebrow, lang)}</div>
+        <h1 className="foot-title">{t(c.title, lang)}</h1>
+        <div className="course-photo">
+          <svg viewBox="0 0 300 200" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="300" height="200" fill="currentColor" opacity="0.04"/><line x1="0" y1="0" x2="300" y2="200" stroke="currentColor" strokeWidth="0.6" opacity="0.35"/><line x1="300" y1="0" x2="0" y2="200" stroke="currentColor" strokeWidth="0.6" opacity="0.35"/></svg>
+          <span className="ph-label">{t(c.photoLabel, lang)}</span>
+          <img src={c.photo} alt="" onError={(e) => { e.target.style.display = "none"; }} />
+        </div>
+      </FadeIn>
+      <div className="course-groups">
+        {c.groups.map((g, i) => (
+          <FadeIn key={i} delay={i * 50}>
+            <div className="skill-group-title">{t(g.label, lang)}</div>
+            <ul className="skill-list">{g.items.map((s, j) => <li key={j}>{typeof s === "string" ? s : s.url ? <a href={s.url} target="_blank" rel="noopener" className="course-link">{t(s, lang)} <span className="arr">↗</span></a> : t(s, lang)}</li>)}</ul>
+          </FadeIn>
+        ))}
+      </div>
+    </section>
+  );
+}
 
 function OtherMe({ lang }) {
   const d = window.SITE_DATA;
@@ -2365,9 +2464,9 @@ function Tweaks({ open, setOpen, lang, accent, setAccent, font, setFont, density
 }
 
 function App() {
-  const [view, setView] = useState("home");
-  const [lang, setLang] = useState((navigator.language || "en").toLowerCase().startsWith("zh") ? "zh" : "en");
-  const [theme, setTheme] = useState(
+  const [view, setView] = useState(() => (window.location.hash === "#projects" ? "prof" : "home"));
+  const [lang, setLang] = useLocal("mh.lang", (navigator.language || "en").toLowerCase().startsWith("zh") ? "zh" : "en");
+  const [theme, setTheme] = useLocal("mh.theme",
     (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) ? "dark" : "light");
   const [tweaksOpen, setTweaksOpen] = useState(false);
 
@@ -2386,6 +2485,16 @@ function App() {
   const [mapStyle, setMapStyle] = useLocal("mh.map", "blob");
   const [navSide, setNavSide]   = useLocal("mh.navside", "top");
   const [introDone, setIntroDone] = useState(() => { try { return sessionStorage.getItem("mh.introPlayed") === "1"; } catch { return true; } });
+
+  useEffect(() => {
+    if (window.location.hash !== "#projects") return;
+    history.replaceState(null, "", window.location.pathname);
+    const id = setTimeout(() => {
+      const el = document.querySelector('[data-key="projects"]');
+      if (el) window.scrollTo(0, el.getBoundingClientRect().top + window.pageYOffset - 120);
+    }, 350);
+    return () => clearTimeout(id);
+  }, []);
 
   useEffect(() => {
     const r = document.documentElement;
@@ -2471,7 +2580,9 @@ function App() {
       <TopNav view={view} setView={setView} lang={lang} setLang={setLang}
               theme={theme} setTheme={setTheme} tweaksOn={tweaksOpen} setTweaksOn={setTweaksOpen} />
       {view === "home" && <Home lang={lang} setView={setView} />}
-      {view === "prof" && <Professional lang={lang} />}
+      {view === "prof" && <Professional lang={lang} setView={setView} />}
+      {view === "course-nycu" && <Coursework lang={lang} school="nycu" setView={setView} />}
+      {view === "course-uiuc" && <Coursework lang={lang} school="uiuc" setView={setView} />}
       {view === "foot" && <Footprint lang={lang} mapStyle={mapStyle} />}
       {view === "other" && <OtherMe lang={lang} />}
       {(view === "prof" || view === "foot") && (

@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Demo · Research-Paper QA — RAG Pipeline</title>
+<script>
+(function(){var d=document.documentElement;
+try{var t=JSON.parse(localStorage.getItem("mh.theme"));d.dataset.theme=(t==="dark"||t==="light")?t:(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");}catch(e){d.dataset.theme=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";}
+try{var l=JSON.parse(localStorage.getItem("mh.lang"));d.dataset.lang=(l==="en"||l==="zh")?l:((navigator.language||"en").toLowerCase().indexOf("zh")===0?"zh":"en");}catch(e){d.dataset.lang=(navigator.language||"en").toLowerCase().indexOf("zh")===0?"zh":"en";}})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC:wght@400;700&family=Space+Mono:wght@700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="demo.css" />
+</head>
+<body>
+<header class="dt">
+<a class="back mono" href="index.html">Meredith's home</a>
+<span class="mono" style="color:var(--ink3)">Project Demo · RAG</span>
+<a class="code mono" href="https://github.com/kiwii424/Generative-Artificial-Intelligence/tree/main/02-research-paper-rag" target="_blank" rel="noopener">Code ↗</a>
+</header>
+<main class="wrap">
+<a class="back-btn mono" href="index.html#projects"><span class="zh">← 返回履歷</span><span class="en">← Back to resume</span></a>
+<div class="eyebrow">Retrieval-Augmented QA</div>
+<h1><span class="zh">Research-Paper QA — <em>RAG</em> Pipeline 與部署服務</span><span class="en">Research-Paper QA — <em>RAG</em> Pipeline &amp; Deployed Service</span></h1>
+<p class="lead"><span class="zh">輸入一篇 NLP 論文全文和一個問題，系統回傳簡短答案，加上支撐答案的原文證據片段。送去評分的證據就是 LLM 實際看到的 context，背後不多塞任何東西。</span><span class="en">Given a paper's full text and a question, the system returns a short answer plus the exact evidence spans that support it. The evidence submitted for scoring is exactly the context the model saw — nothing extra behind the scenes.</span></p>
+<div class="stats">
+<div class="stat"><b>48 → <i>65</i></b><span>Answer correctness /100</span></div>
+<div class="stat"><b>0.26 → <i>0.32</i></b><span>Evidence score</span></div>
+<div class="stat"><b>~3 s</b><span class="zh">每問延遲（研究管線）</span><span class="en">Per-query (research pipeline)</span></div>
+<div class="stat"><b>&lt; 1 s</b><span class="zh">雲端服務 · scale-to-zero</span><span class="en">Cloud service · scale-to-zero</span></div>
+</div>
+<h2><span class="num">01</span><span class="zh">這個專案在做什麼</span><span class="en">What this project does</span></h2>
+<p><span class="zh">任務是論文問答：hidden test set 有 100 篇 NLP 論文、每篇一個問題，系統要給出答案和證據片段。評分有兩項——答案正確性由 LLM judge 判對錯；證據分數是各片段的 ROUGE-L 除以送出的片段數，多塞片段會直接扣分。這個專案從研究腳本一路做到可部署的服務：<code>pipeline/</code> 在 benchmark 上衝分，<code>service/</code> 把同一套想法包成有測試、容器化、可以對任意貼上論文問答的 API。</span><span class="en">The task is paper QA: a hidden test set of 100 NLP papers, one question each; the system must return an answer and evidence spans. Scoring is two-fold — answer correctness from a binary LLM judge, and an evidence score of per-span ROUGE-L divided by the number of submitted spans, so padding actively hurts. The project goes from research script to deployable service: <code>pipeline/</code> maximizes benchmark scores, <code>service/</code> repackages the idea as a tested, containerized API that answers questions over any pasted paper.</span></p>
+<h2><span class="num">02</span><span class="zh">實際問答展示</span><span class="en">Live example</span></h2>
+<div class="qa-demo">
+<div class="qa-paper">
+<div class="qa-paper-head mono"><span class="zh">論文全文（輸入）</span><span class="en">Paper full text (input)</span></div>
+<div class="qa-paper-body" id="qaPaper">
+<b class="qa-title">Collaborative Memory Network for Spoken Language Understanding</b>
+<p>Abstract — Spoken Language Understanding (SLU) mainly involves two tasks, intent detection and slot filling, which are generally modeled jointly in existing works. However, most existing models fail to fully utilize co-occurrence relations between slots and intents…</p>
+<p>To address this issue, in this paper we propose a novel Collaborative Memory Network (CM-Net) based on the well-designed block, named CM-block…</p>
+</div>
+</div>
+<div class="qa-chat">
+<div class="qa-q"><span class="mono qa-who">Q</span><div class="qa-bubble"><span class="zh">這篇論文提出的模型叫什麼？要解決什麼問題？</span><span class="en">What model does this paper propose, and what problem does it address?</span></div></div>
+<div class="qa-a"><span class="mono qa-who a">A</span><div class="qa-bubble">
+<div class="qa-answer">The paper proposes CM-Net (Collaborative Memory Network), addressing the failure of existing SLU models to fully utilize co-occurrence relations between slots and intents.</div>
+<div class="qa-ev-head mono"><span class="zh">檢索證據（LLM 實際看到的 context）</span><span class="en">Retrieved evidence (the exact context the LLM saw)</span></div>
+<div class="qa-ev"><span class="mono qa-ev-n">[1]</span>most existing models fail to fully utilize co-occurrence relations between slots and intents, which restricts their potential performance.</div>
+<div class="qa-ev"><span class="mono qa-ev-n">[2]</span>we propose a novel Collaborative Memory Network (CM-Net) based on the well-designed block, named CM-block.</div>
+</div></div>
+</div>
+</div>
+<h2><span class="num">03</span><span class="zh">怎麼做</span><span class="en">How it works</span></h2>
+<details class="step" open>
+<summary><span class="n">1</span>Parent–child chunking<span class="hint">DocumentProcessor</span></summary>
+<div class="body"><span class="zh">依句子切 chunk，尺寸從資料量出來：golden evidence 中位數 216 字元，所以 child chunk 目標 200 字元（上限 350、重疊 2 句），每個 child 保留約 1,200 字元的 parent window 給 reranker 和 LLM 當上下文。</span><span class="en">Sentence-based chunking sized from the data: golden evidence spans have a median of 216 characters, so child chunks target 200 chars (max 350, 2-sentence overlap), each keeping a ~1,200-char parent window for the reranker and the LLM.</span></div>
+</details>
+<details class="step">
+<summary><span class="n">2</span>Hybrid retrieval<span class="hint">FAISS + BM25 + HyDE</span></summary>
+<div class="body"><span class="zh">FAISS 稠密檢索（<code>snowflake-arctic-embed-l-v2.0</code>）加 BM25，配 query 變體與 HyDE，用 Reciprocal Rank Fusion（k=60）融合。</span><span class="en">FAISS dense search (<code>snowflake-arctic-embed-l-v2.0</code>) plus BM25, with query variants and HyDE, fused by Reciprocal Rank Fusion (k=60).</span></div>
+</details>
+<details class="step">
+<summary><span class="n">3</span>Cross-encoder rerank<span class="hint">bge-reranker-v2-m3</span></summary>
+<div class="body"><span class="zh">Cross-encoder 重排序，加 section boosting（query routing 命中的章節 +1.5）。Ablation 掃過 embedder × reranker 組合後，arctic-embed + v2-m3 這對最好。</span><span class="en">Cross-encoder reranking with section boosting (+1.5 for sections matched by query routing). An ablation sweep over embedder × reranker pairs picked arctic-embed + v2-m3.</span></div>
+</details>
+<details class="step">
+<summary><span class="n">4</span>Dynamic K<span class="hint">1/K</span></summary>
+<div class="body"><span class="zh">證據分數除以 K（送出的片段數），所以只留 rerank 分數為正的 chunk，分差大於 2.0 就截斷。實驗下來 K ≥ 2 是底線：單一片段很少夠 3B 模型可靠作答。</span><span class="en">The evidence metric divides by K (submitted span count), so only positively-scored chunks are kept, cut at a score gap of 2.0. Experiments showed K ≥ 2 is the floor: one span rarely carries enough context for a 3B model.</span></div>
+</details>
+<details class="step">
+<summary><span class="n">5</span>Sentence-level refinement<span class="hint">evidence = context</span></summary>
+<div class="body"><span class="zh">生成前把 top chunk 拆成單句與滑動視窗重新打分，選出最小、最精準的不重疊片段——這些片段同時是送去評分的證據和 LLM 的 context，一致性由構造保證。</span><span class="en">Before generation, single sentences and sliding windows from the top chunks are re-scored; the best non-overlapping spans become both the submitted evidence and the LLM context, so the faithfulness constraint holds by construction.</span></div>
+</details>
+<details class="step">
+<summary><span class="n">6</span>Type-aware generation<span class="hint">Llama-3.2-3B</span></summary>
+<div class="body"><span class="zh">先分類問題型別（number / list / yesno / reason / method / factoid），套對應 prompt、temperature 0；「I don't know」自動重試，最後把答案 snap 回逐字的證據原文。</span><span class="en">The question is classified (number / list / yesno / reason / method / factoid) and prompted accordingly at temperature 0, with IDK-recovery retries; the answer is snapped back to verbatim evidence text.</span></div>
+</details>
+<div class="note">
+<div class="t"><span class="zh">留下來的負面結果</span><span class="en">Negative results, kept on purpose</span></div>
+<p style="margin:0 0 .5rem"><span class="zh">「長片段加分」：假設長片段與 golden evidence 重疊更多，結果兩項指標都變差（0.249 / 50）。Cross-encoder 本來就校準得好，加分只是把平庸的長片段推上去。</span><span class="en">A length bonus (hypothesis: longer spans overlap golden evidence more) made both metrics worse (0.249 / 50) — the cross-encoder is already well calibrated, and the bonus just promoted mediocre long spans.</span></p>
+<p style="margin:0"><span class="zh">「Adaptive K 從 1 開始」：public split 上證據分 +0.044，但 hidden set 正確性掉 9 篇——弱答案偵測器放過太多看似合理其實錯誤的 K=1 答案。</span><span class="en">Adaptive K starting at 1 gained +0.044 evidence on the public split but lost 9 papers of correctness on the hidden set — the weak-answer detector passed too many plausible-but-wrong K=1 answers.</span></p>
+</div>
+<h2><span class="num">04</span><span class="zh">研究管線 vs 部署服務</span><span class="en">Research pipeline vs deployed service</span></h2>
+<table>
+<thead><tr><th></th><th>pipeline/</th><th>service/</th></tr></thead>
+<tbody>
+<tr><td><span class="zh">目標</span><span class="en">Goal</span></td><td><span class="zh">在 hidden benchmark 上衝分</span><span class="en">Maximize hidden-benchmark scores</span></td><td><span class="zh">對任意貼上的論文互動問答</span><span class="en">Interactive QA over any pasted paper</span></td></tr>
+<tr><td><span class="zh">檢索</span><span class="en">Retrieval</span></td><td>FAISS dense + BM25 + RRF + rerank</td><td><span class="zh">零依賴 BM25（image 小、冷啟快）</span><span class="en">Dependency-free BM25 (small image, fast cold start)</span></td></tr>
+<tr><td><span class="zh">生成</span><span class="en">Generation</span></td><td>type-aware prompting + span snapping</td><td><span class="zh">同一模型、單一 grounded prompt</span><span class="en">Same model, one grounded prompt</span></td></tr>
+<tr><td><span class="zh">周邊</span><span class="en">Around it</span></td><td><span class="zh">ablation runner、自評 harness、實驗日誌</span><span class="en">Ablation runner, self-scoring harness, experiment log</span></td><td>FastAPI · 15 tests · Docker · K8s · Prometheus /metrics</td></tr>
+</tbody>
+</table>
+<div class="tags"><span class="tag">RAG</span><span class="tag">FAISS</span><span class="tag">BM25</span><span class="tag">HyDE</span><span class="tag">RRF</span><span class="tag">Reranking</span><span class="tag">FastAPI</span><span class="tag">Kubernetes</span></div>
+<div class="foot">
+<a class="mono" href="index.html#projects"><span class="zh">← 回到個人網站</span><span class="en">← Back to site</span></a>
+<a class="mono" href="https://github.com/kiwii424/Generative-Artificial-Intelligence/tree/main/02-research-paper-rag" target="_blank" rel="noopener">View code on GitHub ↗</a>
+</div>
+</main>
+</body>
+</html>

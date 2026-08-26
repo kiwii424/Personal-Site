@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Demo · GPU Optimization for CNN Convolution</title>
+<script>
+(function(){var d=document.documentElement;
+try{var t=JSON.parse(localStorage.getItem("mh.theme"));d.dataset.theme=(t==="dark"||t==="light")?t:(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");}catch(e){d.dataset.theme=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";}
+try{var l=JSON.parse(localStorage.getItem("mh.lang"));d.dataset.lang=(l==="en"||l==="zh")?l:((navigator.language||"en").toLowerCase().indexOf("zh")===0?"zh":"en");}catch(e){d.dataset.lang=(navigator.language||"en").toLowerCase().indexOf("zh")===0?"zh":"en";}})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC:wght@400;700&family=Space+Mono:wght@700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="demo.css" />
+</head>
+<body>
+<header class="dt">
+<a class="back mono" href="index.html">Meredith's home</a>
+<span class="mono" style="color:var(--ink3)">Project Demo · CUDA</span>
+<a class="code mono" href="https://github.com/kiwii424/Applied-Parallel-Programming/tree/main/Project" target="_blank" rel="noopener">Code ↗</a>
+</header>
+<main class="wrap">
+<a class="back-btn mono" href="index.html#projects"><span class="zh">← 返回履歷</span><span class="en">← Back to resume</span></a>
+<div class="eyebrow">UIUC ECE 408 · Applied Parallel Programming</div>
+<h1><span class="zh">用 <em>CUDA</em> 加速 CNN 前向卷積</span><span class="en">Accelerating CNN Convolution with <em>CUDA</em></span></h1>
+<p class="lead"><span class="zh">在 LeNet-5 風格的推論管線上優化卷積層：從 CPU baseline、直接 CUDA 卷積、im2col、kernel fusion，一路做到 streams 與 Tensor Cores，每一步都用 profiler 量測。</span><span class="en">Optimizing the convolution layers of a LeNet-5-style inference pipeline: from a CPU baseline through direct CUDA convolution, im2col, and kernel fusion, up to streams and Tensor Cores — every step measured with profilers.</span></p>
+<div class="stats">
+<div class="stat"><b>60 → <i>38.49</i> ms</b><span class="zh">Op time 總和（batch 10,000）</span><span class="en">Total op time (batch 10,000)</span></div>
+<div class="stat"><b><i>−35.9%</i></b><span class="zh">相對 60ms 滿分線</span><span class="en">Under the 60ms full-credit bar</span></div>
+<div class="stat"><b>A40 · CUDA 12.4</b><span>NCSA Delta · Slurm</span></div>
+<div class="stat"><b>nsys + ncu</b><span>Profiling</span></div>
+</div>
+<h2><span class="num">01</span><span class="zh">這個專案在做什麼</span><span class="en">What this project does</span></h2>
+<p><span class="zh">課程期末專案：用 CUDA 實作並優化修改版 LeNet-5 兩層卷積（C1、C3）的前向傳播，模型對 Fashion-MNIST 做推論——一批 10,000 張 86×86 灰階影像，輸出 10 類。評分看兩層卷積的 op time 總和：≤ 60ms 拿滿分、> 100ms 零分。卷積是 CNN 最貴的運算，這個專案就是把它在 GPU 上一路壓快的完整過程，分三個 milestone 進行。</span><span class="en">The course final project: implement and optimize the forward pass of two convolution layers (C1, C3) in a modified LeNet-5 with CUDA, running inference on Fashion-MNIST — a batch of 10,000 grayscale 86×86 images, 10 output classes. Grading measures the total op time of the two layers: ≤ 60ms is full credit, > 100ms is zero. Convolution is the most expensive op in a CNN; this project is the full journey of making it fast on a GPU, across three milestones.</span></p>
+<h2><span class="num">02</span><span class="zh">優化歷程</span><span class="en">The optimization journey</span></h2>
+<div class="bars">
+<div class="bar-row"><div class="lbl">M1 · CPU</div><div class="bar-track"><div class="bar-fill" data-w="100"></div><span class="bar-val"><span class="zh">數十秒（batch 10,000）</span><span class="en">tens of seconds (batch 10,000)</span></span></div></div>
+<div class="bar-row"><div class="lbl">M1 · <span class="zh">直接卷積 kernel</span><span class="en">direct conv kernel</span></div><div class="bar-track"><div class="bar-fill" data-w="35"></div><span class="bar-val">~70 ms</span></div></div>
+<div class="bar-row"><div class="lbl">M2 · im2col unroll</div><div class="bar-track"><div class="bar-fill" data-w="100"></div><span class="bar-val">~200 ms</span></div></div>
+<div class="bar-row"><div class="lbl">M2 · kernel fusion</div><div class="bar-track"><div class="bar-fill" data-w="30"></div><span class="bar-val">~60 ms</span></div></div>
+<div class="bar-row"><div class="lbl">M3 · <span class="zh">最終組合</span><span class="en">final mix</span></div><div class="bar-track win"><div class="bar-fill coral" data-w="19.2"></div><span class="bar-val">38.49 ms</span></div></div>
+</div>
+<p class="small"><span class="zh">M1/M2 為課程規格的參考量級（CPU 那條不成比例）；38.49ms 是最終提交實測。GPU bar 以 200ms 為滿刻度</span><span class="en">M1/M2 are course-spec reference magnitudes (the CPU bar is not to scale); 38.49ms is the measured final submission. GPU bars scaled to 200ms</span></p>
+<p><span class="zh">有趣的是中間那步：把卷積展開成矩陣乘（im2col）後反而變慢——unroll 本身要寫一份巨大的中間矩陣（<code>Channel·K² × Batch·H·W</code>，大到索引會爆 <code>INT_MAX</code>）。它的價值在下一步才兌現：矩陣乘的形式讓 tiling、Tensor Cores、cuBLAS 這些武器都能上場。</span><span class="en">The interesting step is the middle one: unrolling convolution into a matrix multiply (im2col) is initially slower — the unroll writes a huge intermediate matrix (<code>Channel·K² × Batch·H·W</code>, big enough to overflow <code>INT_MAX</code> indexing). Its value pays off next: the GEMM form is what lets tiling, Tensor Cores, and cuBLAS come into play.</span></p>
+<h2><span class="num">03</span><span class="zh">每一步在做什麼</span><span class="en">What each step does</span></h2>
+<details class="step" open>
+<summary><span class="n">1</span><span class="zh">直接卷積 kernel</span><span class="en">Direct convolution kernel</span><span class="hint">new-forward.cu</span></summary>
+<div class="body"><span class="zh">每個 thread 算一個輸出像素：對 input 的 K×K 視窗與濾波器做內積。host 端分三段——prolog 配置記憶體並搬資料上 GPU、conv_forward_gpu 設定 grid/block 並發射 kernel、epilog 搬結果回來。正確性先於速度：batch 10,000 準確率 0.8714。</span><span class="en">One thread per output pixel: a dot product between a K×K input window and the filter. Host code has three phases — prolog allocates and copies to the GPU, conv_forward_gpu configures the grid and launches, epilog copies back. Correctness first: 0.8714 accuracy at batch 10,000.</span></div>
+</details>
+<details class="step">
+<summary><span class="n">2</span>im2col unrolling<span class="hint">unroll-new-forward.cu</span></summary>
+<div class="body"><span class="zh">把每個 K×K 輸入視窗攤平成一欄，卷積就變成「濾波器矩陣 × 展開矩陣」的 GEMM，再把結果 permute 回 <code>Batch × Map × H × W</code>。三個 kernel：unroll、matmul、permute。展開矩陣超過 <code>INT_MAX</code>，索引全部用 <code>size_t</code>。</span><span class="en">Each K×K input window is flattened into a column, turning convolution into a GEMM of filter matrix × unrolled matrix, with a final permute back to <code>Batch × Map × H × W</code>. Three kernels: unroll, matmul, permute. The unrolled matrix exceeds <code>INT_MAX</code>, so all indexing uses <code>size_t</code>.</span></div>
+</details>
+<details class="step">
+<summary><span class="n">3</span>Kernel fusion<span class="hint">kernel-fusion-forward.cu</span></summary>
+<div class="body"><span class="zh">把 unroll、tiled matmul、permute 融成一個 kernel：載入 shared memory tile 時直接從原始 input feature 取值（隱式 unroll），寫回時直接放到 permute 後的正確位置。整份巨大中間矩陣從此不用寫進 global memory，~200ms 掉到 ~60ms。</span><span class="en">Unroll, tiled matmul, and permute fused into one kernel: shared-memory tiles load straight from the original input features (implicit unroll), and outputs are written directly to their permuted positions. The huge intermediate matrix never touches global memory — ~200ms drops to ~60ms.</span></div>
+</details>
+<details class="step">
+<summary><span class="n">4</span>Streams<span class="hint">required · m3</span></summary>
+<div class="body"><span class="zh">把 batch 切段，用多條 CUDA stream 讓「上傳資料、跑 kernel、下載結果」互相重疊；host 記憶體要用 pinned memory 才能非同步傳輸。最終效能提交依課程規定用單一 stream（多 stream 下 op time 不可靠）。</span><span class="en">The batch is split across CUDA streams so upload, kernel execution, and download overlap; host memory must be pinned for async transfers. The final performance submission uses a single stream per course rules (op times are unreliable under multi-stream).</span></div>
+</details>
+<details class="step">
+<summary><span class="n">5</span>Tensor Cores (WMMA)<span class="hint">required · m3</span></summary>
+<div class="body"><span class="zh">用 warp matrix functions 直接驅動 Tensor Core 做 16×16 tile 的矩陣乘，TF32 格式（精度不掉、準確率不變）。不透過 cuBLAS，自己排 fragment 的 load / mma / store。</span><span class="en">Warp matrix functions drive the Tensor Cores directly on 16×16 tiles in TF32 (no accuracy loss). No cuBLAS — fragment load / mma / store orchestrated by hand.</span></div>
+</details>
+<details class="step">
+<summary><span class="n">6</span><span class="zh">其他個別實驗</span><span class="en">Other individual experiments</span><span class="hint">m3</span></summary>
+<div class="body"><span class="zh">constant memory 放濾波器權重、<code>__restrict__</code> 解指標別名、loop unrolling、block size 與 thread coarsening 參數掃描、cuBLAS 對照、FP16/<code>__half2</code>（精度換頻寬，最終提交不用以保準確率）、register/shared memory tiling。每項個別實作、用 <code>nsys</code>/<code>ncu</code> 分析，最後只把加總最快的組合放進 <code>m3-forward.cu</code>。</span><span class="en">Constant-memory filter weights, <code>__restrict__</code> for pointer aliasing, loop unrolling, block-size and thread-coarsening sweeps, a cuBLAS comparison, FP16/<code>__half2</code> (precision for bandwidth — excluded from the final submission to keep exact accuracy), and register/shared-memory tiling. Each implemented individually and profiled with <code>nsys</code>/<code>ncu</code>; only the fastest end-to-end mix went into <code>m3-forward.cu</code>.</span></div>
+</details>
+<h2><span class="num">04</span><span class="zh">實作過的優化</span><span class="en">Optimizations implemented</span></h2>
+<div class="check-grid">
+<div class="check req"><b>Streams</b><span class="zh">required · 計算與傳輸重疊 · pinned memory</span><span class="en">required · overlap compute &amp; transfer · pinned memory</span></div>
+<div class="check req"><b>Tensor Cores (WMMA)</b><span>required · TF32 warp matrix functions</span></div>
+<div class="check"><b>im2col unrolling</b><span class="zh">卷積 → 矩陣乘</span><span class="en">convolution → GEMM</span></div>
+<div class="check"><b>Kernel fusion</b><span class="zh">unroll + GEMM + permute 合一</span><span class="en">unroll + GEMM + permute in one</span></div>
+<div class="check"><b>cuBLAS</b><span class="zh">庫函式 GEMM 對照</span><span class="en">library GEMM comparison</span></div>
+<div class="check"><b>FP16 / __half2</b><span class="zh">精度換頻寬</span><span class="en">precision for bandwidth</span></div>
+<div class="check"><b>Constant memory</b><span class="zh">卷積核權重</span><span class="en">filter weights</span></div>
+<div class="check"><b>__restrict__ + loop unrolling</b><span class="zh">指標別名 / 迴圈開銷</span><span class="en">pointer aliasing / loop overhead</span></div>
+<div class="check"><b><span class="zh">參數掃描</span><span class="en">Parameter sweep</span></b><span>block size · thread coarsening</span></div>
+<div class="check"><b>Register / shared tiling</b><span class="zh">記憶體階層重用</span><span class="en">memory-hierarchy reuse</span></div>
+</div>
+<div class="tags"><span class="tag">CUDA C/C++</span><span class="tag">im2col</span><span class="tag">Kernel Fusion</span><span class="tag">Streams</span><span class="tag">Tensor Cores</span><span class="tag">nsys / ncu</span><span class="tag">Slurm / HPC</span></div>
+<div class="foot">
+<a class="mono" href="index.html#projects"><span class="zh">← 回到個人網站</span><span class="en">← Back to site</span></a>
+<a class="mono" href="https://github.com/kiwii424/Applied-Parallel-Programming/tree/main/Project" target="_blank" rel="noopener">View code on GitHub ↗</a>
+</div>
+</main>
+<script>
+(function(){
+var fills=document.querySelectorAll('.bar-fill[data-w]');
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.style.width=e.target.dataset.w+'%';io.unobserve(e.target);}});},{threshold:.4});
+fills.forEach(function(f){io.observe(f);});
+})();
+</script>
+</body>
+</html>

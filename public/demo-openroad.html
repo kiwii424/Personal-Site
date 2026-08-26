@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Demo · OpenROAD QoR Explorer</title>
+<script>
+(function(){var d=document.documentElement;
+try{var t=JSON.parse(localStorage.getItem("mh.theme"));d.dataset.theme=(t==="dark"||t==="light")?t:(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");}catch(e){d.dataset.theme=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";}
+try{var l=JSON.parse(localStorage.getItem("mh.lang"));d.dataset.lang=(l==="en"||l==="zh")?l:((navigator.language||"en").toLowerCase().indexOf("zh")===0?"zh":"en");}catch(e){d.dataset.lang=(navigator.language||"en").toLowerCase().indexOf("zh")===0?"zh":"en";}})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC:wght@400;700&family=Space+Mono:wght@700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="demo.css" />
+<style>.flow{display:flex;flex-wrap:wrap;align-items:center;gap:.4rem;margin:1.4rem 0;font-family:var(--mono);font-weight:700;font-size:.66rem;letter-spacing:.08em;text-transform:uppercase}.flow .st{border:1.5px solid var(--ink);background:var(--paper2);padding:.45em .8em}.flow .ar{color:var(--coral)}.flow .st.knob{border-color:var(--coral);color:var(--coral)}figure.chart{background:#fff}figure.chart img{padding:.6rem}</style>
+</head>
+<body>
+<header class="dt">
+<a class="back mono" href="index.html">Meredith's home</a>
+<span class="mono" style="color:var(--ink3)">Project Demo · EDA</span>
+<a class="code mono" href="https://github.com/kiwii424/OpenROAD-QoR-Explorer" target="_blank" rel="noopener">Code ↗</a>
+</header>
+<main class="wrap">
+<a class="back-btn mono" href="index.html#projects"><span class="zh">← 返回履歷</span><span class="en">← Back to resume</span></a>
+<div class="eyebrow">RTL-to-GDS · Physical Design</div>
+<h1>OpenROAD <em>QoR</em> Explorer</h1>
+<p class="lead"><span class="zh">在 OpenROAD-flow-scripts（ORFS）的完整 RTL-to-GDS 流程上做參數掃描與 QoR 分析：一個設計（aes · ASAP7 預測性製程）、四個 flow 旋鈕、34 組 run，回答「哪個旋鈕真正影響 timing、power 和 routability」。</span><span class="en">Parameter sweep and QoR analysis over a full RTL-to-GDS flow on OpenROAD-flow-scripts (ORFS): one design (aes on the ASAP7 predictive PDK), four flow knobs, 34 runs — answering which knob actually moves timing, power, and routability.</span></p>
+<div class="stats">
+<div class="stat"><b>34</b><span class="zh">Runs（1 nominal · 11 OAT · 22 LHS）</span><span class="en">Runs (1 nominal · 11 OAT · 22 LHS)</span></div>
+<div class="stat"><b>4</b><span class="zh">Flow 旋鈕</span><span class="en">Flow knobs</span></div>
+<div class="stat"><b>13</b><span class="zh">Pareto front 上的點</span><span class="en">Points on the Pareto front</span></div>
+<div class="stat"><b>|ρ| 0.93–0.99</b><span class="zh">時脈週期 vs 各 QoR 指標</span><span class="en">Clock period vs every QoR metric</span></div>
+</div>
+<h2><span class="num">01</span><span class="zh">這個專案在做什麼</span><span class="en">What this project does</span></h2>
+<p><span class="zh">晶片實體設計流程有一堆可調參數（利用率、擺放密度、時脈約束⋯），但哪些真的重要？這個專案用 Tcl + Python 把 ORFS 的 synthesis → floorplan → place → CTS → route 全流程自動化——不 fork 流程腳本，每組 run 都是普通的 <code>make</code> 加命令列變數覆寫——掃 34 組參數組合，收集每組的 WNS/TNS、power、cell area、wirelength、DRC 數，算出旋鈕的敏感度排名和 power-vs-timing 的 Pareto front。</span><span class="en">Physical design flows have many tunable parameters (utilization, placement density, clock constraints…) — which ones actually matter? This project automates the full ORFS synthesis → floorplan → place → CTS → route flow with Tcl + Python — no forked flow scripts, every run is plain <code>make</code> with command-line overrides — sweeping 34 parameter combinations, collecting WNS/TNS, power, cell area, wirelength, and DRC count per run, then computing knob sensitivity rankings and a power-vs-timing Pareto front.</span></p>
+<div class="flow">
+<span class="st">RTL</span><span class="ar">→</span><span class="st">Synthesis</span><span class="ar">→</span><span class="st">Floorplan</span><span class="ar">→</span><span class="st">Place</span><span class="ar">→</span><span class="st">CTS</span><span class="ar">→</span><span class="st">Route</span><span class="ar">→</span><span class="st">GDS</span><span class="ar">→</span><span class="st">QoR</span>
+<span class="st knob">SDC clock</span><span class="st knob">CORE_UTILIZATION</span><span class="st knob">ASPECT_RATIO</span><span class="st knob">PLACE_DENSITY</span>
+</div>
+<h2><span class="num">02</span><span class="zh">結果圖</span><span class="en">Result charts</span></h2>
+<figure class="chart">
+<img src="uploads/openroad-pareto.svg" alt="Power versus effective clock period, 34 runs, 13-point Pareto front" loading="lazy" />
+<figcaption><span class="zh">Power vs 有效時脈週期 · 34 runs · 13 點 Pareto front</span><span class="en">Power vs effective clock period · 34 runs · 13-point Pareto front</span></figcaption>
+</figure>
+<figure class="chart">
+<img src="uploads/openroad-sensitivity.svg" alt="Knob influence: Spearman correlation magnitude against each QoR metric" loading="lazy" />
+<figcaption><span class="zh">旋鈕影響力 · 對各 QoR 指標的 Spearman 相關強度</span><span class="en">Knob influence · Spearman correlation magnitude per QoR metric</span></figcaption>
+</figure>
+<h2><span class="num">03</span><span class="zh">分析報告——五個發現</span><span class="en">The analysis — five findings</span></h2>
+<p class="small"><span class="zh">以下每個數字都來自 repo 提交的 data/runs.csv 與 findings_evidence.txt；「有效週期」= clock period − WNS</span><span class="en">Every number below comes from the committed data/runs.csv and findings_evidence.txt; “effective period” = clock period − WNS</span></p>
+<table>
+<thead><tr><th><span class="zh">旋鈕 |ρ|</span><span class="en">Knob |ρ|</span></th><th>WNS</th><th>Power</th><th>Cell area</th><th>Wirelength</th></tr></thead>
+<tbody>
+<tr class="hi"><td>Clock period</td><td>0.93</td><td>0.99</td><td>0.97</td><td>0.64</td></tr>
+<tr><td>CORE_ASPECT_RATIO</td><td>0.28</td><td>0.24</td><td>0.20</td><td>0.07</td></tr>
+<tr><td>PLACE_DENSITY</td><td>0.10</td><td>0.07</td><td>0.05</td><td>0.20</td></tr>
+<tr><td>CORE_UTILIZATION</td><td>0.05</td><td>0.01</td><td>0.07</td><td>0.53</td></tr>
+</tbody>
+</table>
+<details class="step" open>
+<summary><span class="n">1</span><span class="zh">時脈週期主導一切</span><span class="en">The clock period dominates everything</span></summary>
+<div class="body"><span class="zh">SDC 時脈週期對每個 QoR 指標的相關都在 |ρ| 0.93–0.99（wirelength 0.64）；沒有任何 floorplan 旋鈕超過 0.28，標準化 OLS 係數的排名也一致。機制在 OAT 掃描看得到：550 → 300ps 把總功耗從 51.7 拉到 116.8 mW（2.26×）、instance 從 21,794 增到 24,176——timing repair 為了追更緊的約束不斷加大 gate、插 buffer。在這個設計上，你寫的約束比對 floorplan 做的所有事加起來都重要。</span><span class="en">The SDC clock period correlates at |ρ| 0.93–0.99 with every QoR metric (0.64 for wirelength); no floorplan knob exceeds 0.28, and standardized OLS coefficients agree. The mechanism shows in the OAT sweep: 550 → 300 ps raises total power from 51.7 to 116.8 mW (2.26×) and instances from 21,794 to 24,176 — timing repair upsizes gates and inserts buffers chasing the tighter constraint. On this design, the constraint you write outweighs everything you do to the floorplan combined.</span></div>
+</details>
+<details class="step">
+<summary><span class="n">2</span><span class="zh">PLACE_DENSITY ≤ 0.70 是 no-op，包括官方預設</span><span class="en">PLACE_DENSITY ≤ 0.70 is a no-op — including the stock default</span></summary>
+<div class="body"><span class="zh">在 CORE_UTILIZATION=70 下，要求 0.50 與 0.65 的兩組 run 在所有 metadata 欄位上 QoR 完全相同。Placer log 解釋了原因：<code>[WARNING GPL-0302] Target density 0.6500 is too low… Automatically adjusting to uniform density 0.7000</code>。官方 aes config 預設 0.65，所以每一次 stock run 都被靜默改寫成 0.70。超過 clamp 後旋鈕才真實且昂貴：0.80 被採用、timing-driven pass 再拉到 0.928，WNS 從 −2.36 惡化到 −30.90 ps。</span><span class="en">At CORE_UTILIZATION=70, requesting 0.50 and 0.65 produced identical QoR on every metadata key. The placer log explains why: <code>[WARNING GPL-0302] Target density 0.6500 is too low… Automatically adjusting to uniform density 0.7000</code>. The stock aes config ships 0.65, so every stock run is silently rewritten to 0.70. Above the clamp the knob is real and expensive: 0.80 is honored, the timing-driven pass raises it to 0.928, and WNS degrades from −2.36 to −30.90 ps.</span></div>
+</details>
+<details class="step">
+<summary><span class="n">3</span><span class="zh">降利用率用更多 cell 買 timing，不是更省電</span><span class="en">Lower utilization buys timing with more cells, not less power</span></summary>
+<div class="body"><span class="zh">利用率 70 → 40 把 WNS 從 −2.36 翻正到 +0.27 ps，但設計長大：instance 30,002 vs 23,677（+27%）、wire 54,429 vs 51,060 µm、功耗略增（84.5 vs 83.4 mW）——多出來的空間被 repair pass 填滿 buffer。反方向 80% 利用率讓設計縮小（21,127 instances、8 2.5 mW）但付出 timing（−8.96 ps）。趨勢還不單調：55% 量到 −3.90 ps，比 70% 更差——跟「小 die = 短線 = 快」的直覺相反。</span><span class="en">Dropping utilization 70 → 40 flips WNS from −2.36 to +0.27 ps, but the design grows: 30,002 vs 23,677 instances (+27%), 54,429 vs 51,060 µm of wire, slightly more power (84.5 vs 83.4 mW) — the extra area gets filled with buffers by the repair passes. Going the other way, 80% shrinks the design (21,127 instances, 82.5 mW) and costs timing (−8.96 ps). The WNS trend is not even monotonic: 55% measures −3.90 ps, worse than 70% — the opposite of the “smaller die = shorter wires = faster” intuition.</span></div>
+</details>
+<details class="step">
+<summary><span class="n">4</span><span class="zh">Pareto front，與預設值的價格</span><span class="en">The Pareto front, and the price of the default</span></summary>
+<div class="body"><span class="zh">34 組中有 13 組在 power vs 有效週期的 Pareto front 上。ORFS 預設也在其中，位於快端（382.4 ps · 83.4 mW）；邻居點顯示局部取捨：util 40 是唯一在 380ps 達標的配置（+1.3% 功耗）；run_022 用 3.5% 的有效時脈換 6% 省電。如果目標頻率有餘裕，front 掉得很快：接受慢 15%（440 ps）省 24% 功耗（63.5 mW）；front 上最慢的點（479 ps）只要 51.5 mW，比預設低 38%。</span><span class="en">13 of 34 configurations are Pareto-optimal for power vs effective period. The ORFS default is one of them, at the fast end (382.4 ps · 83.4 mW); its neighbors show the local trades: util 40 is the only 380 ps config that meets timing (+1.3% power); run_022 gives up 3.5% effective clock for 6% less power. With slack in the target frequency the front drops fast: accepting 15% slower (440 ps) cuts power 24% (63.5 mW), and the slowest front point (479 ps) runs at 51.5 mW — 38% below the default.</span></div>
+</details>
+<details class="step">
+<summary><span class="n">5</span><span class="zh">掃描穩健性</span><span class="en">Sweep robustness</span></summary>
+<div class="body"><span class="zh">34 組全部跑完完整流程：0 DRC violation、0 crash、0 timeout，包括 util 80、density 被拉到 0.93 的角落點——預先設計的失敗分類（crash / timeout / drc_fail）一次都沒觸發。34 組中有 20 組在要求的週期下 miss timing，這正是掃描的目的：不可行的約束也是同一條曲線上的數據點。</span><span class="en">All 34 configurations completed the full flow with zero DRC violations, crashes, or timeouts — including corner points like util 80 with density clamped to 0.93; the planned failure taxonomy (crash / timeout / drc_fail) never fired. 20 of 34 runs miss timing at their requested period, which is the sweep working as intended: infeasible constraints are data points on the same curves.</span></div>
+</details>
+<h2><span class="num">04</span><span class="zh">工程細節</span><span class="en">Engineering details</span></h2>
+<details class="step" open>
+<summary><span class="n">a</span><span class="zh">可拋棄式 Docker 執行</span><span class="en">Disposable Docker runs</span></summary>
+<div class="body"><span class="zh">流程跑在 pin 住版本的 <code>openroad/orfs</code> image 裡：<code>WORK_HOME</code> 把 log 和結果導到 host mount，容器用完即丟（<code>--rm</code>）；<code>FLOW_VARIANT</code> 給每組 run 獨立的輸出目錄，可平行跑；逾時由 host 端 <code>docker kill</code> 強制執行。掃描值就是 make 命令列變數，靠 make 的優先權覆寫預設，不改 image 裡任何檔案。</span><span class="en">The flow runs in a version-pinned <code>openroad/orfs</code> image: <code>WORK_HOME</code> redirects logs/results to a host mount so containers stay disposable (<code>--rm</code>); <code>FLOW_VARIANT</code> namespaces each run's outputs for parallel runs; timeouts are enforced from the host via <code>docker kill</code>. Sweep values are plain make command-line variables overriding defaults by normal precedence — nothing inside the image is modified.</span></div>
+</details>
+<details class="step">
+<summary><span class="n">b</span><span class="zh">數據都有憑據</span><span class="en">Evidence behind every number</span></summary>
+<div class="body"><span class="zh">repo 的 <code>data/</code> 提交了每組 run 的 JSON 快照與 <code>runs.csv</code>——每個引用的數字都能對回原始資料。校準 run 驗證了 SDC 產生器：stock SDC 與生成 SDC 在 107 個 metadata 欄位中 103 個完全一致（差的 4 個是 cpu/memory/runtime），證明流程對固定 image 是 deterministic 的。</span><span class="en">The repo's <code>data/</code> commits a JSON snapshot per run plus <code>runs.csv</code> — every quoted number traces back to raw data. Calibration runs validate the SDC generator: stock vs generated SDC match on 103 of 107 metadata keys (the 4 differences are cpu/memory/runtime fields), showing the flow is deterministic for a fixed image.</span></div>
+</details>
+<details class="step">
+<summary><span class="n">c</span><span class="zh">與 ICCAD 2025 的關係</span><span class="en">Relation to ICCAD 2025</span></summary>
+<div class="body"><span class="zh">流程架構與 ASAP7 製程和 ICCAD 2025 Problem C 相同。競賽程式碼不公開；這個 repo 只涵蓋流程自動化，不碰 placement / routing 演算法本身。</span><span class="en">The flow structure and ASAP7 PDK are the same as ICCAD 2025 Problem C. The contest code is closed; this repo covers flow automation only, not placement/routing algorithms.</span></div>
+</details>
+<div class="tags"><span class="tag">OpenROAD / ORFS</span><span class="tag">ASAP7</span><span class="tag">Tcl</span><span class="tag">Python</span><span class="tag">Docker</span><span class="tag">Latin Hypercube</span><span class="tag">Pareto</span></div>
+<div class="foot">
+<a class="mono" href="index.html#projects"><span class="zh">← 回到個人網站</span><span class="en">← Back to site</span></a>
+<a class="mono" href="https://github.com/kiwii424/OpenROAD-QoR-Explorer" target="_blank" rel="noopener">View code on GitHub ↗</a>
+</div>
+</main>
+</body>
+</html>
